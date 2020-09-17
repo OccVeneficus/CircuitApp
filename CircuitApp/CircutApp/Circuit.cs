@@ -1,40 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
 
 namespace CircutApp
 {
+    public class CircuitElementChangedEventArgs : EventArgs
+    {
+        public double[] Frequency { get; set; }
+    }
+
+    public delegate Complex[] CircuitElementChangedHandler(object sender,
+        CircuitElementChangedEventArgs e);
+
     public class Circuit
     {
-        public List<IElement> _elements;
-        public List<IElement> Elements { get; set; }
-
-        public Complex[] CalculateZ(List<double> frequencies)
+        public CircuitElements<IElement> Elements
         {
-            Complex[] resultZ = new Complex[frequencies.Count];
-            int i = 0;
-            foreach (double frequency in frequencies)
+            get;
+            set;
+        }
+
+        public event CircuitElementChangedHandler CircuitChanging;
+        public Complex[] CalculateZ(double[] frequencies)
+        {
+            int index = 0;
+            Complex[] result = new Complex[frequencies.Length];
+            foreach (var frequency in frequencies)
             {
-                resultZ[i] = 0.0;
-                foreach (IElement element in Elements)
+                foreach (var element in Elements)
                 {
-                    resultZ[i] = resultZ[i] + element.CalculateZ(frequency);
+                    result[index] = result[index] + element.CalculateZ(frequency);
                 }
 
-                ++i;
+                index++;
             }
-            return resultZ;
+
+            return result;
         }
 
         public Circuit()
         {
-            Elements = new List<IElement>();
+            Elements = new CircuitElements<IElement>();
+            Elements.ElementsChanged += Elements_ElementsChanged;
         }
 
-        public event EventHandler CircuitChanged;
+        private void Elements_ElementsChanged(object sender, EventArgs e)
+        {
+            CircuitChanging?.Invoke(this, new CircuitElementChangedEventArgs());
+        }
     }
 }
