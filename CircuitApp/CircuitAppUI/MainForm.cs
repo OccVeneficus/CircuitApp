@@ -23,16 +23,16 @@ namespace CircuitAppUI
             firstCircuit.Elements.Add(new Inductor() { Name = "V12", Value = 0.012 });
             firstCircuit.Elements.Add(new Capacitor() { Name = "D31", Value = 0.0000031 });
             Complex[] Z = new Complex[3];
-            CircuitElementChangedEventArgs f = new CircuitElementChangedEventArgs();
-            f.Frequency = new []{50.0};
+            double[] f = new []{50.0};
             Z = firstCircuit.CalculateZ(new[] {50.0});
-            firstCircuit.CircuitChanging += (sender, e) => CircuitC
+            firstCircuit.CircuitChanging += new CircuitElementChangedHandler(FirstCircuit_CircuitChanging(firstCircuit,f));
             firstCircuit.Elements[0].Value = 31;
         }
 
-        private Complex[] FirstCircuit_CircuitChanging(object sender, CircuitElementChangedEventArgs e)
+        private Complex[] FirstCircuit_CircuitChanging(object sender, double[] frequencies)
         {
-            throw new NotImplementedException();
+            Circuit d = (Circuit) sender;
+            return d.CalculateZ(frequencies);
         }
 
         private void circuit1ToolStripMenuItem_Click(object sender, EventArgs e)

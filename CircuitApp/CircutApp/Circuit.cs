@@ -13,7 +13,7 @@ namespace CircutApp
     }
 
     public delegate Complex[] CircuitElementChangedHandler(object sender,
-        CircuitElementChangedEventArgs e);
+        double[] frequency);
 
     public class Circuit
     {
@@ -49,7 +49,7 @@ namespace CircutApp
 
         private void Elements_ElementsChanged(object sender, EventArgs e)
         {
-            CircuitChanging?.Invoke(this, new CircuitElementChangedEventArgs());
+            CircuitChanging?.Invoke(this, null);
         }
     }
 }
