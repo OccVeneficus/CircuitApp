@@ -30,10 +30,12 @@ namespace CircuitAppUI
             firstCircuit.Elements[0].Value = 31;
         }
 
-        private void FirstCircuit_CircuitChanging(object sender, CircuitElementChangedEventArgs e, double[] frequencies)
+        private Complex[] FirstCircuit_CircuitChanging(object sender,
+            CircuitElementChangedEventArgs e, double[] frequencies)
         {
             Circuit d = (Circuit) sender;
             e.NewResultZ = d.CalculateZ(frequencies);
+            return e.NewResultZ;
         }
 
         private void circuit1ToolStripMenuItem_Click(object sender, EventArgs e)

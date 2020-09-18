@@ -10,8 +10,15 @@ using System.Numerics;
 
 namespace CircutApp
 {
+    /// <summary>
+    /// Custom collection type for circuit elements
+    /// </summary>
+    /// <typeparam name="T">Classes with IElement realizations</typeparam>
     public class CircuitElements<T> : ObservableCollection<T> where T : IElement
     {
+        /// <summary>
+        /// Event fires when value of one of the elements changed or when new element added/deleted
+        /// </summary>
         public event EventHandler ElementsChanged;
 
         protected override void InsertItem(int index, T item)
@@ -44,6 +51,11 @@ namespace CircutApp
             base.ClearItems();
         }
 
+        /// <summary>
+        /// Handler for ValueChanged event
+        /// </summary>
+        /// <param name="sender">IElement</param>
+        /// <param name="e">Default EventArgs</param>
         private void Item_ValueChanged(object sender, EventArgs e)
         {
             ElementsChanged?.Invoke(this, e);

@@ -7,16 +7,29 @@ using System.Threading.Tasks;
 
 namespace CircutApp
 {
+    /// <summary>
+    /// Custom EventArgs for getting recalculated Z
+    /// </summary>
     public class CircuitElementChangedEventArgs : EventArgs
     {
         public Complex[] NewResultZ { get; set; }
     }
 
-    public delegate void CircuitElementChangedHandler(object sender,
+    /// <summary>
+    /// Signature for recalculation method
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <returns></returns>
+    public delegate Complex[] CircuitElementChangedHandler(object sender,
         CircuitElementChangedEventArgs e);
 
     public class Circuit
     {
+
+        /// <summary>
+        /// Collection of IElement elements
+        /// </summary>
         public CircuitElements<IElement> Elements
         {
             get;
