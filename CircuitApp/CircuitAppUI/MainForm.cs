@@ -25,14 +25,15 @@ namespace CircuitAppUI
             Complex[] Z = new Complex[3];
             double[] f = new []{50.0};
             Z = firstCircuit.CalculateZ(new[] {50.0});
-            firstCircuit.CircuitChanging += new CircuitElementChangedHandler(FirstCircuit_CircuitChanging(firstCircuit,f));
+            firstCircuit.CircuitChanging += new CircuitElementChangedHandler((sender, args)
+                => FirstCircuit_CircuitChanging(sender,args,f));
             firstCircuit.Elements[0].Value = 31;
         }
 
-        private Complex[] FirstCircuit_CircuitChanging(object sender, double[] frequencies)
+        private void FirstCircuit_CircuitChanging(object sender, CircuitElementChangedEventArgs e, double[] frequencies)
         {
             Circuit d = (Circuit) sender;
-            return d.CalculateZ(frequencies);
+            e.NewResultZ = d.CalculateZ(frequencies);
         }
 
         private void circuit1ToolStripMenuItem_Click(object sender, EventArgs e)
