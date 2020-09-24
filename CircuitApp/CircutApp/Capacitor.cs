@@ -1,31 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CircutApp
 {
+    ///<summary>
+    /// Class for circuit element capacitor
+    /// </summary>
+    /// <inheritdoc cref="ISegment"/>
     public class Capacitor : IElement
     {
+        public event EventHandler SegmentChanged;
         public string Name { get; set; }
         private double _value;
+
         public double Value
         {
             get => _value;
             set
             {
                 _value = value;
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                SegmentChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// For IElements sub segments always null
+        /// </summary>
+        private ObservableCollection<ISegment> _subSegments;
+        public ObservableCollection<ISegment> SubSegments
+        {
+            get => _subSegments;
+            private set => _subSegments = null;
         }
 
         public Complex CalculateZ(double frequency)
         {
-            return (Complex) Complex.ImaginaryOne * ((-1) / (2 * Math.PI * frequency * Value));
+            return (Complex)(1 / (2 * Math.PI * frequency * Value * Complex.ImaginaryOne));
         }
-
-        public event EventHandler ValueChanged;
     }
 }

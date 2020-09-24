@@ -1,14 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CircutApp
 {
+    /// <summary>
+    /// Class for circuit element Resistor
+    /// </summary>
+    /// <inheritdoc cref="ISegment"/>
     public class Resistor : IElement
     {
+        /// <summary>
+        /// SubSegments for elements is always null
+        /// </summary>
+        private ObservableCollection<ISegment> _subSegments;
+        public ObservableCollection<ISegment> SubSegments
+        {
+            get => _subSegments;
+            private set => _subSegments = null;
+        }
+
         public string Name { get; set; }
 
         private double _value;
@@ -17,8 +28,12 @@ namespace CircutApp
             get => _value;
             set
             {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 _value = value;
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                SegmentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -27,6 +42,6 @@ namespace CircutApp
             return (Complex) Value;
         }
 
-        public event EventHandler ValueChanged;
+        public event EventHandler SegmentChanged;
     }
 }

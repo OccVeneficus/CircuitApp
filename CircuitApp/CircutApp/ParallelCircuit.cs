@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CircutApp
 {
-    /// <summary>
-    /// Combination of circuit elements
-    /// </summary>
-    public class Circuit
+    public class ParallelCircuit : ISegment
     {
         private ObservableCollection<ISegment> _subSegments;
         public ObservableCollection<ISegment> SubSegments
@@ -36,26 +34,16 @@ namespace CircutApp
             }
         }
 
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Event that fires whenever Elements changed
-        /// </summary>
         public event EventHandler SegmentChanged;
 
-        /// <summary>
-        /// Method that calculates summary impedance of all circuit elements
-        /// </summary>
-        /// <param name="frequencies"></param>
-        /// <returns></returns>
-        public List<Complex> CalculateZ(List<double> frequencies)
+        public Complex CalculateZ(double frequency)
         {
-            return (from frequency in frequencies
-                    from subSegment in SubSegments 
-                    select subSegment.CalculateZ(frequency)).ToList();
+            Complex result = SubSegments.Aggregate<ISegment, Complex>(0, (current, segment) =>
+                    current + 1 / segment.CalculateZ(frequency));
+            return 1/result;
         }
 
-        public Circuit()
+        public ParallelCircuit()
         {
             SubSegments = new ObservableCollection<ISegment>();
             SubSegments.CollectionChanged += OnSegmentChanged;
@@ -63,7 +51,7 @@ namespace CircutApp
 
         private void OnSegmentChanged(object sender, EventArgs e)
         {
-            SegmentChanged?.Invoke(this,e);
+            SegmentChanged?.Invoke(this, e);
         }
     }
 }

@@ -44,11 +44,15 @@
   <ItemGroup>
     <Compile Include="Capacitor.cs" />
     <Compile Include="Circuit.cs" />
-    <Compile Include="CircuitElements.cs" />
+    <Compile Include="EventDrivenCollection.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="Inductor.cs" />
+    <Compile Include="ISegment.cs" />
+    <Compile Include="ParallelCircuit.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resistor.cs" />
+    <Compile Include="SerialCircuit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
