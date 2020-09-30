@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -10,31 +11,9 @@ namespace CircutApp
 {
     public class ParallelCircuit : ISegment
     {
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
-        {
-            get => _subSegments;
-            set
-            {
-                switch (value)
-                {
-                    case IElement element:
-                    {
-                        _subSegments = value;
-                        element.SegmentChanged += OnSegmentChanged;
-                        break;
-                    }
-                    default:
-                    {
-                        _subSegments = value;
-                        value.CollectionChanged += OnSegmentChanged;
-                        break;
-                    }
-                }
-            }
-        }
+        public EventDrivenCollection<ISegment> SubSegments { get; set; }
 
-        public event EventHandler SegmentChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Complex CalculateZ(double frequency)
         {
@@ -45,13 +24,13 @@ namespace CircutApp
 
         public ParallelCircuit()
         {
-            SubSegments = new ObservableCollection<ISegment>();
+            SubSegments = new EventDrivenCollection<ISegment>();
             SubSegments.CollectionChanged += OnSegmentChanged;
         }
 
         private void OnSegmentChanged(object sender, EventArgs e)
         {
-            SegmentChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
     }
 }

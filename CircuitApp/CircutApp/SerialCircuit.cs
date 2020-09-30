@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 
@@ -7,47 +8,25 @@ namespace CircutApp
 {
     public class SerialCircuit : ISegment
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Complex CalculateZ(double frequency)
         {
             return SubSegments.Aggregate<ISegment, Complex>(0, (current, segment) => 
                     current + segment.CalculateZ(frequency));
         }
 
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
-        {
-            get => _subSegments;
-            set
-            {
-                switch (value)
-                {
-                    case IElement element:
-                    {
-                        _subSegments = value;
-                        element.SegmentChanged += OnSegmentChanged;
-                        break;
-                    }
-                    default:
-                    {
-                        _subSegments = value;
-                        value.CollectionChanged += OnSegmentChanged;
-                        break;
-                    }
-                }
-            }
-        }
-
-        public event EventHandler SegmentChanged;
+        public EventDrivenCollection<ISegment> SubSegments { get; set; }
 
         public SerialCircuit()
         {
-            SubSegments = new ObservableCollection<ISegment>();
-            SubSegments.CollectionChanged += OnSegmentChanged;
+            SubSegments = new EventDrivenCollection<ISegment>();
+            SubSegments.CollectionChanged += OnCollectionChanged;
         }
 
-        private void OnSegmentChanged(object sender, EventArgs e)
+        private void OnCollectionChanged(object sender, EventArgs e)
         {
-            SegmentChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
     }
 }

@@ -12,36 +12,14 @@ namespace CircutApp
     /// </summary>
     public class Circuit
     {
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
-        {
-            get => _subSegments;
-            set
-            {
-                switch (value)
-                {
-                    case IElement element:
-                    {
-                        _subSegments = value;
-                        element.SegmentChanged += OnSegmentChanged;
-                        break;
-                    }
-                    default:
-                    {
-                        _subSegments = value;
-                        value.CollectionChanged += OnSegmentChanged;
-                        break;
-                    }
-                }
-            }
-        }
+        public EventDrivenCollection<ISegment> SubSegments { get; set; }
 
         public string Name { get; set; }
 
         /// <summary>
         /// Event that fires whenever Elements changed
         /// </summary>
-        public event EventHandler SegmentChanged;
+        public event EventHandler CircuitChanged;
 
         /// <summary>
         /// Method that calculates summary impedance of all circuit elements
@@ -57,13 +35,13 @@ namespace CircutApp
 
         public Circuit()
         {
-            SubSegments = new ObservableCollection<ISegment>();
-            SubSegments.CollectionChanged += OnSegmentChanged;
+            SubSegments = new EventDrivenCollection<ISegment>();
+            SubSegments.CollectionChanged += OnCollectionChanged;
         }
 
-        private void OnSegmentChanged(object sender, EventArgs e)
+        private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            SegmentChanged?.Invoke(this,e);
+            CircuitChanged?.Invoke(this, e);
         }
     }
 }

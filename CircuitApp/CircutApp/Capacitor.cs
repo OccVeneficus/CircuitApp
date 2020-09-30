@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace CircutApp
@@ -10,7 +11,8 @@ namespace CircutApp
     /// <inheritdoc cref="ISegment"/>
     public class Capacitor : IElement
     {
-        public event EventHandler SegmentChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Name { get; set; }
         private double _value;
 
@@ -20,15 +22,15 @@ namespace CircutApp
             set
             {
                 _value = value;
-                SegmentChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
             }
         }
 
         /// <summary>
         /// For IElements sub segments always null
         /// </summary>
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
+        private EventDrivenCollection<ISegment> _subSegments;
+        public EventDrivenCollection<ISegment> SubSegments
         {
             get => _subSegments;
             private set => _subSegments = null;

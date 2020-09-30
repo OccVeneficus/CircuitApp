@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace CircutApp
@@ -13,8 +14,8 @@ namespace CircutApp
         /// <summary>
         /// SubSegments for elements is always null
         /// </summary>
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
+        private EventDrivenCollection<ISegment> _subSegments;
+        public EventDrivenCollection<ISegment> SubSegments
         {
             get => _subSegments;
             private set => _subSegments = null;
@@ -33,7 +34,7 @@ namespace CircutApp
                     throw new ArgumentOutOfRangeException();
                 }
                 _value = value;
-                SegmentChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
             }
         }
 
@@ -42,6 +43,6 @@ namespace CircutApp
             return (Complex) Value;
         }
 
-        public event EventHandler SegmentChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

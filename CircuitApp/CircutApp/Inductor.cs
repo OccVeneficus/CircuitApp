@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace CircutApp
@@ -24,15 +23,15 @@ namespace CircutApp
                     throw new ArgumentOutOfRangeException();
                 }
                 _value = value;
-                SegmentChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
             }
         }
 
         /// <summary>
         /// For IElements sub segments always null
         /// </summary>
-        private ObservableCollection<ISegment> _subSegments;
-        public ObservableCollection<ISegment> SubSegments
+        private EventDrivenCollection<ISegment> _subSegments;
+        public EventDrivenCollection<ISegment> SubSegments
         {
             get => _subSegments;
             private set => _subSegments = null;
@@ -43,6 +42,6 @@ namespace CircutApp
             return (Complex)2 * Math.PI * frequency * Value * Complex.ImaginaryOne;
         }
 
-        public event EventHandler SegmentChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

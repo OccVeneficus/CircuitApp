@@ -1,99 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
+using System.ComponentModel;
 
 namespace CircutApp
 {
     /// <summary>
-    /// Custom collection type for circuit elements
+    /// Custom collection type for circuit segments and elements
     /// </summary>
-    /// <typeparam name="T">Classes with ISegment realizations</typeparam>
-    public class EventDrivenCollection<T> : ObservableCollection<T> where T : ISegment
+    /// <typeparam name="T">Classes with INotifyPropertyChanged realizations</typeparam>
+    public class EventDrivenCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
         /// <summary>
-        /// Event fires when value of one of the elements changed or when new element added/deleted
+        /// Constructor subscribe CollectionChanged event on it's handler
         /// </summary>
-        public event EventHandler ElementsChanged;
-
-        protected override void InsertItem(int index, T item)
+        public EventDrivenCollection()
         {
-            base.InsertItem(index, item);
-            if (item is IElement element)
-            {
-                element.SegmentChanged += OnSegmentChanged;
-            }
-            else
-            {
-                item.SegmentChanged += OnSegmentChanged;
-            }
-        }
-
-        protected override void RemoveItem(int index)
-        {
-            var item = this[index];
-            base.RemoveItem(index);
-            if (item is IElement element)
-            {
-                element.SegmentChanged += OnSegmentChanged;
-            }
-            else
-            {
-                item.SegmentChanged += OnSegmentChanged;
-            }
-        }
-
-        protected override void SetItem(int index, T item)
-        {
-            var oldItem = this[index];
-            base.SetItem(index, item);
-            if (item is IElement element)
-            {
-                element.SegmentChanged += OnSegmentChanged;
-            }
-            else
-            {
-                item.SegmentChanged += OnSegmentChanged;
-            }
-            if (oldItem is IElement oldElement)
-            {
-                oldElement.SegmentChanged -= OnSegmentChanged;
-            }
-            else
-            {
-               oldItem.SegmentChanged -= OnSegmentChanged;
-            }
-        }
-
-        protected override void ClearItems()
-        {
-            foreach (var item in Items)
-            {
-                if (item is IElement element)
-                {
-                    element.SegmentChanged -= OnSegmentChanged;
-                }
-                else
-                {
-                    item.SegmentChanged -= OnSegmentChanged;
-                }
-            }
-            base.ClearItems();
+            CollectionChanged += FullEventDrivenCollectionChanged;
         }
 
         /// <summary>
-        /// Handler for ValueChanged event
+        /// CollectionChanged event handler. Subscribes/unsubscribes collection items on ItemPropertyChanged handler
         /// </summary>
-        /// <param name="sender">IElement</param>
-        /// <param name="e">Default EventArgs</param>
-        private void OnSegmentChanged(object sender, EventArgs e)
+        /// <param name="sender">Circuit segment or element that caused event firing</param>
+        /// <param name="e">NotifyCollectionChanged arguments</param>
+        private void FullEventDrivenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            ElementsChanged?.Invoke(this, e);
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    ((INotifyPropertyChanged) item).PropertyChanged += ItemPropertyChanged;
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    ((INotifyPropertyChanged)item).PropertyChanged -= ItemPropertyChanged;
+                }
+            }
+        }
+
+        /// <summary>
+        /// PropertyChanged event handler. Fires OnCollectionChanged event
+        /// </summary>
+        /// <param name="sender">Circuit segment or element that caused event firing</param>
+        /// <param name="e">PropertyChanged event arguments</param>
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyCollectionChangedEventArgs args = 
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace,
+                sender, sender, IndexOf((T)sender));
+            OnCollectionChanged(args);
         }
     }
 }

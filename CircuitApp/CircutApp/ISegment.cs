@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace CircutApp
@@ -7,7 +8,7 @@ namespace CircutApp
     /// <summary>
     /// Interface for circuit segments
     /// </summary>
-    public interface ISegment
+    public interface ISegment : INotifyPropertyChanged
     {
         /// <summary>
         /// Method for impedance calculating
@@ -19,11 +20,6 @@ namespace CircutApp
         /// <summary>
         /// SubSegments collection
         /// </summary>
-        ObservableCollection<ISegment> SubSegments { get; }
-
-        /// <summary>
-        /// Event that fires whenever segment of circuit changed
-        /// </summary>
-        event EventHandler SegmentChanged;
+        EventDrivenCollection<ISegment> SubSegments { get; }
     }
 }
