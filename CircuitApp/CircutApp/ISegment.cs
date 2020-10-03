@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Numerics;
 
 namespace CircutApp
@@ -20,6 +18,6 @@ namespace CircutApp
         /// <summary>
         /// SubSegments collection
         /// </summary>
-        EventDrivenCollection<ISegment> SubSegments { get; }
+        EventDrivenCollection SubSegments { get; }
     }
 }

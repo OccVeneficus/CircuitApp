@@ -7,8 +7,7 @@ namespace CircutApp
     /// <summary>
     /// Custom collection type for circuit segments and elements
     /// </summary>
-    /// <typeparam name="T">Classes with INotifyPropertyChanged realizations</typeparam>
-    public class EventDrivenCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
+    public class EventDrivenCollection : ObservableCollection<ISegment> 
     {
         /// <summary>
         /// Constructor subscribe CollectionChanged event on it's handler
@@ -19,11 +18,13 @@ namespace CircutApp
         }
 
         /// <summary>
-        /// CollectionChanged event handler. Subscribes/unsubscribes collection items on ItemPropertyChanged handler
+        /// CollectionChanged event handler. Subscribes/unsubscribes collection items on
+        /// ItemPropertyChanged handler
         /// </summary>
         /// <param name="sender">Circuit segment or element that caused event firing</param>
         /// <param name="e">NotifyCollectionChanged arguments</param>
-        private void FullEventDrivenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FullEventDrivenCollectionChanged(object sender,
+            NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
@@ -51,7 +52,7 @@ namespace CircutApp
         {
             NotifyCollectionChangedEventArgs args = 
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace,
-                sender, sender, IndexOf((T)sender));
+                sender, sender, IndexOf((ISegment)sender));
             OnCollectionChanged(args);
         }
     }

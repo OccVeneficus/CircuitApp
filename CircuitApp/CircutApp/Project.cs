@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CircutApp
 {
@@ -19,12 +15,12 @@ namespace CircutApp
         /// <summary>
         /// All added frequencies
         /// </summary>
-        public List<double> Frequencies { get; set; } 
+        public List<List<double>> Frequencies { get; set; } 
         
         /// <summary>
         /// All calculated impedance
         /// </summary>
-        public List<Complex> ImpedanceZ { get; set; } 
+        public List<List<Complex>> ImpedanceZ { get; set; } 
 
         /// <summary>
         /// Constructor
@@ -32,8 +28,8 @@ namespace CircutApp
         public Project()
         {
             Circuits = new List<Circuit>();
-            Frequencies = new List<double>();
-            ImpedanceZ = new List<Complex>();
+            Frequencies = new List<List<double>>();
+            ImpedanceZ = new List<List<Complex>>();
         }
     }
 }

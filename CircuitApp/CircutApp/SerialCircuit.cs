@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -16,17 +15,18 @@ namespace CircutApp
                     current + segment.CalculateZ(frequency));
         }
 
-        public EventDrivenCollection<ISegment> SubSegments { get; set; }
+        public EventDrivenCollection SubSegments { get; set; }
 
         public SerialCircuit()
         {
-            SubSegments = new EventDrivenCollection<ISegment>();
+            SubSegments = new EventDrivenCollection();
             SubSegments.CollectionChanged += OnCollectionChanged;
         }
 
         private void OnCollectionChanged(object sender, EventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+            PropertyChanged?.Invoke(this, 
+                new PropertyChangedEventArgs(string.Empty));
         }
     }
 }

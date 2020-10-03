@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Numerics;
 
@@ -12,9 +11,23 @@ namespace CircutApp
     /// </summary>
     public class Circuit
     {
-        public EventDrivenCollection<ISegment> SubSegments { get; set; }
+        public EventDrivenCollection SubSegments { get; set; }
 
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (value == "" || value.Length > 40)
+                {
+                    throw new ArgumentException("Value is empty or have more than 40" +
+                                                " characters");
+                }
+
+                _name = value;
+            }
+        }
 
         /// <summary>
         /// Event that fires whenever Elements changed
@@ -35,11 +48,11 @@ namespace CircutApp
 
         public Circuit()
         {
-            SubSegments = new EventDrivenCollection<ISegment>();
+            SubSegments = new EventDrivenCollection();
             SubSegments.CollectionChanged += OnCollectionChanged;
         }
 
-        private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CircuitChanged?.Invoke(this, e);
         }
