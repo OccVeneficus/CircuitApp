@@ -7,7 +7,7 @@ namespace CircutApp
     public abstract class Element : IElement
     {
 
-        public EventDrivenCollection SubSegments { get; }
+        public EventDrivenCollection SubSegments { get; } = null;
 
         public string Name { get; set; }
 
