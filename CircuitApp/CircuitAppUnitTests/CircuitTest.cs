@@ -16,6 +16,15 @@ namespace CircuitAppUnitTests
             _circuit = new Circuit();
         }
 
+        [Test(Description = "Test circuit name property get")]
+        public void TestCircuitName_PositiveGetSet()
+        {
+            InitiateCircuit();
+            string expected = "Test";
+            _circuit.Name = "Test";
+            Assert.AreEqual(expected,_circuit.Name,"Returned wrong value");
+        }
+
         [TestCase("", "Exception expected when name is empty string",
             TestName = "Set empty string as circuit name")]
         [TestCase("test-test-test-test-test-test-test-test-test-test",

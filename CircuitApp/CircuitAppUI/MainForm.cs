@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Numerics;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace CircuitAppUI
@@ -20,9 +19,7 @@ namespace CircuitAppUI
             Initialize();
             Test();
             BindDataSources();
-            circuitElementsTreeView.Nodes.Add(new TreeNode(){Tag = _project.Circuits[0], Text = @"Circuit1"});
-            BuildTree(circuitElementsTreeView.Nodes[0], _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0]);
-            circuitElementsTreeView.ExpandAll();
+            ReBuildTree();
         }
 
         private void Test()
@@ -34,6 +31,7 @@ namespace CircuitAppUI
             s0.SubSegments[1].SubSegments.Add(new Resistor(){Name = "R1", Value = 0.002});
             s0.SubSegments[1].SubSegments.Add(new Inductor(){ Name = "L2", Value = 0.012});
             _project.Circuits[0].SubSegments.Add(s0);
+
             _project.Circuits.Add(new Circuit() { Name = "Circuit2" });
             SerialCircuit s1 = new SerialCircuit();
             ParallelCircuit p1 = new ParallelCircuit();
@@ -47,17 +45,28 @@ namespace CircuitAppUI
             s1.SubSegments.Add(new Resistor(){Name = "R0033",Value = 5});
             s1.SubSegments.Add(p2);
             _project.Circuits[1].SubSegments.Add(s1);
+
             _project.Circuits.Add(new Circuit() { Name = "Circuit3" });
             _project.Circuits[2].SubSegments.Add(new SerialCircuit());
-            _project.Circuits[2].SubSegments[0].SubSegments.Add(new Resistor(){Name = "R33",Value = 10});
+            _project.Circuits[2].SubSegments[0].SubSegments.Add(new Resistor(){Name = "R33"
+                ,Value = 10});
             _project.Circuits[2].SubSegments[0].SubSegments.Add(new ParallelCircuit());
-            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor() { Name = "R34", Value = 10 });
-            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor() { Name = "R35", Value = 10 });
+            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor()
+                { Name = "R34", Value = 10 });
+            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor()
+                { Name = "R35", Value = 10 });
+
             _project.Circuits.Add(new Circuit() { Name = "Circuit4" });
+            _project.Circuits[3].SubSegments.Add(new Resistor(){Name = "R1", Value = 30.0});
+            _project.Circuits[3].SubSegments.Add(new Resistor() { Name = "R2", Value = 40.0 });
+
+
             _project.Circuits.Add(new Circuit() { Name = "Circuit5" });
             for (int i = 0; i < 5; i++)
             {
-                _project.ImpedanceZ[i].AddRange(_project.Circuits[i].CalculateZ(_project.Frequencies[i]));
+                _project.ImpedanceZ[i].AddRange(_project.Circuits[i].CalculateZ
+                    (_project.Frequencies[i]));
+                _project.Circuits[i].CircuitChanged += Circuit_SegmentChanged;
             }
         }
 
@@ -95,7 +104,10 @@ namespace CircuitAppUI
 
         private void Circuit_SegmentChanged(object sender, EventArgs e)
         {
-
+            _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
+                _project.Circuits[circuitsComboBox.SelectedIndex]
+                    .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
+            ReBindDataSources();
         }
 
         private void frequenciesListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -116,11 +128,7 @@ namespace CircuitAppUI
             }
 
             ReBindDataSources();
-            circuitElementsTreeView.Nodes.Clear();
-            circuitElementsTreeView.Nodes.Add(new TreeNode());
-            circuitElementsTreeView.Nodes[0].Text = _project.Circuits[circuitsComboBox.SelectedIndex].Name;
-            BuildTree(circuitElementsTreeView.Nodes[0],_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0]);
-            circuitElementsTreeView.ExpandAll();
+            ReBuildTree();
         }
 
         private void ReBindDataSources()
@@ -133,6 +141,14 @@ namespace CircuitAppUI
             impedancesListBox.DataSource = _project.ImpedanceZ[circuitsComboBox.SelectedIndex];
             frequenciesListBox.SelectedIndexChanged += frequenciesListBox_SelectedIndexChanged;
             impedancesListBox.SelectedIndexChanged += impedancesListBox_SelectedIndexChanged;
+        }
+
+        private void PopulateTree(TreeNode currentNode, EventDrivenCollection subSegments)
+        {
+            foreach (var segment in subSegments)
+            {
+               BuildTree(currentNode,segment);
+            }
         }
 
         private void BuildTree(TreeNode currentNode, ISegment segment)
@@ -169,6 +185,19 @@ namespace CircuitAppUI
             }
         }
 
+        private void ReBuildTree()
+        {
+            circuitElementsTreeView.Nodes.Clear();
+            circuitElementsTreeView.Nodes.Add(new TreeNode()
+            { 
+                Tag = _project.Circuits[circuitsComboBox.SelectedIndex],
+                Text = ((Circuit)circuitsComboBox.SelectedItem).Name
+            });
+            PopulateTree(circuitElementsTreeView.Nodes[0],
+                _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments);
+            circuitElementsTreeView.ExpandAll();
+        }
+
         private void frequencyInputTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
@@ -185,7 +214,8 @@ namespace CircuitAppUI
 
         private void addFrequencyButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(frequencyImputTextBox.Text) || !double.TryParse(frequencyImputTextBox.Text, out _))
+            if (string.IsNullOrWhiteSpace(frequencyImputTextBox.Text) || 
+                !double.TryParse(frequencyImputTextBox.Text, out _))
             {
                 frequencyImputTextBox.BackColor = Color.LightCoral;
                 MessageBox.Show(@"You can't add empty space or strings to frequencies.",
@@ -193,7 +223,8 @@ namespace CircuitAppUI
             }
             else
             {
-                _project.Frequencies[circuitsComboBox.SelectedIndex].Add(Convert.ToDouble(frequencyImputTextBox.Text));
+                _project.Frequencies[circuitsComboBox.SelectedIndex].Add
+                    (Convert.ToDouble(frequencyImputTextBox.Text));
                 frequencyImputTextBox.BackColor = Color.White;
                 frequencyImputTextBox.Clear();
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
@@ -232,7 +263,7 @@ namespace CircuitAppUI
                     }
                     break;
                 }
-                case SerialCircuit s:
+                case SerialCircuit _:
                 {
                     elementTypeTextBox.Text = @"Serial segment";
                     elementTypeTextBox.Text = @"";
@@ -259,7 +290,8 @@ namespace CircuitAppUI
             }
             _project.Frequencies[circuitsComboBox.SelectedIndex].Remove
                 (Convert.ToDouble(frequenciesListBox.SelectedItem));
-            _project.ImpedanceZ[circuitsComboBox.SelectedIndex].Remove((Complex)impedancesListBox.SelectedItem);
+            _project.ImpedanceZ[circuitsComboBox.SelectedIndex].Remove
+                ((Complex)impedancesListBox.SelectedItem);
             frequenciesListBox.SelectedIndex = 0;
             ReBindDataSources();
         }
@@ -288,39 +320,74 @@ namespace CircuitAppUI
             Point targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = circuitElementsTreeView.GetNodeAt(targetPoint);
             TreeNode draggedNode = (TreeNode) e.Data.GetData(typeof(TreeNode));
-            TreeNode parent = draggedNode.Parent;
+            TreeNode draggedNodeParent = draggedNode.Parent;
+            TreeNode targetNodeParent = targetNode.Parent;
+            
             if (!draggedNode.Equals(targetNode) && !ContainsNode(draggedNode, targetNode))
             {
                 if (e.Effect == DragDropEffects.Move)
                 {
-                    (parent.Tag as ISegment).SubSegments.Remove(draggedNode.Tag as ISegment);
+                    if (targetNode.Tag is Element)
+                    {
+                        ChooseConnectionTypeForm form = new ChooseConnectionTypeForm();
+                        form.ShowDialog();
+                        if (form.DialogResult == DialogResult.OK)
+                        {
+
+                        }
+                        else if (form.DialogResult == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+                    }
+                    if (draggedNodeParent.Tag is ISegment s)
+                    {
+                        s.SubSegments.Remove(draggedNode.Tag as ISegment);
+                    }
+                    else if (draggedNodeParent.Tag is Circuit c)
+                    {
+                        c.SubSegments.Remove(draggedNode.Tag as ISegment);
+                    }
                     draggedNode.Remove();
                     targetNode.Nodes.Add(draggedNode);
-                    ((ISegment)targetNode.Tag).SubSegments.Add((ISegment)draggedNode.Tag);
                 }
                 else if (e.Effect == DragDropEffects.Copy)
                 {
                     targetNode.Nodes.Add((TreeNode) draggedNode.Clone());
                 }
-                targetNode.Expand();
-                if ((parent.Tag is SerialCircuit || parent.Tag is ParallelCircuit) &&
-                    parent.Nodes.Count == 0)
+
+                if (targetNode.Tag is ISegment segment)
                 {
-                    parent.Remove();
-                    RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0],
-                        parent.Tag as ISegment);
+                    segment.SubSegments.Add((ISegment)draggedNode.Tag);
                 }
+                else if (targetNode.Tag is Circuit circuit)
+                {
+                    circuit.SubSegments.Add((ISegment)draggedNode.Tag);
+                }
+
+                if ((draggedNodeParent.Tag is SerialCircuit || draggedNodeParent.Tag is ParallelCircuit)
+                    && draggedNodeParent.Nodes.Count == 0)
+                {
+                    draggedNodeParent.Remove();
+                    RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                        draggedNodeParent.Tag as ISegment);
+                }
+                targetNode.Expand();
             }
         }
 
-        private void RecursiveRemove(ISegment segment, ISegment toDelete)
+        private void RecursiveRemove(EventDrivenCollection subSegments, ISegment toDelete)
         {
-            bool isDeleted = segment.SubSegments.Remove(toDelete);
-            if (!isDeleted && segment.SubSegments != null)
+            if (subSegments == null)
             {
-                foreach (var s in segment.SubSegments)
+                return;
+            }
+            bool isDeleted = subSegments.Remove(toDelete);
+            if (!isDeleted)
+            {
+                foreach (var s in subSegments)
                 {
-                    RecursiveRemove(s,toDelete);
+                    RecursiveRemove(s.SubSegments,toDelete);
                 }
             }
         }
@@ -343,6 +410,41 @@ namespace CircuitAppUI
         private void circuitElementsTreeView_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = e.AllowedEffect;
+        }
+
+        private void removeElementButton_Click(object sender, EventArgs e)
+        {
+            if (circuitElementsTreeView.SelectedNode.Tag is ISegment &&
+                MessageBox.Show(@"Are you sure you want to permanently delete selected item?",
+                    @"Delete segment", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                    circuitElementsTreeView.SelectedNode.Tag as ISegment);
+                circuitElementsTreeView.Nodes.Remove(circuitElementsTreeView.SelectedNode);
+            }
+            else if (circuitElementsTreeView.SelectedNode.Tag is Circuit)
+            {
+                deleteCircuitButton_Click(this,e);
+            }
+        }
+
+        private void deleteCircuitButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(@"You sure you want to permanently delete selected circuit?",
+                @"Delete circuit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                _project.Circuits.RemoveAt(circuitsComboBox.SelectedIndex);
+                _project.ImpedanceZ.RemoveAt(circuitsComboBox.SelectedIndex);
+                _project.Frequencies.RemoveAt(circuitsComboBox.SelectedIndex);
+                circuitElementsTreeView.Nodes.Clear();
+                circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
+                circuitsComboBox.DataSource = null;
+                circuitsComboBox.DataSource = _project.Circuits;
+                circuitsComboBox.DisplayMember = "Name";
+                circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
+                ReBindDataSources();
+                ReBuildTree();
+            }
         }
     }
 }

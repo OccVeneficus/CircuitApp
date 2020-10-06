@@ -47,7 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="circuitElementsTreeView\SelectedNode.cs" />
+    <Compile Include="AddEditElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEditElement.Designer.cs">
+      <DependentUpon>AddEditElement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseConnectionTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseConnectionTypeForm.Designer.cs">
+      <DependentUpon>ChooseConnectionTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +67,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddEditElement.resx">
+      <DependentUpon>AddEditElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChooseConnectionTypeForm.resx">
+      <DependentUpon>ChooseConnectionTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

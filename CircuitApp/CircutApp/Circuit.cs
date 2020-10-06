@@ -41,9 +41,17 @@ namespace CircutApp
         /// <returns></returns>
         public List<Complex> CalculateZ(List<double> frequencies)
         {
-            return (from frequency in frequencies
-                    from subSegment in SubSegments 
-                    select subSegment.CalculateZ(frequency)).ToList();
+            List<Complex> result = new List<Complex>();
+            foreach (var frequency in frequencies)
+            {
+                Complex segmentResult = new Complex();
+                foreach (var segment in SubSegments)
+                {
+                    segmentResult += segment.CalculateZ(frequency);
+                }
+                result.Add(segmentResult);
+            }
+            return result;
         }
 
         public Circuit()

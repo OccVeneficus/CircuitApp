@@ -30,12 +30,25 @@
         {
             this.components = new System.ComponentModel.Container();
             this.circuitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.removeElementButton = new System.Windows.Forms.Button();
+            this.editElementButton = new System.Windows.Forms.Button();
+            this.addElementButton = new System.Windows.Forms.Button();
+            this.selectedElementLabel = new System.Windows.Forms.Label();
+            this.typeLabel = new System.Windows.Forms.Label();
+            this.valueLabel = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.elementTypeTextBox = new System.Windows.Forms.TextBox();
+            this.elementValueTextBox = new System.Windows.Forms.TextBox();
+            this.elementNameTextBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.addFrequencyButton = new System.Windows.Forms.Button();
+            this.deleteFrequencyButton = new System.Windows.Forms.Button();
             this.frequencyLabel = new System.Windows.Forms.Label();
             this.frequencyImputTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -47,6 +60,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.addSegmentButton = new System.Windows.Forms.Button();
             this.editCircuitButton = new System.Windows.Forms.Button();
             this.deleteCircuitButton = new System.Windows.Forms.Button();
             this.addCircuitButton = new System.Windows.Forms.Button();
@@ -54,22 +68,10 @@
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.deleteFrequencyButton = new System.Windows.Forms.Button();
-            this.addFrequencyButton = new System.Windows.Forms.Button();
-            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.serialCircuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.circuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.elementNameTextBox = new System.Windows.Forms.TextBox();
-            this.elementValueTextBox = new System.Windows.Forms.TextBox();
-            this.elementTypeTextBox = new System.Windows.Forms.TextBox();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.valueLabel = new System.Windows.Forms.Label();
-            this.typeLabel = new System.Windows.Forms.Label();
-            this.selectedElementLabel = new System.Windows.Forms.Label();
-            this.addElementButton = new System.Windows.Forms.Button();
-            this.editElementButton = new System.Windows.Forms.Button();
-            this.removeElementButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -85,7 +87,6 @@
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -94,6 +95,10 @@
             // 
             this.circuitsBindingSource.DataMember = "Circuits";
             this.circuitsBindingSource.DataSource = this.projectBindingSource;
+            // 
+            // projectBindingSource
+            // 
+            this.projectBindingSource.DataSource = typeof(CircutApp.Project);
             // 
             // tableLayoutPanel1
             // 
@@ -157,6 +162,104 @@
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             // 
+            // removeElementButton
+            // 
+            this.removeElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.removeElementButton.Location = new System.Drawing.Point(272, 133);
+            this.removeElementButton.Name = "removeElementButton";
+            this.removeElementButton.Size = new System.Drawing.Size(150, 39);
+            this.removeElementButton.TabIndex = 9;
+            this.removeElementButton.Text = "Remove";
+            this.removeElementButton.UseVisualStyleBackColor = true;
+            this.removeElementButton.Click += new System.EventHandler(this.removeElementButton_Click);
+            // 
+            // editElementButton
+            // 
+            this.editElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.editElementButton.Location = new System.Drawing.Point(272, 89);
+            this.editElementButton.Name = "editElementButton";
+            this.editElementButton.Size = new System.Drawing.Size(150, 38);
+            this.editElementButton.TabIndex = 8;
+            this.editElementButton.Text = "Edit";
+            this.editElementButton.UseVisualStyleBackColor = true;
+            // 
+            // addElementButton
+            // 
+            this.addElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.addElementButton.Location = new System.Drawing.Point(272, 44);
+            this.addElementButton.Name = "addElementButton";
+            this.addElementButton.Size = new System.Drawing.Size(150, 39);
+            this.addElementButton.TabIndex = 7;
+            this.addElementButton.Text = "Add element";
+            this.addElementButton.UseVisualStyleBackColor = true;
+            // 
+            // selectedElementLabel
+            // 
+            this.selectedElementLabel.AutoSize = true;
+            this.selectedElementLabel.Location = new System.Drawing.Point(64, 21);
+            this.selectedElementLabel.Name = "selectedElementLabel";
+            this.selectedElementLabel.Size = new System.Drawing.Size(121, 17);
+            this.selectedElementLabel.TabIndex = 6;
+            this.selectedElementLabel.Text = "Selected element:";
+            // 
+            // typeLabel
+            // 
+            this.typeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.typeLabel.AutoSize = true;
+            this.typeLabel.Location = new System.Drawing.Point(37, 142);
+            this.typeLabel.Name = "typeLabel";
+            this.typeLabel.Size = new System.Drawing.Size(44, 17);
+            this.typeLabel.TabIndex = 5;
+            this.typeLabel.Text = "Type:";
+            // 
+            // valueLabel
+            // 
+            this.valueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.valueLabel.AutoSize = true;
+            this.valueLabel.Location = new System.Drawing.Point(37, 102);
+            this.valueLabel.Name = "valueLabel";
+            this.valueLabel.Size = new System.Drawing.Size(48, 17);
+            this.valueLabel.TabIndex = 4;
+            this.valueLabel.Text = "Value:";
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(37, 62);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(49, 17);
+            this.nameLabel.TabIndex = 3;
+            this.nameLabel.Text = "Name:";
+            // 
+            // elementTypeTextBox
+            // 
+            this.elementTypeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementTypeTextBox.Enabled = false;
+            this.elementTypeTextBox.Location = new System.Drawing.Point(90, 139);
+            this.elementTypeTextBox.Name = "elementTypeTextBox";
+            this.elementTypeTextBox.Size = new System.Drawing.Size(155, 22);
+            this.elementTypeTextBox.TabIndex = 2;
+            // 
+            // elementValueTextBox
+            // 
+            this.elementValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementValueTextBox.Enabled = false;
+            this.elementValueTextBox.Location = new System.Drawing.Point(90, 99);
+            this.elementValueTextBox.Name = "elementValueTextBox";
+            this.elementValueTextBox.Size = new System.Drawing.Size(155, 22);
+            this.elementValueTextBox.TabIndex = 1;
+            // 
+            // elementNameTextBox
+            // 
+            this.elementNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementNameTextBox.Enabled = false;
+            this.elementNameTextBox.Location = new System.Drawing.Point(90, 59);
+            this.elementNameTextBox.MaxLength = 40;
+            this.elementNameTextBox.Name = "elementNameTextBox";
+            this.elementNameTextBox.Size = new System.Drawing.Size(155, 22);
+            this.elementNameTextBox.TabIndex = 0;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.groupBox3);
@@ -179,6 +282,28 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
+            // addFrequencyButton
+            // 
+            this.addFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.addFrequencyButton.Location = new System.Drawing.Point(48, 78);
+            this.addFrequencyButton.Name = "addFrequencyButton";
+            this.addFrequencyButton.Size = new System.Drawing.Size(204, 38);
+            this.addFrequencyButton.TabIndex = 4;
+            this.addFrequencyButton.Text = "Add";
+            this.addFrequencyButton.UseVisualStyleBackColor = true;
+            this.addFrequencyButton.Click += new System.EventHandler(this.addFrequencyButton_Click);
+            // 
+            // deleteFrequencyButton
+            // 
+            this.deleteFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleteFrequencyButton.Location = new System.Drawing.Point(48, 134);
+            this.deleteFrequencyButton.Name = "deleteFrequencyButton";
+            this.deleteFrequencyButton.Size = new System.Drawing.Size(204, 38);
+            this.deleteFrequencyButton.TabIndex = 3;
+            this.deleteFrequencyButton.Text = "Delete";
+            this.deleteFrequencyButton.UseVisualStyleBackColor = true;
+            this.deleteFrequencyButton.Click += new System.EventHandler(this.deleteFrequencyButton_Click);
+            // 
             // frequencyLabel
             // 
             this.frequencyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -196,6 +321,7 @@
             this.frequencyImputTextBox.Name = "frequencyImputTextBox";
             this.frequencyImputTextBox.Size = new System.Drawing.Size(122, 22);
             this.frequencyImputTextBox.TabIndex = 0;
+            this.frequencyImputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
             // 
             // panel4
             // 
@@ -289,6 +415,7 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.addSegmentButton);
             this.panel6.Controls.Add(this.editCircuitButton);
             this.panel6.Controls.Add(this.deleteCircuitButton);
             this.panel6.Controls.Add(this.addCircuitButton);
@@ -300,12 +427,22 @@
             this.panel6.Size = new System.Drawing.Size(331, 477);
             this.panel6.TabIndex = 0;
             // 
+            // addSegmentButton
+            // 
+            this.addSegmentButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.addSegmentButton.Location = new System.Drawing.Point(249, 431);
+            this.addSegmentButton.Name = "addSegmentButton";
+            this.addSegmentButton.Size = new System.Drawing.Size(79, 43);
+            this.addSegmentButton.TabIndex = 5;
+            this.addSegmentButton.Text = "Add segment";
+            this.addSegmentButton.UseVisualStyleBackColor = true;
+            // 
             // editCircuitButton
             // 
             this.editCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editCircuitButton.Location = new System.Drawing.Point(203, 442);
+            this.editCircuitButton.Location = new System.Drawing.Point(176, 431);
             this.editCircuitButton.Name = "editCircuitButton";
-            this.editCircuitButton.Size = new System.Drawing.Size(67, 32);
+            this.editCircuitButton.Size = new System.Drawing.Size(67, 43);
             this.editCircuitButton.TabIndex = 4;
             this.editCircuitButton.Text = "Edit";
             this.editCircuitButton.UseVisualStyleBackColor = true;
@@ -313,21 +450,22 @@
             // deleteCircuitButton
             // 
             this.deleteCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.deleteCircuitButton.Location = new System.Drawing.Point(126, 442);
+            this.deleteCircuitButton.Location = new System.Drawing.Point(99, 431);
             this.deleteCircuitButton.Name = "deleteCircuitButton";
-            this.deleteCircuitButton.Size = new System.Drawing.Size(71, 32);
+            this.deleteCircuitButton.Size = new System.Drawing.Size(71, 43);
             this.deleteCircuitButton.TabIndex = 3;
             this.deleteCircuitButton.Text = "Delete";
             this.deleteCircuitButton.UseVisualStyleBackColor = true;
+            this.deleteCircuitButton.Click += new System.EventHandler(this.deleteCircuitButton_Click);
             // 
             // addCircuitButton
             // 
             this.addCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addCircuitButton.Location = new System.Drawing.Point(49, 442);
+            this.addCircuitButton.Location = new System.Drawing.Point(3, 431);
             this.addCircuitButton.Name = "addCircuitButton";
-            this.addCircuitButton.Size = new System.Drawing.Size(71, 32);
+            this.addCircuitButton.Size = new System.Drawing.Size(90, 43);
             this.addCircuitButton.TabIndex = 2;
-            this.addCircuitButton.Text = "Add";
+            this.addCircuitButton.Text = "Add circuit";
             this.addCircuitButton.UseVisualStyleBackColor = true;
             // 
             // circuitElementsTreeView
@@ -337,7 +475,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.circuitElementsTreeView.Location = new System.Drawing.Point(3, 36);
             this.circuitElementsTreeView.Name = "circuitElementsTreeView";
-            this.circuitElementsTreeView.Size = new System.Drawing.Size(325, 400);
+            this.circuitElementsTreeView.Size = new System.Drawing.Size(325, 389);
             this.circuitElementsTreeView.TabIndex = 1;
             this.circuitElementsTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.circuitElementsTreeView_ItemDrag);
             this.circuitElementsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.circuitElementsTreeView_AfterSelect);
@@ -373,32 +511,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // deleteFrequencyButton
-            // 
-            this.deleteFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.deleteFrequencyButton.Location = new System.Drawing.Point(48, 134);
-            this.deleteFrequencyButton.Name = "deleteFrequencyButton";
-            this.deleteFrequencyButton.Size = new System.Drawing.Size(204, 38);
-            this.deleteFrequencyButton.TabIndex = 3;
-            this.deleteFrequencyButton.Text = "Delete";
-            this.deleteFrequencyButton.UseVisualStyleBackColor = true;
-            this.deleteFrequencyButton.Click += new System.EventHandler(this.deleteFrequencyButton_Click);
-            // 
-            // addFrequencyButton
-            // 
-            this.addFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.addFrequencyButton.Location = new System.Drawing.Point(48, 78);
-            this.addFrequencyButton.Name = "addFrequencyButton";
-            this.addFrequencyButton.Size = new System.Drawing.Size(204, 38);
-            this.addFrequencyButton.TabIndex = 4;
-            this.addFrequencyButton.Text = "Add";
-            this.addFrequencyButton.UseVisualStyleBackColor = true;
-            this.addFrequencyButton.Click += new System.EventHandler(this.addFrequencyButton_Click);
-            // 
-            // projectBindingSource
-            // 
-            this.projectBindingSource.DataSource = typeof(CircutApp.Project);
-            // 
             // serialCircuitBindingSource
             // 
             this.serialCircuitBindingSource.DataSource = typeof(CircutApp.SerialCircuit);
@@ -406,94 +518,6 @@
             // circuitBindingSource
             // 
             this.circuitBindingSource.DataSource = typeof(CircutApp.Circuit);
-            // 
-            // elementNameTextBox
-            // 
-            this.elementNameTextBox.Enabled = false;
-            this.elementNameTextBox.Location = new System.Drawing.Point(99, 54);
-            this.elementNameTextBox.MaxLength = 40;
-            this.elementNameTextBox.Name = "elementNameTextBox";
-            this.elementNameTextBox.Size = new System.Drawing.Size(128, 22);
-            this.elementNameTextBox.TabIndex = 0;
-            // 
-            // elementValueTextBox
-            // 
-            this.elementValueTextBox.Enabled = false;
-            this.elementValueTextBox.Location = new System.Drawing.Point(99, 94);
-            this.elementValueTextBox.Name = "elementValueTextBox";
-            this.elementValueTextBox.Size = new System.Drawing.Size(128, 22);
-            this.elementValueTextBox.TabIndex = 1;
-            // 
-            // elementTypeTextBox
-            // 
-            this.elementTypeTextBox.Enabled = false;
-            this.elementTypeTextBox.Location = new System.Drawing.Point(99, 134);
-            this.elementTypeTextBox.Name = "elementTypeTextBox";
-            this.elementTypeTextBox.Size = new System.Drawing.Size(128, 22);
-            this.elementTypeTextBox.TabIndex = 2;
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(46, 57);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(49, 17);
-            this.nameLabel.TabIndex = 3;
-            this.nameLabel.Text = "Name:";
-            // 
-            // valueLabel
-            // 
-            this.valueLabel.AutoSize = true;
-            this.valueLabel.Location = new System.Drawing.Point(46, 97);
-            this.valueLabel.Name = "valueLabel";
-            this.valueLabel.Size = new System.Drawing.Size(48, 17);
-            this.valueLabel.TabIndex = 4;
-            this.valueLabel.Text = "Value:";
-            // 
-            // typeLabel
-            // 
-            this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(46, 137);
-            this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(44, 17);
-            this.typeLabel.TabIndex = 5;
-            this.typeLabel.Text = "Type:";
-            // 
-            // selectedElementLabel
-            // 
-            this.selectedElementLabel.AutoSize = true;
-            this.selectedElementLabel.Location = new System.Drawing.Point(64, 21);
-            this.selectedElementLabel.Name = "selectedElementLabel";
-            this.selectedElementLabel.Size = new System.Drawing.Size(121, 17);
-            this.selectedElementLabel.TabIndex = 6;
-            this.selectedElementLabel.Text = "Selected element:";
-            // 
-            // addElementButton
-            // 
-            this.addElementButton.Location = new System.Drawing.Point(275, 49);
-            this.addElementButton.Name = "addElementButton";
-            this.addElementButton.Size = new System.Drawing.Size(152, 32);
-            this.addElementButton.TabIndex = 7;
-            this.addElementButton.Text = "Add";
-            this.addElementButton.UseVisualStyleBackColor = true;
-            // 
-            // editElementButton
-            // 
-            this.editElementButton.Location = new System.Drawing.Point(275, 87);
-            this.editElementButton.Name = "editElementButton";
-            this.editElementButton.Size = new System.Drawing.Size(152, 31);
-            this.editElementButton.TabIndex = 8;
-            this.editElementButton.Text = "Edit";
-            this.editElementButton.UseVisualStyleBackColor = true;
-            // 
-            // removeElementButton
-            // 
-            this.removeElementButton.Location = new System.Drawing.Point(275, 124);
-            this.removeElementButton.Name = "removeElementButton";
-            this.removeElementButton.Size = new System.Drawing.Size(152, 32);
-            this.removeElementButton.TabIndex = 9;
-            this.removeElementButton.Text = "Remove";
-            this.removeElementButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -504,6 +528,7 @@
             this.Name = "MainForm";
             this.Text = "CircuitApp";
             ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -521,7 +546,6 @@
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -569,6 +593,7 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.TextBox elementTypeTextBox;
         private System.Windows.Forms.TextBox elementValueTextBox;
+        private System.Windows.Forms.Button addSegmentButton;
     }
 }
 
