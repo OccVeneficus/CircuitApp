@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.circuitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -68,10 +67,10 @@
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.serialCircuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.circuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -87,6 +86,7 @@
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -95,10 +95,6 @@
             // 
             this.circuitsBindingSource.DataMember = "Circuits";
             this.circuitsBindingSource.DataSource = this.projectBindingSource;
-            // 
-            // projectBindingSource
-            // 
-            this.projectBindingSource.DataSource = typeof(CircutApp.Project);
             // 
             // tableLayoutPanel1
             // 
@@ -182,6 +178,7 @@
             this.editElementButton.TabIndex = 8;
             this.editElementButton.Text = "Edit";
             this.editElementButton.UseVisualStyleBackColor = true;
+            this.editElementButton.Click += new System.EventHandler(this.editElementButton_Click);
             // 
             // addElementButton
             // 
@@ -192,6 +189,7 @@
             this.addElementButton.TabIndex = 7;
             this.addElementButton.Text = "Add element";
             this.addElementButton.UseVisualStyleBackColor = true;
+            this.addElementButton.Click += new System.EventHandler(this.addElementButton_Click);
             // 
             // selectedElementLabel
             // 
@@ -436,6 +434,7 @@
             this.addSegmentButton.TabIndex = 5;
             this.addSegmentButton.Text = "Add segment";
             this.addSegmentButton.UseVisualStyleBackColor = true;
+            this.addSegmentButton.Click += new System.EventHandler(this.addSegmentButton_Click);
             // 
             // editCircuitButton
             // 
@@ -511,6 +510,10 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // projectBindingSource
+            // 
+            this.projectBindingSource.DataSource = typeof(CircutApp.Project);
+            // 
             // serialCircuitBindingSource
             // 
             this.serialCircuitBindingSource.DataSource = typeof(CircutApp.SerialCircuit);
@@ -528,7 +531,6 @@
             this.Name = "MainForm";
             this.Text = "CircuitApp";
             ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -546,6 +548,7 @@
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).EndInit();
             this.ResumeLayout(false);

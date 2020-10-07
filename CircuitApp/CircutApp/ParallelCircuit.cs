@@ -15,6 +15,10 @@ namespace CircutApp
         {
             Complex result = SubSegments.Aggregate<ISegment, Complex>(0, (current,
                     segment) => current + 1 / segment.CalculateZ(frequency));
+            if (result.Equals(Complex.Zero))
+            {
+                return result;
+            }
             return 1/result;
         }
 
