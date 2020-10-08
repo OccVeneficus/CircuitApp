@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.parallelRadioButton = new System.Windows.Forms.RadioButton();
-            this.serialRadioButton = new System.Windows.Forms.RadioButton();
-            this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.okButton = new System.Windows.Forms.Button();
+            this.serialRadioButton = new System.Windows.Forms.RadioButton();
+            this.parallelRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,16 +50,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add segment as:";
             // 
-            // parallelRadioButton
+            // cancelButton
             // 
-            this.parallelRadioButton.AutoSize = true;
-            this.parallelRadioButton.Location = new System.Drawing.Point(69, 31);
-            this.parallelRadioButton.Name = "parallelRadioButton";
-            this.parallelRadioButton.Size = new System.Drawing.Size(150, 21);
-            this.parallelRadioButton.TabIndex = 0;
-            this.parallelRadioButton.TabStop = true;
-            this.parallelRadioButton.Text = "Parallel to choosen";
-            this.parallelRadioButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Location = new System.Drawing.Point(144, 97);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(63, 97);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(75, 23);
+            this.okButton.TabIndex = 2;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // serialRadioButton
             // 
@@ -72,25 +81,16 @@
             this.serialRadioButton.Text = "Serial to choosen";
             this.serialRadioButton.UseVisualStyleBackColor = true;
             // 
-            // okButton
+            // parallelRadioButton
             // 
-            this.okButton.Location = new System.Drawing.Point(63, 97);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 2;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Location = new System.Drawing.Point(144, 97);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.parallelRadioButton.AutoSize = true;
+            this.parallelRadioButton.Location = new System.Drawing.Point(69, 31);
+            this.parallelRadioButton.Name = "parallelRadioButton";
+            this.parallelRadioButton.Size = new System.Drawing.Size(150, 21);
+            this.parallelRadioButton.TabIndex = 0;
+            this.parallelRadioButton.TabStop = true;
+            this.parallelRadioButton.Text = "Parallel to choosen";
+            this.parallelRadioButton.UseVisualStyleBackColor = true;
             // 
             // ChooseConnectionTypeForm
             // 
@@ -103,6 +103,7 @@
             this.Name = "ChooseConnectionTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add as...";
+            this.Shown += new System.EventHandler(this.ChooseConnectionTypeForm_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

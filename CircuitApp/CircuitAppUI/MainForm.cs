@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -21,6 +22,7 @@ namespace CircuitAppUI
             Test();
             BindDataSources();
             ReBuildTree();
+            circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
         private void Test()
@@ -130,12 +132,18 @@ namespace CircuitAppUI
 
             ReBindDataSources();
             ReBuildTree();
+            circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
         private void ReBindDataSources()
         {
+            if (_project.Circuits.Count.Equals(0))
+            {
+                return;
+            }
             frequenciesListBox.SelectedIndexChanged -= frequenciesListBox_SelectedIndexChanged;
             impedancesListBox.SelectedIndexChanged -= impedancesListBox_SelectedIndexChanged;
+            frequenciesListBox.ClearSelected();
             frequenciesListBox.DataSource = null;
             impedancesListBox.DataSource = null;
             frequenciesListBox.DataSource = _project.Frequencies[circuitsComboBox.SelectedIndex];
@@ -202,12 +210,12 @@ namespace CircuitAppUI
         private void frequencyInputTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != ','))
+                (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
 
-            if ((e.KeyChar == ',') && (frequencyImputTextBox.Text.IndexOf(',') > -1))
+            if ((e.KeyChar == '.') && (frequencyImputTextBox.Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
@@ -216,7 +224,8 @@ namespace CircuitAppUI
         private void addFrequencyButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(frequencyImputTextBox.Text) || 
-                !double.TryParse(frequencyImputTextBox.Text, out _))
+                !double.TryParse(frequencyImputTextBox.Text, NumberStyles.Float,
+                    CultureInfo.InvariantCulture, out _))
             {
                 frequencyImputTextBox.BackColor = Color.LightCoral;
                 MessageBox.Show(@"You can't add empty space or strings to frequencies.",
@@ -225,7 +234,7 @@ namespace CircuitAppUI
             else
             {
                 _project.Frequencies[circuitsComboBox.SelectedIndex].Add
-                    (Convert.ToDouble(frequencyImputTextBox.Text));
+                    (Convert.ToDouble(frequencyImputTextBox.Text, CultureInfo.InvariantCulture));
                 frequencyImputTextBox.BackColor = Color.White;
                 frequencyImputTextBox.Clear();
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
@@ -361,6 +370,10 @@ namespace CircuitAppUI
         {
             Point targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = circuitElementsTreeView.GetNodeAt(targetPoint);
+            if (targetNode == null)
+            {
+                return;
+            }
             TreeNode draggedNode = (TreeNode) e.Data.GetData(typeof(TreeNode));
             TreeNode draggedNodeParent = draggedNode.Parent;
             TreeNode targetNodeParent = targetNode.Parent;
@@ -450,6 +463,12 @@ namespace CircuitAppUI
 
         private void removeElementButton_Click(object sender, EventArgs e)
         {
+            if (circuitElementsTreeView.SelectedNode.Equals(null))
+            {
+                MessageBox.Show(@"There is no items to delete",
+                    @"Empty", MessageBoxButtons.OK);
+                return;
+            }
             if (circuitElementsTreeView.SelectedNode.Tag is ISegment &&
                 MessageBox.Show(@"Are you sure you want to permanently delete selected item?",
                     @"Delete segment", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -466,6 +485,12 @@ namespace CircuitAppUI
 
         private void deleteCircuitButton_Click(object sender, EventArgs e)
         {
+            if (circuitsComboBox.Items.Equals(null))
+            {
+                MessageBox.Show(@"There is no items to delete",
+                    @"Empty", MessageBoxButtons.OK);
+                return;
+            }
             if (MessageBox.Show(@"You sure you want to permanently delete selected circuit?",
                 @"Delete circuit", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -489,7 +514,7 @@ namespace CircuitAppUI
 
         private void addElementButton_Click(object sender, EventArgs e)
         {
-            AddEditElement form = new AddEditElement();
+            AddEditElementForm form = new AddEditElementForm();
             form.ElementName = "";
             form.ElementValue = new double();
             form.ElementType = typeof(Resistor);
@@ -509,7 +534,7 @@ namespace CircuitAppUI
                 {
                     parallelSegment.SubSegments.Add(newElement as ISegment);
                 }
-                else if (circuitElementsTreeView.SelectedNode.Tag is ParallelCircuit serialSegment)
+                else if (circuitElementsTreeView.SelectedNode.Tag is SerialCircuit serialSegment)
                 {
                     serialSegment.SubSegments.Add(newElement as ISegment);
                 }
@@ -556,13 +581,161 @@ namespace CircuitAppUI
 
         private void editElementButton_Click(object sender, EventArgs e)
         {
-            AddEditElement addEditForm = new AddEditElement();
-            addEditForm.ElementType = circuitElementsTreeView.SelectedNode.Tag.GetType();
-            addEditForm.ElementName = elementNameTextBox.Text;
-            addEditForm.ShowDialog();
-            if (addEditForm.DialogResult == DialogResult.OK)
+            if (circuitElementsTreeView.SelectedNode.Tag is Element element)
+            {
+                AddEditElementForm addEditForm = new AddEditElementForm();
+                addEditForm.ElementType = element.GetType();
+                addEditForm.ElementName = element.Name;
+                addEditForm.ElementValue = element.Value;
+                addEditForm.ShowDialog();
+                if (addEditForm.DialogResult == DialogResult.OK)
+                {
+                    var editElement = Activator.CreateInstance(addEditForm.ElementType);
+                    ((Element) editElement).Value = addEditForm.ElementValue;
+                    ((Element) editElement).Name = addEditForm.ElementName;
+                    circuitElementsTreeView.SelectedNode.Tag = editElement;
+                    ReplaceElement(circuitElementsTreeView.SelectedNode,
+                        _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                        editElement as ISegment);
+                }
+            }
+            else if (circuitElementsTreeView.SelectedNode.Tag is SerialCircuit serial)
+            {
+                ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm
+                {
+                    Type = serial
+                };
+                chooseConnectionForm.ShowDialog();
+                if (chooseConnectionForm.DialogResult == DialogResult.OK)
+                {
+                    if (chooseConnectionForm.Type is ParallelCircuit parallelSegment)
+                    {
+                        parallelSegment.SubSegments = serial.SubSegments;
+                        ReplaceElement(circuitElementsTreeView.SelectedNode,
+                            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                            parallelSegment);
+                    }
+                }
+            }
+            else if (circuitElementsTreeView.SelectedNode.Tag is ParallelCircuit parallel)
             {
 
+                ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm
+                {
+                    Type = parallel
+                };
+                chooseConnectionForm.ShowDialog();
+                if (chooseConnectionForm.DialogResult == DialogResult.OK)
+                {
+                    if (chooseConnectionForm.Type is SerialCircuit parallelSegment)
+                    {
+                        parallelSegment.SubSegments = parallel.SubSegments;
+                        ReplaceElement(circuitElementsTreeView.SelectedNode,
+                            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                            parallelSegment);
+                    }
+
+                }
+            }
+            else if (circuitElementsTreeView.SelectedNode.Tag is Circuit)
+            {
+                editCircuitButton_Click(sender,e);
+            }
+        }
+
+        private (List<int>, ISegment) FindPath(TreeNode currentNode,
+            EventDrivenCollection currentSegment)
+        {
+            var path = new List<int>();
+            while (currentNode.Parent != null)
+            {
+                path.Insert(0, currentNode.Index);
+                currentNode = currentNode.Parent;
+            }
+
+            ISegment segment = currentSegment[path[0]];
+
+            foreach (var index in path.Skip(1))
+            {
+                segment = segment.SubSegments[index];
+            }
+
+            return (path, segment);
+        }
+
+        private void ChooseTreeNodeAfterReplace(List<int> path)
+        {
+            ReBuildTree();
+            circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0].Nodes[path[0]];
+            foreach (var index in path.Skip(1))
+            {
+                circuitElementsTreeView.SelectedNode =
+                    circuitElementsTreeView.SelectedNode.Nodes[index];
+            }
+        }
+
+        private void ReplaceElement(TreeNode currentNode, EventDrivenCollection currentSegment,
+            ISegment replace)
+        {
+            var replaceNode = currentNode;
+            var pathAndItem = FindPath(currentNode, currentSegment);
+
+            RecursiveRemove(currentSegment, pathAndItem.Item2);
+
+            int replaceIndex = pathAndItem.Item1[pathAndItem.Item1.Count - 1];
+
+            if (replaceNode.Parent.Parent != null)
+            {
+                pathAndItem.Item1.RemoveAt(pathAndItem.Item1.Count - 1);
+                pathAndItem.Item2 = currentSegment[pathAndItem.Item1[0]];
+                foreach (var index in pathAndItem.Item1.Skip(1))
+                {
+                    pathAndItem.Item2 = pathAndItem.Item2.SubSegments[index];
+                }
+                pathAndItem.Item2.SubSegments.Insert(replaceIndex, replace);
+                pathAndItem.Item1.Add(replaceIndex);
+                ChooseTreeNodeAfterReplace(pathAndItem.Item1);
+                return;
+            }
+            currentSegment.Insert(replaceIndex, replace);
+            ChooseTreeNodeAfterReplace(pathAndItem.Item1);
+        }
+
+        private void addCircuitButton_Click(object sender, EventArgs e)
+        {
+            AddEditCircuitForm form = new AddEditCircuitForm();
+            form.Circuit = new Circuit();
+            form.ShowDialog();
+            if (form.DialogResult == DialogResult.OK)
+            {
+                _project.Circuits.Add(form.Circuit);
+                circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
+                circuitsComboBox.DataSource = null;
+                circuitsComboBox.DataSource = _project.Circuits;
+                circuitsComboBox.DisplayMember = "Name";
+                circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
+                _project.ImpedanceZ.Add(new List<Complex>());
+                _project.Frequencies.Add(new List<double>());
+                ReBuildTree();
+            }
+
+        }
+
+        private void editCircuitButton_Click(object sender, EventArgs e)
+        {
+            AddEditCircuitForm form = new AddEditCircuitForm();
+
+            form.Circuit = (Circuit) circuitsComboBox.SelectedItem;
+            form.ShowDialog();
+            if (form.DialogResult == DialogResult.OK)
+            {
+                ((Circuit) circuitsComboBox.SelectedItem).Name = form.Circuit.Name;
+                circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
+                circuitsComboBox.DataSource = null;
+                circuitsComboBox.DataSource = _project.Circuits;
+                circuitsComboBox.DisplayMember = "Name";
+                circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
+                ReBuildTree();
             }
         }
     }

@@ -6,7 +6,7 @@ namespace CircuitAppUI
 {
     public partial class ChooseConnectionTypeForm : Form
     {
-        public ISegment Type { get; private set; }
+        public ISegment Type { get; set; }
         public ChooseConnectionTypeForm()
         {
             InitializeComponent();
@@ -39,6 +39,22 @@ namespace CircuitAppUI
         {
             DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void ChooseConnectionTypeForm_Shown(object sender, EventArgs e)
+        {
+            if (Type is ParallelCircuit)
+            {
+                parallelRadioButton.Checked = true;
+            }
+            else if (Type is SerialCircuit)
+            {
+                serialRadioButton.Checked = true;
+            }
+            else
+            {
+                serialRadioButton.Checked = true;
+            }
         }
     }
 }

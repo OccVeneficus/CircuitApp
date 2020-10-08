@@ -12,7 +12,7 @@ using CircutApp;
 
 namespace CircuitAppUI
 {
-    public partial class AddEditElement : Form
+    public partial class AddEditElementForm : Form
     {
         public string ElementName { get; set; }
 
@@ -20,27 +20,9 @@ namespace CircuitAppUI
 
         public Type ElementType { get; set; }
 
-        public AddEditElement()
+        public AddEditElementForm()
         {
             InitializeComponent();
-            nameTextBox.Text = ElementName;
-            valueTextBox.Text = ElementValue.ToString(CultureInfo.CurrentCulture);
-            if (ElementType == typeof(Resistor))
-            {
-                resistorTypeRadioButton.Checked = true;
-            }
-            else if (ElementType == typeof(Capacitor))
-            {
-                capacitorTypeRadioButton.Checked = true;
-            }
-            else if (ElementType == typeof(Inductor))
-            {
-                inductorTypeRadioButton.Checked = true;
-            }
-            else
-            {
-                resistorTypeRadioButton.Checked = true;
-            }
         }
 
         private void nameTextBox_Validating(object sender, CancelEventArgs e)
@@ -69,12 +51,12 @@ namespace CircuitAppUI
         private void valueTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != ','))
+                (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
 
-            if ((e.KeyChar == ',') && (valueTextBox.Text.IndexOf(',') > -1))
+            if ((e.KeyChar == '.') && (valueTextBox.Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
@@ -113,7 +95,29 @@ namespace CircuitAppUI
 
         private void valueTextBox_TextChanged(object sender, EventArgs e)
         {
-            ElementValue = Convert.ToDouble(valueTextBox.Text);
+            ElementValue = Convert.ToDouble(valueTextBox.Text,CultureInfo.InvariantCulture);
+        }
+
+        private void AddEditElementForm_Shown(object sender, EventArgs e)
+        {
+            nameTextBox.Text = ElementName;
+            valueTextBox.Text = ElementValue.ToString();
+            if (ElementType == typeof(Resistor))
+            {
+                resistorTypeRadioButton.Checked = true;
+            }
+            else if (ElementType == typeof(Capacitor))
+            {
+                capacitorTypeRadioButton.Checked = true;
+            }
+            else if (ElementType == typeof(Inductor))
+            {
+                inductorTypeRadioButton.Checked = true;
+            }
+            else
+            {
+                resistorTypeRadioButton.Checked = true;
+            }
         }
     }
 }
