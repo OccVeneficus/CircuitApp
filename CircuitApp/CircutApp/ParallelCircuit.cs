@@ -5,10 +5,17 @@ using System.Numerics;
 
 namespace CircutApp
 {
+    /// <summary>
+    /// Type for parallel segment
+    /// </summary>
+    /// <inheritdoc cref="ISegment"/>
     public class ParallelCircuit : ISegment
     {
         public EventDrivenCollection SubSegments { get; set; }
 
+        /// <summary>
+        /// Event for segment change
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Complex CalculateZ(double frequency)
@@ -22,12 +29,20 @@ namespace CircutApp
             return 1/result;
         }
 
+        /// <summary>
+        /// Segment constructor
+        /// </summary>
         public ParallelCircuit()
         {
             SubSegments = new EventDrivenCollection();
             SubSegments.CollectionChanged += OnSegmentChanged;
         }
 
+        /// <summary>
+        /// Event handler for SubSegments changed event
+        /// </summary>
+        /// <param name="sender">SubSegments</param>
+        /// <param name="e">Default event arguments</param>
         private void OnSegmentChanged(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, 

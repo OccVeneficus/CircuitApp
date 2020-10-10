@@ -4,9 +4,14 @@ using System.Numerics;
 
 namespace CircutApp
 {
+    /// <summary>
+    /// <inheritdoc cref="IElement"/>
+    /// </summary>
     public abstract class Element : IElement
     {
-
+        /// <summary>
+        /// SubSegments for element are always null
+        /// </summary>
         public EventDrivenCollection SubSegments { get; } = null;
 
         public string Name { get; set; }
