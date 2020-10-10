@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace CircuitAppUI
@@ -197,6 +196,10 @@ namespace CircuitAppUI
         private void ReBuildTree()
         {
             circuitElementsTreeView.Nodes.Clear();
+            if (circuitsComboBox.Items.Count == 0)
+            {
+                return;
+            }
             circuitElementsTreeView.Nodes.Add(new TreeNode()
             { 
                 Tag = _project.Circuits[circuitsComboBox.SelectedIndex],
@@ -463,7 +466,7 @@ namespace CircuitAppUI
 
         private void removeElementButton_Click(object sender, EventArgs e)
         {
-            if (circuitElementsTreeView.SelectedNode.Equals(null))
+            if (circuitElementsTreeView.SelectedNode==null)
             {
                 MessageBox.Show(@"There is no items to delete",
                     @"Empty", MessageBoxButtons.OK);
@@ -485,7 +488,7 @@ namespace CircuitAppUI
 
         private void deleteCircuitButton_Click(object sender, EventArgs e)
         {
-            if (circuitsComboBox.Items.Equals(null))
+            if (circuitsComboBox.Items.Count == 0)
             {
                 MessageBox.Show(@"There is no items to delete",
                     @"Empty", MessageBoxButtons.OK);
@@ -509,11 +512,19 @@ namespace CircuitAppUI
                 }
                 ReBindDataSources();
                 ReBuildTree();
+                if (circuitElementsTreeView.Nodes.Count != 0)
+                {
+                    circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
+                }
             }
         }
 
         private void addElementButton_Click(object sender, EventArgs e)
         {
+            if (circuitsComboBox.Items.Count == 0)
+            {
+                addCircuitButton_Click(sender,e);
+            }
             AddEditElementForm form = new AddEditElementForm();
             form.ElementName = "";
             form.ElementValue = new double();
@@ -577,6 +588,7 @@ namespace CircuitAppUI
                 return;
             }
             _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments.Add(form.Type);
+            ReBuildTree();
         }
 
         private void editElementButton_Click(object sender, EventArgs e)

@@ -70,5 +70,14 @@ namespace CircuitAppUnitTests
             };
             CollectionAssert.AreEqual(result,trueResult, "Wrong calculations");
         }
+
+        [Test(Description = "Checking CalculateZ method with empty subsegments")]
+        public void TestCalculateZ_EmptySubSegments()
+        {
+            InitiateCircuit();
+            List<Complex> expected = new List<Complex>() {Complex.Zero};
+            List<Complex> actual = _circuit.CalculateZ(new List<double>() {100.0});
+            CollectionAssert.AreEqual(expected,actual, "Method return not Complex.Zero with empty subsegments");
+        }
     }
 }

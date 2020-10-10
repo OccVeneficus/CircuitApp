@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Numerics;
-
-namespace CircutApp
+﻿namespace CircutApp
 {
     /// <summary>
     /// Interface for electric circuit elements

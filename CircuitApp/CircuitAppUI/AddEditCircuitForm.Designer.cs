@@ -82,6 +82,7 @@
             this.MaximumSize = new System.Drawing.Size(369, 173);
             this.MinimumSize = new System.Drawing.Size(369, 173);
             this.Name = "AddEditCircuitForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Circuit";
             this.Shown += new System.EventHandler(this.AddEditCircuitForm_Shown);
             this.ResumeLayout(false);

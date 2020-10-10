@@ -27,6 +27,15 @@ namespace CircuitAppUnitTests
             Assert.AreEqual(expected, actual, "Wrong calculations");
         }
 
+        [Test(Description = "Test CalculateZ method when subsegments are empty")]
+        public void ParallelCircuitCalculateZWithEmptySubSegmentsTest()
+        {
+            Initialize();
+            Complex expected = Complex.Zero;
+            Complex actual = _parallelCircuit.CalculateZ(100);
+            Assert.AreEqual(expected,actual,"Return wasn't zero for empty segment");
+        }
+
         [Test(Description = "Test PropertyChanged event firing")]
         public void ParallelCircuitPropertyChangedEvent_Firing()
         {
