@@ -18,13 +18,13 @@ namespace CircuitAppUI
             InitializeComponent();
             _project = new Project();
             Initialize();
-            Test();
+            InitializeProject();
             BindDataSources();
             ReBuildTree();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
-        private void Test()
+        private void InitializeProject()
         {
             _project.Circuits.Add(new Circuit() { Name = "Circuit1"});
             SerialCircuit s0 = new SerialCircuit();
