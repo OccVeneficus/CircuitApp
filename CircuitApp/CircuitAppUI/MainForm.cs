@@ -552,7 +552,7 @@ namespace CircuitAppUI
                 else if (circuitElementsTreeView.SelectedNode.Tag is ParallelCircuit parallelSegment)
                 {
                     parallelSegment.SubSegments.Add(newElement as ISegment);
-                }
+                } //TODO: одинаковые ветки - избавиться с помощью полиморфизма
                 else if (circuitElementsTreeView.SelectedNode.Tag is SerialCircuit serialSegment)
                 {
                     serialSegment.SubSegments.Add(newElement as ISegment);
@@ -569,7 +569,7 @@ namespace CircuitAppUI
                             chooseConnectionForm.Type.SubSegments.Add(element);
                             segment.SubSegments.Remove(element);
                             segment.SubSegments.Add(chooseConnectionForm.Type);
-                        }
+                        } //TODO: избавиться от дублирования
                         else if (circuitElementsTreeView.SelectedNode.Parent.Tag is Circuit circuit)
                         {
                             chooseConnectionForm.Type.SubSegments.Add(newElement as ISegment);
