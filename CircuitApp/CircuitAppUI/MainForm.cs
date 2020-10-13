@@ -16,16 +16,18 @@ namespace CircuitAppUI
         public MainForm()
         {
             InitializeComponent();
+            //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта
             _project = new Project();
             Initialize();
             InitializeProject();
             BindDataSources();
-            ReBuildTree();
+            ReBuildTree(); //TODO: Re - это не самостоятельное слово
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
         private void InitializeProject()
         {
+            //TODO: это не должно делаться в форме - сделай отдельный класс для инициализации проекта включая частоты и пр.
             _project.Circuits.Add(new Circuit() { Name = "Circuit1"});
             SerialCircuit s0 = new SerialCircuit();
             s0.SubSegments.Add(new Capacitor(){Name = "C1", Value = 6e-6});
@@ -158,18 +160,19 @@ namespace CircuitAppUI
                BuildTree(currentNode,segment);
             }
         }
-
+        //TODO: DefineTreeNode()?
         private void BuildTree(TreeNode currentNode, ISegment segment)
         {
             var node = new TreeNode();
             switch (segment)
-            {
+            { //TODO: IElement?
                 case Element a:
                 {
                     node.Text = a.Name;
                     node.Tag = a;
                     break;
                 }
+                //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться
                 case ParallelCircuit p:
                 {
                     node.Text = @"Parallel Segment";
@@ -230,6 +233,7 @@ namespace CircuitAppUI
                 !double.TryParse(frequencyImputTextBox.Text, NumberStyles.Float,
                     CultureInfo.InvariantCulture, out _))
             {
+                //TODO: грамошибка
                 frequencyImputTextBox.BackColor = Color.LightCoral;
                 MessageBox.Show(@"You can't add empty space or strings to frequencies.",
                     @"Wrong input", MessageBoxButtons.OK);
@@ -331,6 +335,7 @@ namespace CircuitAppUI
         private void MoveToElement(TreeNode targetNode, TreeNode draggedNode,
             TreeNode draggedNodeParent, TreeNode targetNodeParent)
         {
+            //TODO: var
             ChooseConnectionTypeForm form = new ChooseConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
@@ -352,6 +357,7 @@ namespace CircuitAppUI
                 }
                 else if (targetNodeParent.Tag is Circuit circuit)
                 {
+                    //TODO: здоровенный кусок кода дублируется только потому, что в качестве корня дерева используется не ISegment
                     form.Type.SubSegments.Add(targetNode.Tag as ISegment);
                     form.Type.SubSegments.Add(draggedNode.Tag as ISegment);
                     circuit.SubSegments.Add(form.Type);
@@ -371,6 +377,7 @@ namespace CircuitAppUI
 
         private void circuitElementsTreeView_DragDrop(object sender, DragEventArgs e)
         {
+            //TODO: var
             Point targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = circuitElementsTreeView.GetNodeAt(targetPoint);
             if (targetNode == null)
@@ -393,7 +400,7 @@ namespace CircuitAppUI
                     if (draggedNodeParent.Tag is ISegment s)
                     {
                         s.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
+                    } //TODO: опять ветвление из Circuit
                     else if (draggedNodeParent.Tag is Circuit c)
                     {
                         c.SubSegments.Remove(draggedNode.Tag as ISegment);
@@ -409,7 +416,7 @@ namespace CircuitAppUI
                 if (targetNode.Tag is ISegment segment)
                 {
                     segment.SubSegments.Add((ISegment)draggedNode.Tag);
-                }
+                } //TODO: и снова
                 else if (targetNode.Tag is Circuit circuit)
                 {
                     circuit.SubSegments.Add((ISegment)draggedNode.Tag);
@@ -444,6 +451,7 @@ namespace CircuitAppUI
             }
         }
 
+        //TODO: мне кажется, работу с нодами надо вынести в отдельный класс. В главной форме слишком много логики. Либо бить окно на контролы
         private bool ContainsNode(TreeNode node1, TreeNode node2)
         {
             if (node2.Parent == null)

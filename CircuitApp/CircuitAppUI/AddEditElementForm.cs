@@ -12,6 +12,9 @@ using CircutApp;
 
 namespace CircuitAppUI
 {
+    //TODO: именование
+    //TODO: xml
+    //TODO: верстка
     public partial class AddEditElementForm : Form
     {
         public string ElementName { get; set; }
@@ -50,6 +53,8 @@ namespace CircuitAppUI
         //TODO: Do something about "," with double input
         private void valueTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //TODO: аналогичная проверка в MainForm - избавиться от дублирования
+            //TODO: вообще, не очевидно, что проверяется условием, пояснить комментарием
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 (e.KeyChar != '.'))
             {

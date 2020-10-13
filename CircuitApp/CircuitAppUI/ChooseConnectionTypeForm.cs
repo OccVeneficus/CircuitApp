@@ -4,8 +4,11 @@ using CircutApp;
 
 namespace CircuitAppUI
 {
+    //TODO: верстка
+    //TODO: xml
     public partial class ChooseConnectionTypeForm : Form
     {
+        //TODO: именование
         public ISegment Type { get; set; }
         public ChooseConnectionTypeForm()
         {
@@ -14,10 +17,11 @@ namespace CircuitAppUI
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close()
             if (parallelRadioButton.Checked)
             {
                 Type = new ParallelCircuit();
-                serialRadioButton.Checked = false;
+                serialRadioButton.Checked = false; //TODO: зачем сбрасывать перед закрытием?
                 DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -29,7 +33,7 @@ namespace CircuitAppUI
                 this.Close();
             }
             else
-            {
+            { //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?
                 MessageBox.Show(@"You must choose connection type first.",
                     @"Type not chosen", MessageBoxButtons.OK);
             }
@@ -52,7 +56,8 @@ namespace CircuitAppUI
                 serialRadioButton.Checked = true;
             }
             else
-            {
+            { 
+                //TODO: здесь должно кидаться исключение на случай добавления новых радиобаттонов на форму
                 serialRadioButton.Checked = true;
             }
         }

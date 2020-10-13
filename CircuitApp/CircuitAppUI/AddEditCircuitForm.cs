@@ -4,6 +4,10 @@ using CircutApp;
 
 namespace CircuitAppUI
 {
+    //TODO: именование
+    //TODO: xml
+    //TODO: верстка
+    //TODO: то есть форма не создает цепь, а просто меняет имя?
     public partial class AddEditCircuitForm : Form
     {
         public Circuit Circuit { get; set; }
