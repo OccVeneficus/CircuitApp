@@ -18,80 +18,19 @@ namespace CircuitAppUI
             InitializeComponent();
             //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта
             _project = new Project();
-            Initialize();
-            InitializeProject();
+            BindDefaultCircuitsChangeEvents();
             BindDataSources();
             RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
-        private void InitializeProject()
+        private void BindDefaultCircuitsChangeEvents()
         {
             //TODO: это не должно делаться в форме - сделай отдельный класс для инициализации проекта включая частоты и пр.
-            _project.Circuits.Add(new Circuit() { Name = "Circuit1"});
-            SerialCircuit s0 = new SerialCircuit();
-            s0.SubSegments.Add(new Capacitor(){Name = "C1", Value = 6e-6});
-            s0.SubSegments.Add(new ParallelCircuit());
-            s0.SubSegments[1].SubSegments.Add(new Resistor(){Name = "R1", Value = 0.002});
-            s0.SubSegments[1].SubSegments.Add(new Inductor(){ Name = "L2", Value = 0.012});
-            _project.Circuits[0].SubSegments.Add(s0);
-
-            _project.Circuits.Add(new Circuit() { Name = "Circuit2" });
-            SerialCircuit s1 = new SerialCircuit();
-            ParallelCircuit p1 = new ParallelCircuit();
-            ParallelCircuit p2 = new ParallelCircuit();
-            p1.SubSegments.Add(new Resistor(){Name = "R34", Value = 12.5});
-            p1.SubSegments.Add(new Capacitor() { Name = "C33", Value = 3e-8 });
-            p2.SubSegments.Add(new Resistor() { Name = "R2313", Value = 10 });
-            p2.SubSegments.Add(new Resistor() { Name = "R3311", Value = 33.11 });
-            p2.SubSegments.Add(new Inductor() { Name = "L33", Value = 0.0125 });
-            s1.SubSegments.Add(p1);
-            s1.SubSegments.Add(new Resistor(){Name = "R0033",Value = 5});
-            s1.SubSegments.Add(p2);
-            _project.Circuits[1].SubSegments.Add(s1);
-
-            _project.Circuits.Add(new Circuit() { Name = "Circuit3" });
-            _project.Circuits[2].SubSegments.Add(new SerialCircuit());
-            _project.Circuits[2].SubSegments[0].SubSegments.Add(new Resistor(){Name = "R33"
-                ,Value = 10});
-            _project.Circuits[2].SubSegments[0].SubSegments.Add(new ParallelCircuit());
-            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor()
-                { Name = "R34", Value = 10 });
-            _project.Circuits[2].SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor()
-                { Name = "R35", Value = 10 });
-
-            _project.Circuits.Add(new Circuit() { Name = "Circuit4" });
-            _project.Circuits[3].SubSegments.Add(new Resistor(){Name = "R1", Value = 30.0});
-            _project.Circuits[3].SubSegments.Add(new Resistor() { Name = "R2", Value = 40.0 });
-
-
-            _project.Circuits.Add(new Circuit() { Name = "Circuit5" });
             for (int i = 0; i < 5; i++)
             {
-                _project.ImpedanceZ[i].AddRange(_project.Circuits[i].CalculateZ
-                    (_project.Frequencies[i]));
                 _project.Circuits[i].CircuitChanged += Circuit_SegmentChanged;
             }
-        }
-
-        private void Initialize()
-        {
-            _project.Frequencies.AddRange(new List<List<double>>()
-            {
-                new List<double>() { 101.0, 200.0, 300.0, 50000.0 },
-                new List<double>() { 102.0, 200.0, 300.0, 50000.0 },
-                new List<double>() { 103.0, 200.0, 300.0, 50000.0 },
-                new List<double>() { 104.0, 200.0, 300.0, 50000.0 },
-                new List<double>() { 105.0, 200.0, 300.0, 50000.0 }
-            });
-            _project.ImpedanceZ.AddRange(new List<List<Complex>>()
-            {
-                new List<Complex>(),
-                new List<Complex>(),
-                new List<Complex>(),
-                new List<Complex>(),
-                new List<Complex>()
-            });
         }
 
         private void BindDataSources()
@@ -163,7 +102,7 @@ namespace CircuitAppUI
         //TODO: DefineTreeNode() (done)?
         private void DefineTreeNode(TreeNode currentNode, ISegment segment)
         {
-            //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться
+            //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться (done)
             var node = new TreeNode
             {
                 Text = segment.Name,
@@ -188,11 +127,11 @@ namespace CircuitAppUI
             }
             circuitElementsTreeView.Nodes.Add(new TreeNode()
             { 
-                Tag = _project.Circuits[circuitsComboBox.SelectedIndex],
+                Tag = _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0],
                 Text = ((Circuit)circuitsComboBox.SelectedItem).Name
             });
             PopulateTree(circuitElementsTreeView.Nodes[0],
-                _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments);
+                _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments);
             circuitElementsTreeView.ExpandAll();
         }
 
@@ -488,6 +427,7 @@ namespace CircuitAppUI
             if (MessageBox.Show(@"You sure you want to permanently delete selected circuit?",
                 @"Delete circuit", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                _project.Circuits[circuitsComboBox.SelectedIndex].CircuitChanged -= Circuit_SegmentChanged;
                 circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
                 _project.Circuits.RemoveAt(circuitsComboBox.SelectedIndex);
                 _project.ImpedanceZ.RemoveAt(circuitsComboBox.SelectedIndex);
@@ -529,29 +469,25 @@ namespace CircuitAppUI
                 if (circuitElementsTreeView.SelectedNode == null ||
                     circuitElementsTreeView.SelectedNode.Tag is Circuit)
                 {
-                    _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments.Add
+                    _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments.Add
                         (newElement as ISegment);
                 }
-                else if (circuitElementsTreeView.SelectedNode.Tag is ParallelCircuit parallelSegment)
+                else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
                 {
-                    parallelSegment.SubSegments.Add(newElement as ISegment);
-                } //TODO: одинаковые ветки - избавиться с помощью полиморфизма
-                else if (circuitElementsTreeView.SelectedNode.Tag is SerialCircuit serialSegment)
-                {
-                    serialSegment.SubSegments.Add(newElement as ISegment);
-                }
+                    segment.SubSegments.Add(newElement as ISegment);
+                } //TODO: одинаковые ветки - избавиться с помощью полиморфизма}
                 else if (circuitElementsTreeView.SelectedNode.Tag is Element element)
                 {
                     ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm();
                     chooseConnectionForm.ShowDialog();
                     if (chooseConnectionForm.DialogResult == DialogResult.OK)
                     {
-                        if (circuitElementsTreeView.SelectedNode.Parent.Tag is ISegment segment)
+                        if (circuitElementsTreeView.SelectedNode.Parent.Tag is Segment parentSegment)
                         {
                             chooseConnectionForm.Type.SubSegments.Add(newElement as ISegment);
                             chooseConnectionForm.Type.SubSegments.Add(element);
-                            segment.SubSegments.Remove(element);
-                            segment.SubSegments.Add(chooseConnectionForm.Type);
+                            parentSegment.SubSegments.Remove(element);
+                            parentSegment.SubSegments.Add(chooseConnectionForm.Type);
                         } //TODO: избавиться от дублирования
                         else if (circuitElementsTreeView.SelectedNode.Parent.Tag is Circuit circuit)
                         {
@@ -706,11 +642,13 @@ namespace CircuitAppUI
 
         private void addCircuitButton_Click(object sender, EventArgs e)
         {
-            AddEditCircuitForm form = new AddEditCircuitForm();
+            var form = new AddEditCircuitForm();
             form.Circuit = new Circuit();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
             {
+                form.Circuit.SubSegments.Add(new SerialCircuit());
+                form.Circuit.CircuitChanged += Circuit_SegmentChanged;
                 _project.Circuits.Add(form.Circuit);
                 circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
                 circuitsComboBox.DataSource = null;
@@ -726,7 +664,7 @@ namespace CircuitAppUI
 
         private void editCircuitButton_Click(object sender, EventArgs e)
         {
-            AddEditCircuitForm form = new AddEditCircuitForm();
+            var form = new AddEditCircuitForm();
 
             form.Circuit = (Circuit) circuitsComboBox.SelectedItem;
             form.ShowDialog();

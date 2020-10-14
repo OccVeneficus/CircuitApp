@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CircutApp;
 
@@ -50,7 +45,6 @@ namespace CircuitAppUI
             }
         }
 
-        //TODO: Do something about "," with double input
         private void valueTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             //TODO: аналогичная проверка в MainForm - избавиться от дублирования

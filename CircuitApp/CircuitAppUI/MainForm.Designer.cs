@@ -411,9 +411,9 @@
             // addSegmentButton
             // 
             this.addSegmentButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addSegmentButton.Location = new System.Drawing.Point(225, 445);
+            this.addSegmentButton.Location = new System.Drawing.Point(227, 445);
             this.addSegmentButton.Name = "addSegmentButton";
-            this.addSegmentButton.Size = new System.Drawing.Size(103, 29);
+            this.addSegmentButton.Size = new System.Drawing.Size(100, 29);
             this.addSegmentButton.TabIndex = 5;
             this.addSegmentButton.Text = "Add segment";
             this.addSegmentButton.UseVisualStyleBackColor = true;
@@ -422,7 +422,7 @@
             // editCircuitButton
             // 
             this.editCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editCircuitButton.Location = new System.Drawing.Point(164, 445);
+            this.editCircuitButton.Location = new System.Drawing.Point(166, 445);
             this.editCircuitButton.Name = "editCircuitButton";
             this.editCircuitButton.Size = new System.Drawing.Size(55, 29);
             this.editCircuitButton.TabIndex = 4;
@@ -433,9 +433,9 @@
             // deleteCircuitButton
             // 
             this.deleteCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.deleteCircuitButton.Location = new System.Drawing.Point(98, 445);
+            this.deleteCircuitButton.Location = new System.Drawing.Point(91, 445);
             this.deleteCircuitButton.Name = "deleteCircuitButton";
-            this.deleteCircuitButton.Size = new System.Drawing.Size(60, 29);
+            this.deleteCircuitButton.Size = new System.Drawing.Size(69, 29);
             this.deleteCircuitButton.TabIndex = 3;
             this.deleteCircuitButton.Text = "Delete";
             this.deleteCircuitButton.UseVisualStyleBackColor = true;
@@ -446,7 +446,7 @@
             this.addCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.addCircuitButton.Location = new System.Drawing.Point(3, 445);
             this.addCircuitButton.Name = "addCircuitButton";
-            this.addCircuitButton.Size = new System.Drawing.Size(89, 29);
+            this.addCircuitButton.Size = new System.Drawing.Size(82, 29);
             this.addCircuitButton.TabIndex = 2;
             this.addCircuitButton.Text = "Add circuit";
             this.addCircuitButton.UseVisualStyleBackColor = true;
