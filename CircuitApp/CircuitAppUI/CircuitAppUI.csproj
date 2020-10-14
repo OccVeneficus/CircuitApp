@@ -47,23 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddEditCircuitForm.cs">
+    <Compile Include="CircuitForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddEditCircuitForm.Designer.cs">
-      <DependentUpon>AddEditCircuitForm.cs</DependentUpon>
+    <Compile Include="CircuitForm.Designer.cs">
+      <DependentUpon>CircuitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddEditElementForm.cs">
+    <Compile Include="ElementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddEditElementForm.Designer.cs">
-      <DependentUpon>AddEditElementForm.cs</DependentUpon>
+    <Compile Include="ElementForm.Designer.cs">
+      <DependentUpon>ElementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChooseConnectionTypeForm.cs">
+    <Compile Include="ConnectionTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChooseConnectionTypeForm.Designer.cs">
-      <DependentUpon>ChooseConnectionTypeForm.cs</DependentUpon>
+    <Compile Include="ConnectionTypeForm.Designer.cs">
+      <DependentUpon>ConnectionTypeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -73,14 +73,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddEditCircuitForm.resx">
-      <DependentUpon>AddEditCircuitForm.cs</DependentUpon>
+    <EmbeddedResource Include="CircuitForm.resx">
+      <DependentUpon>CircuitForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddEditElementForm.resx">
-      <DependentUpon>AddEditElementForm.cs</DependentUpon>
+    <EmbeddedResource Include="ElementForm.resx">
+      <DependentUpon>ElementForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChooseConnectionTypeForm.resx">
-      <DependentUpon>ChooseConnectionTypeForm.cs</DependentUpon>
+    <EmbeddedResource Include="ConnectionTypeForm.resx">
+      <DependentUpon>ConnectionTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

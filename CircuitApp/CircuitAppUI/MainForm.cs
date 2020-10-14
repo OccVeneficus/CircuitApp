@@ -50,7 +50,7 @@ namespace CircuitAppUI
             _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                 _project.Circuits[circuitsComboBox.SelectedIndex]
                     .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
-            ReBindDataSources();
+            RebindDataSources();
         }
 
         private void frequenciesListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -70,12 +70,12 @@ namespace CircuitAppUI
                 return;
             }
 
-            ReBindDataSources();
+            RebindDataSources();
             RebuildTree();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
-        private void ReBindDataSources()
+        private void RebindDataSources()
         {
             if (_project.Circuits.Count.Equals(0))
             {
@@ -169,7 +169,7 @@ namespace CircuitAppUI
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                     _project.Circuits[circuitsComboBox.SelectedIndex]
                         .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
-                ReBindDataSources();
+                RebindDataSources();
                 frequenciesListBox.SelectedIndex = frequenciesListBox.Items.Count - 1;
             }
         }
@@ -202,7 +202,7 @@ namespace CircuitAppUI
                     }
                     break;
                 }
-                case SerialCircuit _:
+                case SerialSegment _:
                 {
                     elementTypeTextBox.Text = @"Serial segment";
                     elementTypeTextBox.Text = @"";
@@ -232,7 +232,7 @@ namespace CircuitAppUI
             _project.ImpedanceZ[circuitsComboBox.SelectedIndex].Remove
                 ((Complex)impedancesListBox.SelectedItem);
             frequenciesListBox.SelectedIndex = 0;
-            ReBindDataSources();
+            RebindDataSources();
         }
 
         private void circuitElementsTreeView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -240,10 +240,6 @@ namespace CircuitAppUI
             if (e.Button == MouseButtons.Left)
             {
                 DoDragDrop(e.Item, DragDropEffects.Move);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                DoDragDrop(e.Item, DragDropEffects.Copy);
             }
         }
 
@@ -258,41 +254,23 @@ namespace CircuitAppUI
             TreeNode draggedNodeParent, TreeNode targetNodeParent)
         {
             //TODO: var (done)
-            var form = new ChooseConnectionTypeForm();
+            var form = new ConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
             {
-                if (targetNodeParent.Tag is ISegment segment)
+                form.Type.SubSegments.Add(targetNode.Tag as ISegment);
+                form.Type.SubSegments.Add(draggedNode.Tag as ISegment);
+                (targetNodeParent.Tag as ISegment)?.SubSegments.Add(form.Type);
+                if (draggedNodeParent.Tag is ISegment s)
                 {
-                    form.Type.SubSegments.Add(targetNode.Tag as ISegment);
-                    form.Type.SubSegments.Add(draggedNode.Tag as ISegment);
-                    segment.SubSegments.Add(form.Type);
-                    if (draggedNodeParent.Tag is ISegment s)
-                    {
-                        s.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
-                    else if (draggedNodeParent.Tag is Circuit c)
-                    {
-                        c.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
-                    segment.SubSegments.Remove(targetNode.Tag as ISegment);
+                    s.SubSegments.Remove(draggedNode.Tag as ISegment);
                 }
-                else if (targetNodeParent.Tag is Circuit circuit)
+                else if (draggedNodeParent.Tag is Circuit c)
                 {
-                    //TODO: здоровенный кусок кода дублируется только потому, что в качестве корня дерева используется не ISegment
-                    form.Type.SubSegments.Add(targetNode.Tag as ISegment);
-                    form.Type.SubSegments.Add(draggedNode.Tag as ISegment);
-                    circuit.SubSegments.Add(form.Type);
-                    if (draggedNodeParent.Tag is ISegment s)
-                    {
-                        s.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
-                    else if (draggedNodeParent.Tag is Circuit c)
-                    {
-                        c.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
-                    circuit.SubSegments.Remove(targetNode.Tag as ISegment);
+                    c.SubSegments.Remove(draggedNode.Tag as ISegment);
                 }
+                (targetNodeParent.Tag as ISegment)?.SubSegments.Remove(targetNode.Tag as ISegment);
+                //TODO: здоровенный кусок кода дублируется только потому, что в качестве корня дерева используется не ISegment
                 RebuildTree();
             }
         }
@@ -319,35 +297,16 @@ namespace CircuitAppUI
                         MoveToElement(targetNode,draggedNode,draggedNodeParent,targetNodeParent);
                         return;
                     }
-                    if (draggedNodeParent.Tag is ISegment s)
-                    {
-                        s.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    } //TODO: опять ветвление из Circuit
-                    else if (draggedNodeParent.Tag is Circuit c)
-                    {
-                        c.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    }
+                    (draggedNodeParent.Tag as ISegment)?.SubSegments.Remove(draggedNode.Tag as ISegment);
+                    //TODO: опять ветвление из Circuit
                     draggedNode.Remove();
                     targetNode.Nodes.Add(draggedNode);
                 }
-                else if (e.Effect == DragDropEffects.Copy)
-                {
-                    targetNode.Nodes.Add((TreeNode) draggedNode.Clone());
-                }
 
-                if (targetNode.Tag is ISegment segment)
-                {
-                    segment.SubSegments.Add((ISegment)draggedNode.Tag);
-                } //TODO: и снова
-                else if (targetNode.Tag is Circuit circuit)
-                {
-                    circuit.SubSegments.Add((ISegment)draggedNode.Tag);
-                }
+                (targetNode.Tag as ISegment)?.SubSegments.Add((ISegment)draggedNode.Tag); //TODO: и снова
 
                 /*Remove empty segment*/
-                if ((draggedNodeParent.Tag is SerialCircuit || 
-                     draggedNodeParent.Tag is ParallelCircuit) &&
-                     draggedNodeParent.Nodes.Count == 0)
+                if (draggedNodeParent.Tag is Segment && draggedNodeParent.Nodes.Count == 0)
                 {
                     draggedNodeParent.Remove();
                     RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
@@ -441,7 +400,7 @@ namespace CircuitAppUI
                 { 
                     circuitsComboBox.SelectedIndex = 0;
                 }
-                ReBindDataSources();
+                RebindDataSources();
                 RebuildTree();
                 if (circuitElementsTreeView.Nodes.Count != 0)
                 {
@@ -456,7 +415,7 @@ namespace CircuitAppUI
             {
                 addCircuitButton_Click(sender,e);
             }
-            AddEditElementForm form = new AddEditElementForm();
+            ElementForm form = new ElementForm();
             form.ElementName = "";
             form.ElementValue = new double();
             form.ElementType = typeof(Resistor);
@@ -466,8 +425,7 @@ namespace CircuitAppUI
                 var newElement = Activator.CreateInstance(form.ElementType);
                 ((Element) newElement).Value = form.ElementValue;
                 ((Element) newElement).Name = form.ElementName;
-                if (circuitElementsTreeView.SelectedNode == null ||
-                    circuitElementsTreeView.SelectedNode.Tag is Circuit)
+                if (circuitElementsTreeView.SelectedNode == null)
                 {
                     _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments.Add
                         (newElement as ISegment);
@@ -475,27 +433,21 @@ namespace CircuitAppUI
                 else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
                 {
                     segment.SubSegments.Add(newElement as ISegment);
-                } //TODO: одинаковые ветки - избавиться с помощью полиморфизма}
+                } 
+                //TODO: одинаковые ветки - избавиться с помощью полиморфизма}
                 else if (circuitElementsTreeView.SelectedNode.Tag is Element element)
                 {
-                    ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm();
-                    chooseConnectionForm.ShowDialog();
-                    if (chooseConnectionForm.DialogResult == DialogResult.OK)
+                    ConnectionTypeForm connectionForm = new ConnectionTypeForm();
+                    connectionForm.ShowDialog();
+                    if (connectionForm.DialogResult == DialogResult.OK)
                     {
                         if (circuitElementsTreeView.SelectedNode.Parent.Tag is Segment parentSegment)
                         {
-                            chooseConnectionForm.Type.SubSegments.Add(newElement as ISegment);
-                            chooseConnectionForm.Type.SubSegments.Add(element);
+                            connectionForm.Type.SubSegments.Add(newElement as ISegment);
+                            connectionForm.Type.SubSegments.Add(element);
                             parentSegment.SubSegments.Remove(element);
-                            parentSegment.SubSegments.Add(chooseConnectionForm.Type);
+                            parentSegment.SubSegments.Add(connectionForm.Type);
                         } //TODO: избавиться от дублирования
-                        else if (circuitElementsTreeView.SelectedNode.Parent.Tag is Circuit circuit)
-                        {
-                            chooseConnectionForm.Type.SubSegments.Add(newElement as ISegment);
-                            chooseConnectionForm.Type.SubSegments.Add(element);
-                            circuit.SubSegments.Remove(element);
-                            circuit.SubSegments.Add(chooseConnectionForm.Type);
-                        }
                     }
                     else
                     {
@@ -508,7 +460,7 @@ namespace CircuitAppUI
 
         private void addSegmentButton_Click(object sender, EventArgs e)
         {
-            ChooseConnectionTypeForm form = new ChooseConnectionTypeForm();
+            ConnectionTypeForm form = new ConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.Cancel)
             {
@@ -522,63 +474,38 @@ namespace CircuitAppUI
         {
             if (circuitElementsTreeView.SelectedNode.Tag is Element element)
             {
-                AddEditElementForm addEditForm = new AddEditElementForm();
-                addEditForm.ElementType = element.GetType();
-                addEditForm.ElementName = element.Name;
-                addEditForm.ElementValue = element.Value;
-                addEditForm.ShowDialog();
-                if (addEditForm.DialogResult == DialogResult.OK)
+                var form = new ElementForm
                 {
-                    var editElement = Activator.CreateInstance(addEditForm.ElementType);
-                    ((Element) editElement).Value = addEditForm.ElementValue;
-                    ((Element) editElement).Name = addEditForm.ElementName;
+                    ElementType = element.GetType(),
+                    ElementName = element.Name,
+                    ElementValue = element.Value
+                };
+                form.ShowDialog();
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    var editElement = Activator.CreateInstance(form.ElementType);
+                    ((Element) editElement).Value = form.ElementValue;
+                    ((Element) editElement).Name = form.ElementName;
                     circuitElementsTreeView.SelectedNode.Tag = editElement;
                     ReplaceElement(circuitElementsTreeView.SelectedNode,
                         _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
                         editElement as ISegment);
                 }
             }
-            else if (circuitElementsTreeView.SelectedNode.Tag is SerialCircuit serial)
+            else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
             {
-                ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm
+                ConnectionTypeForm connectionForm = new ConnectionTypeForm
                 {
-                    Type = serial
+                    Type = segment
                 };
-                chooseConnectionForm.ShowDialog();
-                if (chooseConnectionForm.DialogResult == DialogResult.OK)
+                connectionForm.ShowDialog();
+                if (connectionForm.DialogResult == DialogResult.OK)
                 {
-                    if (chooseConnectionForm.Type is ParallelCircuit parallelSegment)
-                    {
-                        parallelSegment.SubSegments = serial.SubSegments;
-                        ReplaceElement(circuitElementsTreeView.SelectedNode,
-                            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
-                            parallelSegment);
-                    }
+                    (connectionForm.Type as Segment).SubSegments = segment.SubSegments;
+                    ReplaceElement(circuitElementsTreeView.SelectedNode,
+                            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments,
+                            (connectionForm.Type as Segment));
                 }
-            }
-            else if (circuitElementsTreeView.SelectedNode.Tag is ParallelCircuit parallel)
-            {
-
-                ChooseConnectionTypeForm chooseConnectionForm = new ChooseConnectionTypeForm
-                {
-                    Type = parallel
-                };
-                chooseConnectionForm.ShowDialog();
-                if (chooseConnectionForm.DialogResult == DialogResult.OK)
-                {
-                    if (chooseConnectionForm.Type is SerialCircuit parallelSegment)
-                    {
-                        parallelSegment.SubSegments = parallel.SubSegments;
-                        ReplaceElement(circuitElementsTreeView.SelectedNode,
-                            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
-                            parallelSegment);
-                    }
-
-                }
-            }
-            else if (circuitElementsTreeView.SelectedNode.Tag is Circuit)
-            {
-                editCircuitButton_Click(sender,e);
             }
         }
 
@@ -642,12 +569,12 @@ namespace CircuitAppUI
 
         private void addCircuitButton_Click(object sender, EventArgs e)
         {
-            var form = new AddEditCircuitForm();
+            var form = new CircuitForm();
             form.Circuit = new Circuit();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
             {
-                form.Circuit.SubSegments.Add(new SerialCircuit());
+                form.Circuit.SubSegments.Add(new SerialSegment());
                 form.Circuit.CircuitChanged += Circuit_SegmentChanged;
                 _project.Circuits.Add(form.Circuit);
                 circuitsComboBox.SelectedIndexChanged -= circuitsComboBox_SelectedIndexChanged;
@@ -664,8 +591,7 @@ namespace CircuitAppUI
 
         private void editCircuitButton_Click(object sender, EventArgs e)
         {
-            var form = new AddEditCircuitForm();
-
+            var form = new CircuitForm();
             form.Circuit = (Circuit) circuitsComboBox.SelectedItem;
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)

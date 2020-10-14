@@ -50,8 +50,8 @@ namespace CircuitAppUnitTests
         public void TestCircuitCalculateZ_ValidData()
         {
             InitiateCircuit();
-            ParallelCircuit p = new ParallelCircuit();
-            SerialCircuit s = new SerialCircuit();
+            ParallelSegment p = new ParallelSegment();
+            SerialSegment s = new SerialSegment();
             Resistor r1 = new Resistor(){Value = 30.0};
             Capacitor c1 = new Capacitor(){Name = "C1",Value = 2e-6};
             Capacitor c2 = new Capacitor(){Name = "C2",Value = 6e-6};

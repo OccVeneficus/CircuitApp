@@ -7,10 +7,13 @@ using CircutApp;
 
 namespace CircuitAppUI
 {
-    //TODO: именование
+    //TODO: именование (done)
     //TODO: xml
     //TODO: верстка
-    public partial class AddEditElementForm : Form
+    /// <summary>
+    /// Form for adding/editing circuit elements
+    /// </summary>
+    public partial class ElementForm : Form
     {
         public string ElementName { get; set; }
 
@@ -18,7 +21,7 @@ namespace CircuitAppUI
 
         public Type ElementType { get; set; }
 
-        public AddEditElementForm()
+        public ElementForm()
         {
             InitializeComponent();
         }

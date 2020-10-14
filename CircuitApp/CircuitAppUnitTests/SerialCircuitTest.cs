@@ -12,11 +12,11 @@ namespace CircuitAppUnitTests
     [TestFixture]
     public class SerialCircuitTest
     {
-        private SerialCircuit _serialCircuit;
+        private SerialSegment _serialSegment;
 
         public void Initialize()
         {
-            _serialCircuit = new SerialCircuit();
+            _serialSegment = new SerialSegment();
         }
 
         [Test(Description = "Serial circuit CalculateZ method test")]
@@ -27,10 +27,10 @@ namespace CircuitAppUnitTests
             Resistor R1 = new Resistor(){Value = 30.0};
             Inductor L1 = new Inductor(){Value = 0.015};
             Capacitor C1 = new Capacitor(){Value = 6e-6};
-            _serialCircuit.SubSegments.Add(R1);
-            _serialCircuit.SubSegments.Add(L1);
-            _serialCircuit.SubSegments.Add(C1);
-            Complex actual = _serialCircuit.CalculateZ(50.0);
+            _serialSegment.SubSegments.Add(R1);
+            _serialSegment.SubSegments.Add(L1);
+            _serialSegment.SubSegments.Add(C1);
+            Complex actual = _serialSegment.CalculateZ(50.0);
             Assert.AreEqual(expected, actual, "Wrong impedance calculations");
         }
 
@@ -39,8 +39,8 @@ namespace CircuitAppUnitTests
         {
             Initialize();
             var wasCalled = false;
-            _serialCircuit.PropertyChanged += (o, e) => wasCalled = true;
-            _serialCircuit.SubSegments.Add(new Resistor());
+            _serialSegment.PropertyChanged += (o, e) => wasCalled = true;
+            _serialSegment.SubSegments.Add(new Resistor());
             Assert.IsTrue(wasCalled,"Event wasn't called");
         }
     }

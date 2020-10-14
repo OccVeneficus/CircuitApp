@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.circuitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -66,10 +63,6 @@
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.serialCircuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.circuitBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -85,18 +78,7 @@
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // circuitsBindingSource
-            // 
-            this.circuitsBindingSource.DataMember = "Circuits";
-            this.circuitsBindingSource.DataSource = this.projectBindingSource;
-            // 
-            // projectBindingSource
-            // 
-            this.projectBindingSource.DataSource = typeof(CircutApp.Project);
             // 
             // tableLayoutPanel1
             // 
@@ -495,14 +477,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // serialCircuitBindingSource
-            // 
-            this.serialCircuitBindingSource.DataSource = typeof(CircutApp.SerialCircuit);
-            // 
-            // circuitBindingSource
-            // 
-            this.circuitBindingSource.DataSource = typeof(CircutApp.Circuit);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -511,8 +485,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "MainForm";
             this.Text = "CircuitApp";
-            ((System.ComponentModel.ISupportInitialize)(this.circuitsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -530,17 +502,11 @@
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.serialCircuitBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circuitBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.BindingSource projectBindingSource;
-        private System.Windows.Forms.BindingSource circuitBindingSource;
-        private System.Windows.Forms.BindingSource serialCircuitBindingSource;
-        private System.Windows.Forms.BindingSource circuitsBindingSource;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;

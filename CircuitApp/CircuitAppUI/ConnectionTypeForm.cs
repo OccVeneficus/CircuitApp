@@ -6,11 +6,11 @@ namespace CircuitAppUI
 {
     //TODO: верстка
     //TODO: xml
-    public partial class ChooseConnectionTypeForm : Form
+    public partial class ConnectionTypeForm : Form
     {
-        //TODO: именование
+        //TODO: именование(done)
         public ISegment Type { get; set; }
-        public ChooseConnectionTypeForm()
+        public ConnectionTypeForm()
         {
             InitializeComponent();
         }
@@ -20,14 +20,14 @@ namespace CircuitAppUI
             //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close()
             if (parallelRadioButton.Checked)
             {
-                Type = new ParallelCircuit();
+                Type = new ParallelSegment();
                 serialRadioButton.Checked = false; //TODO: зачем сбрасывать перед закрытием?
                 DialogResult = DialogResult.OK;
                 this.Close();
             }
             else if (serialRadioButton.Checked)
             {
-                Type = new SerialCircuit();
+                Type = new SerialSegment();
                 parallelRadioButton.Checked = false;
                 DialogResult = DialogResult.OK;
                 this.Close();
@@ -47,11 +47,11 @@ namespace CircuitAppUI
 
         private void ChooseConnectionTypeForm_Shown(object sender, EventArgs e)
         {
-            if (Type is ParallelCircuit)
+            if (Type is ParallelSegment)
             {
                 parallelRadioButton.Checked = true;
             }
-            else if (Type is SerialCircuit)
+            else if (Type is SerialSegment)
             {
                 serialRadioButton.Checked = true;
             }

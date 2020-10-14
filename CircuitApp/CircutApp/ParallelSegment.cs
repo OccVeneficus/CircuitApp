@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 
 namespace CircutApp
@@ -9,7 +7,7 @@ namespace CircutApp
     /// Type for parallel segment
     /// </summary>
     /// <inheritdoc cref="Segment"/>
-    public class ParallelCircuit : Segment
+    public class ParallelSegment : Segment
     {
         public override string Name { get; } = "Parallel segment";
         public override Complex CalculateZ(double frequency)

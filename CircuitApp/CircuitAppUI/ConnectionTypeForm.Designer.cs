@@ -1,6 +1,6 @@
 ﻿namespace CircuitAppUI
 {
-    partial class ChooseConnectionTypeForm
+    partial class ConnectionTypeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -92,7 +92,7 @@
             this.parallelRadioButton.Text = "Parallel to choosen";
             this.parallelRadioButton.UseVisualStyleBackColor = true;
             // 
-            // ChooseConnectionTypeForm
+            // ConnectionTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,7 +100,7 @@
             this.Controls.Add(this.groupBox1);
             this.MaximumSize = new System.Drawing.Size(307, 185);
             this.MinimumSize = new System.Drawing.Size(307, 185);
-            this.Name = "ChooseConnectionTypeForm";
+            this.Name = "ConnectionTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add as...";
             this.Shown += new System.EventHandler(this.ChooseConnectionTypeForm_Shown);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 
 namespace CircutApp
@@ -9,7 +7,7 @@ namespace CircutApp
     /// Type for serial segment
     /// </summary>
     /// <inheritdoc cref="Segment"/>
-    public class SerialCircuit : Segment
+    public class SerialSegment : Segment
     {
         public override string Name { get; } = "Serial segment";
         public override Complex CalculateZ(double frequency)

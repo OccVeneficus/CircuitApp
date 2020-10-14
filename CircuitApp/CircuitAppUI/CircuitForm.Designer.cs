@@ -1,6 +1,6 @@
 ﻿namespace CircuitAppUI
 {
-    partial class AddEditCircuitForm
+    partial class CircuitForm
     {
         /// <summary>
         /// Required designer variable.
@@ -70,7 +70,7 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // AddEditCircuitForm
+            // CircuitForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -81,7 +81,7 @@
             this.Controls.Add(this.nameTextBox);
             this.MaximumSize = new System.Drawing.Size(369, 173);
             this.MinimumSize = new System.Drawing.Size(369, 173);
-            this.Name = "AddEditCircuitForm";
+            this.Name = "CircuitForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Circuit";
             this.Shown += new System.EventHandler(this.AddEditCircuitForm_Shown);

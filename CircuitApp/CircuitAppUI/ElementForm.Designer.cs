@@ -1,6 +1,6 @@
 ﻿namespace CircuitAppUI
 {
-    partial class AddEditElementForm
+    partial class ElementForm
     {
         /// <summary>
         /// Required designer variable.
@@ -156,8 +156,9 @@
             this.nameTextBox.Size = new System.Drawing.Size(171, 22);
             this.nameTextBox.TabIndex = 0;
             this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
+            this.nameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.nameTextBox_Validating);
             // 
-            // AddEditElementForm
+            // ElementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -165,7 +166,7 @@
             this.Controls.Add(this.panel1);
             this.MaximumSize = new System.Drawing.Size(389, 293);
             this.MinimumSize = new System.Drawing.Size(389, 293);
-            this.Name = "AddEditElementForm";
+            this.Name = "ElementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Element";
             this.Shown += new System.EventHandler(this.AddEditElementForm_Shown);
