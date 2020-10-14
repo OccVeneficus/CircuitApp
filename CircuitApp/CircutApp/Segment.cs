@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CircutApp
 {
@@ -15,6 +11,7 @@ namespace CircutApp
     public abstract class Segment : ISegment
     {
         public EventDrivenCollection SubSegments { get; set; }
+        public abstract string Name { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

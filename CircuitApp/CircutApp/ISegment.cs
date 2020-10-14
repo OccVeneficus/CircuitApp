@@ -19,5 +19,7 @@ namespace CircutApp
         /// SubSegments collection
         /// </summary>
         EventDrivenCollection SubSegments { get; }
+
+        string Name { get; }
     }
 }

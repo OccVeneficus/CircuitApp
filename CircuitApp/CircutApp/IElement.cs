@@ -12,6 +12,6 @@
         /// <summary>
         /// Element name
         /// </summary>
-        string Name { get; set; }
+        new string Name { get; set; }
     }
 }

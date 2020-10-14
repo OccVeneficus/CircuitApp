@@ -11,6 +11,7 @@ namespace CircutApp
     /// <inheritdoc cref="Segment"/>
     public class ParallelCircuit : Segment
     {
+        public override string Name { get; } = "Parallel segment";
         public override Complex CalculateZ(double frequency)
         {
             Complex result = SubSegments.Aggregate<ISegment, Complex>(0, (current,

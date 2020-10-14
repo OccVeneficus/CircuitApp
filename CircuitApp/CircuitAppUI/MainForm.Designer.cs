@@ -48,7 +48,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.addFrequencyButton = new System.Windows.Forms.Button();
             this.deleteFrequencyButton = new System.Windows.Forms.Button();
-            this.frequencyImputTextBox = new System.Windows.Forms.TextBox();
+            this.frequencyInputTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.frequenciesListBox = new System.Windows.Forms.ListBox();
@@ -264,7 +264,7 @@
             // 
             this.groupBox3.Controls.Add(this.addFrequencyButton);
             this.groupBox3.Controls.Add(this.deleteFrequencyButton);
-            this.groupBox3.Controls.Add(this.frequencyImputTextBox);
+            this.groupBox3.Controls.Add(this.frequencyInputTextBox);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
@@ -295,14 +295,14 @@
             this.deleteFrequencyButton.UseVisualStyleBackColor = true;
             this.deleteFrequencyButton.Click += new System.EventHandler(this.deleteFrequencyButton_Click);
             // 
-            // frequencyImputTextBox
+            // frequencyInputTextBox
             // 
-            this.frequencyImputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.frequencyImputTextBox.Location = new System.Drawing.Point(48, 59);
-            this.frequencyImputTextBox.Name = "frequencyImputTextBox";
-            this.frequencyImputTextBox.Size = new System.Drawing.Size(204, 22);
-            this.frequencyImputTextBox.TabIndex = 0;
-            this.frequencyImputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
+            this.frequencyInputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.frequencyInputTextBox.Location = new System.Drawing.Point(48, 59);
+            this.frequencyInputTextBox.Name = "frequencyInputTextBox";
+            this.frequencyInputTextBox.Size = new System.Drawing.Size(204, 22);
+            this.frequencyInputTextBox.TabIndex = 0;
+            this.frequencyInputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
             // 
             // panel4
             // 
@@ -560,7 +560,7 @@
         private System.Windows.Forms.ComboBox circuitsComboBox;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox frequencyImputTextBox;
+        private System.Windows.Forms.TextBox frequencyInputTextBox;
         private System.Windows.Forms.Button editCircuitButton;
         private System.Windows.Forms.Button deleteCircuitButton;
         private System.Windows.Forms.Button addCircuitButton;

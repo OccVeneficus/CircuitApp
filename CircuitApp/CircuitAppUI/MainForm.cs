@@ -21,7 +21,7 @@ namespace CircuitAppUI
             Initialize();
             InitializeProject();
             BindDataSources();
-            ReBuildTree(); //TODO: Re - это не самостоятельное слово
+            RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
@@ -132,7 +132,7 @@ namespace CircuitAppUI
             }
 
             ReBindDataSources();
-            ReBuildTree();
+            RebuildTree();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
@@ -160,32 +160,15 @@ namespace CircuitAppUI
                DefineTreeNode(currentNode,segment);
             }
         }
-        //TODO: DefineTreeNode()?
+        //TODO: DefineTreeNode() (done)?
         private void DefineTreeNode(TreeNode currentNode, ISegment segment)
         {
-            var node = new TreeNode();
-            switch (segment)
-            { //TODO: IElement?
-                case Element a:
-                {
-                    node.Text = a.Name;
-                    node.Tag = a;
-                    break;
-                }
-                //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться
-                case ParallelCircuit p:
-                {
-                    node.Text = @"Parallel Segment";
-                    node.Tag = p;
-                    break;
-                }
-                default:
-                {
-                    node.Text = @"Serial Segment";
-                    node.Tag = segment;
-                    break;
-                }
-            }
+            //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться
+            var node = new TreeNode
+            {
+                Text = segment.Name,
+                Tag = segment
+            };
             currentNode.Nodes.Add(node);
             if (segment.SubSegments != null)
             {
@@ -196,7 +179,7 @@ namespace CircuitAppUI
             }
         }
 
-        private void ReBuildTree()
+        private void RebuildTree()
         {
             circuitElementsTreeView.Nodes.Clear();
             if (circuitsComboBox.Items.Count == 0)
@@ -221,7 +204,7 @@ namespace CircuitAppUI
                 e.Handled = true;
             }
 
-            if ((e.KeyChar == '.') && (frequencyImputTextBox.Text.IndexOf('.') > -1))
+            if ((e.KeyChar == '.') && (frequencyInputTextBox.Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
@@ -229,21 +212,21 @@ namespace CircuitAppUI
 
         private void addFrequencyButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(frequencyImputTextBox.Text) || 
-                !double.TryParse(frequencyImputTextBox.Text, NumberStyles.Float,
+            if (string.IsNullOrWhiteSpace(frequencyInputTextBox.Text) || 
+                !double.TryParse(frequencyInputTextBox.Text, NumberStyles.Float,
                     CultureInfo.InvariantCulture, out _))
             {
-                //TODO: грамошибка
-                frequencyImputTextBox.BackColor = Color.LightCoral;
+                //TODO: грамошибка (done)
+                frequencyInputTextBox.BackColor = Color.LightCoral;
                 MessageBox.Show(@"You can't add empty space or strings to frequencies.",
                     @"Wrong input", MessageBoxButtons.OK);
             }
             else
             {
                 _project.Frequencies[circuitsComboBox.SelectedIndex].Add
-                    (Convert.ToDouble(frequencyImputTextBox.Text, CultureInfo.InvariantCulture));
-                frequencyImputTextBox.BackColor = Color.White;
-                frequencyImputTextBox.Clear();
+                    (Convert.ToDouble(frequencyInputTextBox.Text, CultureInfo.InvariantCulture));
+                frequencyInputTextBox.BackColor = Color.White;
+                frequencyInputTextBox.Clear();
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                     _project.Circuits[circuitsComboBox.SelectedIndex]
                         .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
@@ -335,8 +318,8 @@ namespace CircuitAppUI
         private void MoveToElement(TreeNode targetNode, TreeNode draggedNode,
             TreeNode draggedNodeParent, TreeNode targetNodeParent)
         {
-            //TODO: var
-            ChooseConnectionTypeForm form = new ChooseConnectionTypeForm();
+            //TODO: var (done)
+            var form = new ChooseConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
             {
@@ -371,14 +354,14 @@ namespace CircuitAppUI
                     }
                     circuit.SubSegments.Remove(targetNode.Tag as ISegment);
                 }
-                ReBuildTree();
+                RebuildTree();
             }
         }
 
         private void circuitElementsTreeView_DragDrop(object sender, DragEventArgs e)
         {
-            //TODO: var
-            Point targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
+            //TODO: var (done)
+            var targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = circuitElementsTreeView.GetNodeAt(targetPoint);
             if (targetNode == null)
             {
@@ -519,7 +502,7 @@ namespace CircuitAppUI
                     circuitsComboBox.SelectedIndex = 0;
                 }
                 ReBindDataSources();
-                ReBuildTree();
+                RebuildTree();
                 if (circuitElementsTreeView.Nodes.Count != 0)
                 {
                     circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
@@ -583,7 +566,7 @@ namespace CircuitAppUI
                         return;
                     }
                 }
-                ReBuildTree();
+                RebuildTree();
             }
         }
 
@@ -596,7 +579,7 @@ namespace CircuitAppUI
                 return;
             }
             _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments.Add(form.Type);
-            ReBuildTree();
+            RebuildTree();
         }
 
         private void editElementButton_Click(object sender, EventArgs e)
@@ -685,7 +668,7 @@ namespace CircuitAppUI
 
         private void ChooseTreeNodeAfterReplace(List<int> path)
         {
-            ReBuildTree();
+            RebuildTree();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0].Nodes[path[0]];
             foreach (var index in path.Skip(1))
             {
@@ -736,7 +719,7 @@ namespace CircuitAppUI
                 circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
                 _project.ImpedanceZ.Add(new List<Complex>());
                 _project.Frequencies.Add(new List<double>());
-                ReBuildTree();
+                RebuildTree();
             }
 
         }
@@ -755,7 +738,7 @@ namespace CircuitAppUI
                 circuitsComboBox.DataSource = _project.Circuits;
                 circuitsComboBox.DisplayMember = "Name";
                 circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
-                ReBuildTree();
+                RebuildTree();
             }
         }
     }

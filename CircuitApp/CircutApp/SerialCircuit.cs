@@ -11,6 +11,7 @@ namespace CircutApp
     /// <inheritdoc cref="Segment"/>
     public class SerialCircuit : Segment
     {
+        public override string Name { get; } = "Serial segment";
         public override Complex CalculateZ(double frequency)
         {
             return SubSegments.Aggregate<ISegment, Complex>(0, (current, segment) => 
