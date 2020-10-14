@@ -157,11 +157,11 @@ namespace CircuitAppUI
         {
             foreach (var segment in subSegments)
             {
-               BuildTree(currentNode,segment);
+               DefineTreeNode(currentNode,segment);
             }
         }
         //TODO: DefineTreeNode()?
-        private void BuildTree(TreeNode currentNode, ISegment segment)
+        private void DefineTreeNode(TreeNode currentNode, ISegment segment)
         {
             var node = new TreeNode();
             switch (segment)
@@ -191,7 +191,7 @@ namespace CircuitAppUI
             {
                 foreach (var s in segment.SubSegments)
                 {
-                    BuildTree(currentNode.LastNode, s);
+                    DefineTreeNode(currentNode.LastNode, s);
                 }
             }
         }
