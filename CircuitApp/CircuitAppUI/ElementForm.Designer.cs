@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.capacitorTypeRadioButton = new System.Windows.Forms.RadioButton();
-            this.inductorTypeRadioButton = new System.Windows.Forms.RadioButton();
-            this.resistorTypeRadioButton = new System.Windows.Forms.RadioButton();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.typeLabel = new System.Windows.Forms.Label();
@@ -39,14 +36,13 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.valueTextBox = new System.Windows.Forms.TextBox();
             this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.capacitorTypeRadioButton);
-            this.panel1.Controls.Add(this.inductorTypeRadioButton);
-            this.panel1.Controls.Add(this.resistorTypeRadioButton);
+            this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.cancelButton);
             this.panel1.Controls.Add(this.okButton);
             this.panel1.Controls.Add(this.typeLabel);
@@ -57,45 +53,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(371, 246);
+            this.panel1.Size = new System.Drawing.Size(348, 168);
             this.panel1.TabIndex = 1;
-            // 
-            // capacitorTypeRadioButton
-            // 
-            this.capacitorTypeRadioButton.AutoSize = true;
-            this.capacitorTypeRadioButton.Location = new System.Drawing.Point(110, 146);
-            this.capacitorTypeRadioButton.Name = "capacitorTypeRadioButton";
-            this.capacitorTypeRadioButton.Size = new System.Drawing.Size(89, 21);
-            this.capacitorTypeRadioButton.TabIndex = 12;
-            this.capacitorTypeRadioButton.TabStop = true;
-            this.capacitorTypeRadioButton.Text = "Capacitor";
-            this.capacitorTypeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // inductorTypeRadioButton
-            // 
-            this.inductorTypeRadioButton.AutoSize = true;
-            this.inductorTypeRadioButton.Location = new System.Drawing.Point(110, 119);
-            this.inductorTypeRadioButton.Name = "inductorTypeRadioButton";
-            this.inductorTypeRadioButton.Size = new System.Drawing.Size(80, 21);
-            this.inductorTypeRadioButton.TabIndex = 11;
-            this.inductorTypeRadioButton.TabStop = true;
-            this.inductorTypeRadioButton.Text = "Inductor";
-            this.inductorTypeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // resistorTypeRadioButton
-            // 
-            this.resistorTypeRadioButton.AutoSize = true;
-            this.resistorTypeRadioButton.Location = new System.Drawing.Point(110, 92);
-            this.resistorTypeRadioButton.Name = "resistorTypeRadioButton";
-            this.resistorTypeRadioButton.Size = new System.Drawing.Size(81, 21);
-            this.resistorTypeRadioButton.TabIndex = 10;
-            this.resistorTypeRadioButton.TabStop = true;
-            this.resistorTypeRadioButton.Text = "Resistor";
-            this.resistorTypeRadioButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(191, 187);
+            this.cancelButton.Location = new System.Drawing.Point(185, 110);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 9;
@@ -105,7 +68,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(110, 187);
+            this.okButton.Location = new System.Drawing.Point(104, 110);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 8;
@@ -116,7 +79,7 @@
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(62, 92);
+            this.typeLabel.Location = new System.Drawing.Point(39, 83);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(44, 17);
             this.typeLabel.TabIndex = 5;
@@ -125,7 +88,7 @@
             // valueLabel
             // 
             this.valueLabel.AutoSize = true;
-            this.valueLabel.Location = new System.Drawing.Point(58, 66);
+            this.valueLabel.Location = new System.Drawing.Point(35, 55);
             this.valueLabel.Name = "valueLabel";
             this.valueLabel.Size = new System.Drawing.Size(48, 17);
             this.valueLabel.TabIndex = 4;
@@ -134,7 +97,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(58, 38);
+            this.nameLabel.Location = new System.Drawing.Point(34, 27);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(49, 17);
             this.nameLabel.TabIndex = 3;
@@ -142,7 +105,7 @@
             // 
             // valueTextBox
             // 
-            this.valueTextBox.Location = new System.Drawing.Point(110, 66);
+            this.valueTextBox.Location = new System.Drawing.Point(89, 52);
             this.valueTextBox.Name = "valueTextBox";
             this.valueTextBox.Size = new System.Drawing.Size(171, 22);
             this.valueTextBox.TabIndex = 1;
@@ -151,21 +114,27 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(110, 38);
+            this.nameTextBox.Location = new System.Drawing.Point(89, 24);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(171, 22);
             this.nameTextBox.TabIndex = 0;
             this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             this.nameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.nameTextBox_Validating);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(89, 80);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(171, 24);
+            this.comboBox1.TabIndex = 10;
+            // 
             // ElementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 246);
+            this.ClientSize = new System.Drawing.Size(348, 168);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(389, 293);
-            this.MinimumSize = new System.Drawing.Size(389, 293);
             this.Name = "ElementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Element";
@@ -179,9 +148,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton capacitorTypeRadioButton;
-        private System.Windows.Forms.RadioButton inductorTypeRadioButton;
-        private System.Windows.Forms.RadioButton resistorTypeRadioButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label typeLabel;
@@ -189,5 +155,6 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.TextBox valueTextBox;
         private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

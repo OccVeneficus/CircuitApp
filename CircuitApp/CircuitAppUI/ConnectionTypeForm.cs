@@ -6,6 +6,9 @@ namespace CircuitAppUI
 {
     //TODO: верстка
     //TODO: xml
+    /// <summary>
+    /// Form for choosing connection type
+    /// </summary>
     public partial class ConnectionTypeForm : Form
     {
         //TODO: именование(done)
@@ -13,39 +16,41 @@ namespace CircuitAppUI
         public ConnectionTypeForm()
         {
             InitializeComponent();
+            serialRadioButton.Checked = true;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close()
-            if (parallelRadioButton.Checked)
-            {
-                Type = new ParallelSegment();
-                serialRadioButton.Checked = false; //TODO: зачем сбрасывать перед закрытием?
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else if (serialRadioButton.Checked)
-            {
-                Type = new SerialSegment();
-                parallelRadioButton.Checked = false;
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else
-            { //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?
-                MessageBox.Show(@"You must choose connection type first.",
-                    @"Type not chosen", MessageBoxButtons.OK);
-            }
+            //TODO: зачем сбрасывать перед закрытием?(done)
+            DialogResult = DialogResult.OK;
+            Close();
+            //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        private void ChooseConnectionTypeForm_Shown(object sender, EventArgs e)
+        private void parallelRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (parallelRadioButton.Checked)
+            {
+                Type = new ParallelSegment();
+            }
+        }
+
+        private void serialRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (serialRadioButton.Checked)
+            {
+                Type = new SerialSegment();
+            }
+        }
+
+        private void ConnectionTypeForm_Load(object sender, EventArgs e)
         {
             if (Type is ParallelSegment)
             {
@@ -56,9 +61,9 @@ namespace CircuitAppUI
                 serialRadioButton.Checked = true;
             }
             else
-            { 
-                //TODO: здесь должно кидаться исключение на случай добавления новых радиобаттонов на форму
-                serialRadioButton.Checked = true;
+            {
+                //TODO: здесь должно кидаться исключение на случай добавления новых радиобаттонов на форму (done)
+                throw new ArgumentException("Failed to choose segment connection type");
             }
         }
     }

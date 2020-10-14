@@ -434,7 +434,7 @@ namespace CircuitAppUI
                 {
                     segment.SubSegments.Add(newElement as ISegment);
                 } 
-                //TODO: одинаковые ветки - избавиться с помощью полиморфизма}
+                //TODO: одинаковые ветки - избавиться с помощью полиморфизма} (done)
                 else if (circuitElementsTreeView.SelectedNode.Tag is Element element)
                 {
                     ConnectionTypeForm connectionForm = new ConnectionTypeForm();
@@ -447,7 +447,7 @@ namespace CircuitAppUI
                             connectionForm.Type.SubSegments.Add(element);
                             parentSegment.SubSegments.Remove(element);
                             parentSegment.SubSegments.Add(connectionForm.Type);
-                        } //TODO: избавиться от дублирования
+                        } //TODO: избавиться от дублирования (done)
                     }
                     else
                     {
@@ -474,12 +474,10 @@ namespace CircuitAppUI
         {
             if (circuitElementsTreeView.SelectedNode.Tag is Element element)
             {
-                var form = new ElementForm
-                {
-                    ElementType = element.GetType(),
-                    ElementName = element.Name,
-                    ElementValue = element.Value
-                };
+                var form = new ElementForm();
+                form.ElementType = element.GetType();
+                form.ElementName = element.Name;
+                form.ElementValue = element.Value;
                 form.ShowDialog();
                 if (form.DialogResult == DialogResult.OK)
                 {
@@ -494,10 +492,8 @@ namespace CircuitAppUI
             }
             else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
             {
-                ConnectionTypeForm connectionForm = new ConnectionTypeForm
-                {
-                    Type = segment
-                };
+                var connectionForm = new ConnectionTypeForm();
+                connectionForm.Type = segment;
                 connectionForm.ShowDialog();
                 if (connectionForm.DialogResult == DialogResult.OK)
                 {

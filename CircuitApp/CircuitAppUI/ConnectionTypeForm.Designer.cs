@@ -77,9 +77,9 @@
             this.serialRadioButton.Name = "serialRadioButton";
             this.serialRadioButton.Size = new System.Drawing.Size(139, 21);
             this.serialRadioButton.TabIndex = 1;
-            this.serialRadioButton.TabStop = true;
             this.serialRadioButton.Text = "Serial to choosen";
             this.serialRadioButton.UseVisualStyleBackColor = true;
+            this.serialRadioButton.CheckedChanged += new System.EventHandler(this.serialRadioButton_CheckedChanged);
             // 
             // parallelRadioButton
             // 
@@ -91,6 +91,7 @@
             this.parallelRadioButton.TabStop = true;
             this.parallelRadioButton.Text = "Parallel to choosen";
             this.parallelRadioButton.UseVisualStyleBackColor = true;
+            this.parallelRadioButton.CheckedChanged += new System.EventHandler(this.parallelRadioButton_CheckedChanged);
             // 
             // ConnectionTypeForm
             // 
@@ -103,7 +104,7 @@
             this.Name = "ConnectionTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add as...";
-            this.Shown += new System.EventHandler(this.ChooseConnectionTypeForm_Shown);
+            this.Load += new System.EventHandler(this.ConnectionTypeForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

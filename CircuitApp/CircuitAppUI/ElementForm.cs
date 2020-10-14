@@ -79,18 +79,18 @@ namespace CircuitAppUI
                 return;
             }
 
-            if (resistorTypeRadioButton.Checked)
-            {
-                ElementType = typeof(Resistor);
-            }
-            else if (inductorTypeRadioButton.Checked)
-            {
-                ElementType = typeof(Inductor);
-            }
-            else if (capacitorTypeRadioButton.Checked)
-            {
-                ElementType = typeof(Capacitor);
-            }
+            //if (resistorTypeRadioButton.Checked)
+            //{
+            //    ElementType = typeof(Resistor);
+            //}
+            //else if (inductorTypeRadioButton.Checked)
+            //{
+            //    ElementType = typeof(Inductor);
+            //}
+            //else if (capacitorTypeRadioButton.Checked)
+            //{
+            //    ElementType = typeof(Capacitor);
+            //}
             DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -104,22 +104,22 @@ namespace CircuitAppUI
         {
             nameTextBox.Text = ElementName;
             valueTextBox.Text = ElementValue.ToString();
-            if (ElementType == typeof(Resistor))
-            {
-                resistorTypeRadioButton.Checked = true;
-            }
-            else if (ElementType == typeof(Capacitor))
-            {
-                capacitorTypeRadioButton.Checked = true;
-            }
-            else if (ElementType == typeof(Inductor))
-            {
-                inductorTypeRadioButton.Checked = true;
-            }
-            else
-            {
-                resistorTypeRadioButton.Checked = true;
-            }
+            //if (ElementType == typeof(Resistor))
+            //{
+            //    resistorTypeRadioButton.Checked = true;
+            //}
+            //else if (ElementType == typeof(Capacitor))
+            //{
+            //    capacitorTypeRadioButton.Checked = true;
+            //}
+            //else if (ElementType == typeof(Inductor))
+            //{
+            //    inductorTypeRadioButton.Checked = true;
+            //}
+            //else
+            //{
+            //    resistorTypeRadioButton.Checked = true;
+            //}
         }
     }
 }
