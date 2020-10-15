@@ -52,12 +52,12 @@ namespace CircutApp
             Circuits[0].SubSegments[0].SubSegments.Add(new Resistor() { Name = "R1", Value = 15.5});
             Circuits[0].SubSegments[0].SubSegments.Add(new Resistor() { Name = "R2", Value = 30.55 });
             Circuits[0].SubSegments[0].SubSegments.Add(new ParallelSegment());
-            Circuits[0].SubSegments[0].SubSegments.Add(new Resistor() { Name = "C1", Value = 6e-7 });
+            Circuits[0].SubSegments[0].SubSegments.Add(new Capacitor() { Name = "C1", Value = 6e-7 });
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments.Add(new Resistor(){Name = "R3", Value = 10});
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments.Add(new Inductor() { Name = "L1", Value = 0.0125});
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments.Add(new SerialSegment());
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new Resistor(){Name = "R4",Value = 12.13});
-            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new Inductor() { Name = "L2", Value = 0.005});
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new Capacitor() { Name = "C2", Value = 0.005});
             Circuits[0].SubSegments[0].SubSegments.Add(new ParallelSegment());
             Circuits[0].SubSegments[0].SubSegments[4].SubSegments.Add(new Resistor(){Name = "R5",Value = 90.54});
             Circuits[0].SubSegments[0].SubSegments[4].SubSegments.Add(new Resistor() { Name = "R6", Value = 13.12 });

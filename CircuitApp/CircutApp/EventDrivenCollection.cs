@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -26,14 +27,10 @@ namespace CircutApp
         private void FullEventDrivenCollectionChanged(object sender,
             NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
+            if (e == null)
             {
-                foreach (var item in e.NewItems)
-                {
-                    ((INotifyPropertyChanged) item).PropertyChanged += ItemPropertyChanged;
-                }
+                return;
             }
-
             if (e.OldItems != null)
             {
                 foreach (var item in e.OldItems)
@@ -41,6 +38,15 @@ namespace CircutApp
                     ((INotifyPropertyChanged)item).PropertyChanged -= ItemPropertyChanged;
                 }
             }
+
+            if (e.NewItems == null) return;
+            {
+                foreach (var item in e.NewItems)
+                {
+                    ((INotifyPropertyChanged) item).PropertyChanged += ItemPropertyChanged;
+                }
+            }
+
         }
 
         /// <summary>
