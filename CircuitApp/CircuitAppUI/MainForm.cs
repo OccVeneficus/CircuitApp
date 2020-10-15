@@ -486,7 +486,7 @@ namespace CircuitAppUI
                     ((Element) editElement).Name = form.ElementName;
                     circuitElementsTreeView.SelectedNode.Tag = editElement;
                     ReplaceElement(circuitElementsTreeView.SelectedNode,
-                        _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                        _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments,
                         editElement as ISegment);
                 }
             }

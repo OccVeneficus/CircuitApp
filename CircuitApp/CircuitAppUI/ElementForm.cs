@@ -24,6 +24,10 @@ namespace CircuitAppUI
         public ElementForm()
         {
             InitializeComponent();
+            elementTypeComboBox.Items.Add(typeof(Resistor));
+            elementTypeComboBox.Items.Add(typeof(Capacitor));
+            elementTypeComboBox.Items.Add(typeof(Inductor));
+            elementTypeComboBox.DisplayMember = "Name";
         }
 
         private void nameTextBox_Validating(object sender, CancelEventArgs e)
@@ -44,7 +48,6 @@ namespace CircuitAppUI
             else
             {
                 nameTextBox.BackColor = Color.White;
-                ElementName = nameTextBox.Text;
             }
         }
 
@@ -52,12 +55,17 @@ namespace CircuitAppUI
         {
             //TODO: аналогичная проверка в MainForm - избавиться от дублирования
             //TODO: вообще, не очевидно, что проверяется условием, пояснить комментарием
+
+            //If pressed key button isn't control, number or "." then consider event handled. 
+            //This will prevent char from getting into TextBox.Text
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
 
+            //If pressed key button was '.' and there is already '.' in TextBox.Text then consider event handled.
+            //This will prevent char from getting into TextBox.Text
             if ((e.KeyChar == '.') && (valueTextBox.Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
@@ -67,7 +75,7 @@ namespace CircuitAppUI
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -78,48 +86,23 @@ namespace CircuitAppUI
                     MessageBoxButtons.OK);
                 return;
             }
-
-            //if (resistorTypeRadioButton.Checked)
-            //{
-            //    ElementType = typeof(Resistor);
-            //}
-            //else if (inductorTypeRadioButton.Checked)
-            //{
-            //    ElementType = typeof(Inductor);
-            //}
-            //else if (capacitorTypeRadioButton.Checked)
-            //{
-            //    ElementType = typeof(Capacitor);
-            //}
+            ElementName = nameTextBox.Text;
+            ElementValue = Convert.ToDouble(valueTextBox.Text, CultureInfo.InvariantCulture);
+            ElementType = (Type)elementTypeComboBox.SelectedItem;
             DialogResult = DialogResult.OK;
-            this.Close();
+            Close();
         }
 
-        private void valueTextBox_TextChanged(object sender, EventArgs e)
-        {
-            ElementValue = Convert.ToDouble(valueTextBox.Text,CultureInfo.InvariantCulture);
-        }
-
-        private void AddEditElementForm_Shown(object sender, EventArgs e)
+        private void ElementForm_Load(object sender, EventArgs e)
         {
             nameTextBox.Text = ElementName;
-            valueTextBox.Text = ElementValue.ToString();
-            //if (ElementType == typeof(Resistor))
-            //{
-            //    resistorTypeRadioButton.Checked = true;
-            //}
-            //else if (ElementType == typeof(Capacitor))
-            //{
-            //    capacitorTypeRadioButton.Checked = true;
-            //}
-            //else if (ElementType == typeof(Inductor))
-            //{
-            //    inductorTypeRadioButton.Checked = true;
-            //}
-            //else
-            //{
-            //    resistorTypeRadioButton.Checked = true;
-            //}
+            valueTextBox.Text = ElementValue.ToString(CultureInfo.InvariantCulture);
+            elementTypeComboBox.SelectedItem = ElementType ?? typeof(Resistor);
+        }
+
+        private void valueTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            ElementValue = Convert.ToDouble(valueTextBox.Text, CultureInfo.InvariantCulture);
         }
     }
 }
