@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace CircuitAppUnitTests
 {
     [TestFixture]
-    public class ParallelCircuitTest
+    public class ParallelSegmentTest
     {
         private ParallelSegment _parallelSegment;
 
@@ -14,7 +14,7 @@ namespace CircuitAppUnitTests
             _parallelSegment = new ParallelSegment();
         }
 
-        [Test(Description = "Test CalculateZ method in parallel segment")]
+        [Test(Description = "Test CalculateImpedance method in parallel segment")]
         public void ParallelCircuitCalculateZTest()
         {
             Initialize();
@@ -23,16 +23,16 @@ namespace CircuitAppUnitTests
             _parallelSegment.SubSegments.Add(c1);
             _parallelSegment.SubSegments.Add(c2);
             Complex expected = new Complex(0, -198.94367886486916);
-            Complex actual = _parallelSegment.CalculateZ(100.0);
+            Complex actual = _parallelSegment.CalculateImpedance(100.0);
             Assert.AreEqual(expected, actual, "Wrong calculations");
         }
 
-        [Test(Description = "Test CalculateZ method when subsegments are empty")]
+        [Test(Description = "Test CalculateImpedance method when subsegments are empty")]
         public void ParallelCircuitCalculateZWithEmptySubSegmentsTest()
         {
             Initialize();
             Complex expected = Complex.Zero;
-            Complex actual = _parallelSegment.CalculateZ(100);
+            Complex actual = _parallelSegment.CalculateImpedance(100);
             Assert.AreEqual(expected,actual,"Return wasn't zero for empty segment");
         }
 
@@ -45,6 +45,15 @@ namespace CircuitAppUnitTests
                 => wasCalled = true;
             _parallelSegment.SubSegments.Add(new Resistor());
             Assert.IsTrue(wasCalled,"Event wasn't called");
+        }
+
+        [Test(Description = "Test Name property")]
+        public void ParallelSegmentName_Test()
+        {
+            Initialize();
+            var expected = "Parallel segment";
+            var actual = _parallelSegment.Name;
+            Assert.AreEqual(expected,actual,"Wrong default segment name");
         }
     }
 }

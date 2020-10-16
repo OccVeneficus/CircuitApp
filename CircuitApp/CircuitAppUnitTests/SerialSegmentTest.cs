@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace CircuitAppUnitTests
 {
     [TestFixture]
-    public class SerialCircuitTest
+    public class SerialSegmentTest
     {
         private SerialSegment _serialSegment;
 
@@ -19,7 +19,7 @@ namespace CircuitAppUnitTests
             _serialSegment = new SerialSegment();
         }
 
-        [Test(Description = "Serial circuit CalculateZ method test")]
+        [Test(Description = "Serial circuit CalculateImpedance method test")]
         public void SerialCircuitCalculateZTest()
         {
             Initialize();
@@ -30,7 +30,7 @@ namespace CircuitAppUnitTests
             _serialSegment.SubSegments.Add(R1);
             _serialSegment.SubSegments.Add(L1);
             _serialSegment.SubSegments.Add(C1);
-            Complex actual = _serialSegment.CalculateZ(50.0);
+            Complex actual = _serialSegment.CalculateImpedance(50.0);
             Assert.AreEqual(expected, actual, "Wrong impedance calculations");
         }
 
@@ -42,6 +42,15 @@ namespace CircuitAppUnitTests
             _serialSegment.PropertyChanged += (o, e) => wasCalled = true;
             _serialSegment.SubSegments.Add(new Resistor());
             Assert.IsTrue(wasCalled,"Event wasn't called");
+        }
+
+        [Test(Description = "Test Name property")]
+        public void ParallelSegmentName_Test()
+        {
+            Initialize();
+            var expected = "Serial segment";
+            var actual = _serialSegment.Name;
+            Assert.AreEqual(expected, actual, "Wrong default segment name");
         }
     }
 }

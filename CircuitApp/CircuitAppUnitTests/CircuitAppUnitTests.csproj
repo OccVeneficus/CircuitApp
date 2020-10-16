@@ -52,11 +52,11 @@
     <Compile Include="ElementHeir.cs" />
     <Compile Include="ElementTests.cs" />
     <Compile Include="InductorTest.cs" />
-    <Compile Include="ParallelCircuitTest.cs" />
+    <Compile Include="ParallelSegmentTest.cs" />
     <Compile Include="ProjectTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResistorTest.cs" />
-    <Compile Include="SerialCircuitTest.cs" />
+    <Compile Include="SerialSegmentTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CircutApp\CircutApp.csproj">

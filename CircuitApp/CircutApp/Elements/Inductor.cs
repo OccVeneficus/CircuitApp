@@ -9,7 +9,7 @@ namespace CircutApp
     /// <inheritdoc cref="ISegment"/>
     public class Inductor : Element
     {
-        public override Complex CalculateZ(double frequency)
+        public override Complex CalculateImpedance(double frequency)
         {
             return (Complex)2 * Math.PI * frequency * Value * Complex.ImaginaryOne;
         }

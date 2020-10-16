@@ -20,7 +20,7 @@ namespace CircuitAppUnitTests
             Initialize();
             _inductor.Value = 0.015;
             Complex expected = new Complex(0, 9.42477796076938);
-            Complex actual = _inductor.CalculateZ(100.0);
+            Complex actual = _inductor.CalculateImpedance(100.0);
             Assert.AreEqual(expected,actual,"Impedance wrong calculation");
         }
     }

@@ -6,7 +6,7 @@ namespace CircuitAppUnitTests
 {
     class ElementHeir : Element
     {
-        public override Complex CalculateZ(double frequency)
+        public override Complex CalculateImpedance(double frequency)
         {
             throw new NotImplementedException();
         }

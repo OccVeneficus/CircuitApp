@@ -13,7 +13,7 @@ namespace CircutApp
         /// </summary>
         /// <param name="frequency">on what frequency calculate</param>
         /// <returns></returns>
-        Complex CalculateZ(double frequency);
+        Complex CalculateImpedance(double frequency);
 
         /// <summary>
         /// SubSegments collection

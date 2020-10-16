@@ -8,8 +8,8 @@ using CircutApp;
 namespace CircuitAppUI
 {
     //TODO: именование (done)
-    //TODO: xml
-    //TODO: верстка
+    //TODO: xml (done)
+    //TODO: верстка (done)
     /// <summary>
     /// Form for adding/editing circuit elements
     /// </summary>
@@ -53,23 +53,9 @@ namespace CircuitAppUI
 
         private void valueTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //TODO: аналогичная проверка в MainForm - избавиться от дублирования
-            //TODO: вообще, не очевидно, что проверяется условием, пояснить комментарием
-
-            //If pressed key button isn't control, number or "." then consider event handled. 
-            //This will prevent char from getting into TextBox.Text
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            //If pressed key button was '.' and there is already '.' in TextBox.Text then consider event handled.
-            //This will prevent char from getting into TextBox.Text
-            if ((e.KeyChar == '.') && (valueTextBox.Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
+            //TODO: аналогичная проверка в MainForm - избавиться от дублирования (done)
+            //TODO: вообще, не очевидно, что проверяется условием, пояснить комментарием (done)
+            KeyPressChecking.CheckForDouble(sender, e);
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

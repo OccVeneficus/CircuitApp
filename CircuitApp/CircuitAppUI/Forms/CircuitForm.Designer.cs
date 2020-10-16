@@ -36,15 +36,15 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(108, 31);
+            this.nameTextBox.Location = new System.Drawing.Point(72, 22);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(156, 22);
+            this.nameTextBox.Size = new System.Drawing.Size(220, 22);
             this.nameTextBox.TabIndex = 0;
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(56, 34);
+            this.nameLabel.Location = new System.Drawing.Point(20, 25);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(49, 17);
             this.nameLabel.TabIndex = 1;
@@ -52,7 +52,8 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(108, 71);
+            this.okButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.okButton.Location = new System.Drawing.Point(91, 61);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -62,7 +63,8 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(189, 71);
+            this.cancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cancelButton.Location = new System.Drawing.Point(172, 61);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -74,13 +76,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 126);
+            this.ClientSize = new System.Drawing.Size(321, 96);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
-            this.MaximumSize = new System.Drawing.Size(369, 173);
-            this.MinimumSize = new System.Drawing.Size(369, 173);
+            this.MaximumSize = new System.Drawing.Size(339, 143);
+            this.MinimumSize = new System.Drawing.Size(339, 143);
             this.Name = "CircuitForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Circuit";

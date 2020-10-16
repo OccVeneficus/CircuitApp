@@ -46,7 +46,7 @@ namespace CircuitAppUnitTests
             Assert.IsTrue(wasCalled);
         }
 
-        [Test(Description = "Checking CalculateZ method")]
+        [Test(Description = "Checking CalculateImpedance method")]
         public void TestCircuitCalculateZ_ValidData()
         {
             InitiateCircuit();
@@ -60,7 +60,7 @@ namespace CircuitAppUnitTests
             s.SubSegments.Add(r1);
             s.SubSegments.Add(p);
             _circuit.SubSegments.Add(s);
-            List<Complex> result = _circuit.CalculateZ(new List<double>()
+            List<Complex> result = _circuit.CalculateImpedances(new List<double>()
                 {100, 200, 300});
             List<Complex> trueResult = new List<Complex>()
             {
@@ -71,12 +71,12 @@ namespace CircuitAppUnitTests
             CollectionAssert.AreEqual(result,trueResult, "Wrong calculations");
         }
 
-        [Test(Description = "Checking CalculateZ method with empty subsegments")]
+        [Test(Description = "Checking CalculateImpedance method with empty subsegments")]
         public void TestCalculateZ_EmptySubSegments()
         {
             InitiateCircuit();
             List<Complex> expected = new List<Complex>() {Complex.Zero};
-            List<Complex> actual = _circuit.CalculateZ(new List<double>() {100.0});
+            List<Complex> actual = _circuit.CalculateImpedances(new List<double>() {100.0});
             CollectionAssert.AreEqual(expected,actual, "Method return not Complex.Zero with empty subsegments");
         }
     }

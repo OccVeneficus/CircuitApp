@@ -11,12 +11,12 @@ namespace CircuitAppUI
 {
     public partial class MainForm : Form
     {
-        private Project _project;
+        private readonly Project _project;
 
         public MainForm()
         {
             InitializeComponent();
-            //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта
+            //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта (done)
             _project = new Project();
             BindDefaultCircuitsChangeEvents();
             BindDataSources();
@@ -26,7 +26,7 @@ namespace CircuitAppUI
 
         private void BindDefaultCircuitsChangeEvents()
         {
-            //TODO: это не должно делаться в форме - сделай отдельный класс для инициализации проекта включая частоты и пр.
+            //TODO: это не должно делаться в форме - сделай отдельный класс для инициализации проекта включая частоты и пр.(done)
             for (int i = 0; i < 5; i++)
             {
                 _project.Circuits[i].CircuitChanged += Circuit_SegmentChanged;
@@ -49,7 +49,7 @@ namespace CircuitAppUI
         {
             _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                 _project.Circuits[circuitsComboBox.SelectedIndex]
-                    .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
+                    .CalculateImpedances(_project.Frequencies[circuitsComboBox.SelectedIndex]);
             RebindDataSources();
         }
 
@@ -92,32 +92,6 @@ namespace CircuitAppUI
             impedancesListBox.SelectedIndexChanged += impedancesListBox_SelectedIndexChanged;
         }
 
-        private void PopulateTree(TreeNode currentNode, EventDrivenCollection subSegments)
-        {
-            foreach (var segment in subSegments)
-            {
-               DefineTreeNode(currentNode,segment);
-            }
-        }
-        //TODO: DefineTreeNode() (done)?
-        private void DefineTreeNode(TreeNode currentNode, ISegment segment)
-        {
-            //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться (done)
-            var node = new TreeNode
-            {
-                Text = segment.Name,
-                Tag = segment
-            };
-            currentNode.Nodes.Add(node);
-            if (segment.SubSegments != null)
-            {
-                foreach (var s in segment.SubSegments)
-                {
-                    DefineTreeNode(currentNode.LastNode, s);
-                }
-            }
-        }
-
         private void RebuildTree()
         {
             circuitElementsTreeView.Nodes.Clear();
@@ -130,23 +104,14 @@ namespace CircuitAppUI
                 Tag = _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0],
                 Text = ((Circuit)circuitsComboBox.SelectedItem).Name
             });
-            PopulateTree(circuitElementsTreeView.Nodes[0],
+            TreeViewBuilder.PopulateTree(circuitElementsTreeView.Nodes[0],
                 _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments);
             circuitElementsTreeView.ExpandAll();
         }
 
         private void frequencyInputTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            if ((e.KeyChar == '.') && (frequencyInputTextBox.Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
+            KeyPressChecking.CheckForDouble(sender,e);
         }
 
         private void addFrequencyButton_Click(object sender, EventArgs e)
@@ -168,7 +133,7 @@ namespace CircuitAppUI
                 frequencyInputTextBox.Clear();
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                     _project.Circuits[circuitsComboBox.SelectedIndex]
-                        .CalculateZ(_project.Frequencies[circuitsComboBox.SelectedIndex]);
+                        .CalculateImpedances(_project.Frequencies[circuitsComboBox.SelectedIndex]);
                 RebindDataSources();
                 frequenciesListBox.SelectedIndex = frequenciesListBox.Items.Count - 1;
             }
@@ -250,31 +215,6 @@ namespace CircuitAppUI
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.GetNodeAt(targetPoint);
         }
 
-        private void MoveToElement(TreeNode targetNode, TreeNode draggedNode,
-            TreeNode draggedNodeParent, TreeNode targetNodeParent)
-        {
-            //TODO: var (done)
-            var form = new ConnectionTypeForm();
-            form.ShowDialog();
-            if (form.DialogResult == DialogResult.OK)
-            {
-                form.Type.SubSegments.Add(targetNode.Tag as ISegment);
-                form.Type.SubSegments.Add(draggedNode.Tag as ISegment);
-                (targetNodeParent.Tag as ISegment)?.SubSegments.Add(form.Type);
-                if (draggedNodeParent.Tag is ISegment s)
-                {
-                    s.SubSegments.Remove(draggedNode.Tag as ISegment);
-                }
-                else if (draggedNodeParent.Tag is Circuit c)
-                {
-                    c.SubSegments.Remove(draggedNode.Tag as ISegment);
-                }
-                (targetNodeParent.Tag as ISegment)?.SubSegments.Remove(targetNode.Tag as ISegment);
-                //TODO: здоровенный кусок кода дублируется только потому, что в качестве корня дерева используется не ISegment
-                RebuildTree();
-            }
-        }
-
         private void circuitElementsTreeView_DragDrop(object sender, DragEventArgs e)
         {
             //TODO: var (done)
@@ -288,64 +228,32 @@ namespace CircuitAppUI
             TreeNode draggedNodeParent = draggedNode.Parent;
             TreeNode targetNodeParent = targetNode.Parent;
             
-            if (!draggedNode.Equals(targetNode) && !ContainsNode(draggedNode, targetNode))
+            if (!draggedNode.Equals(targetNode) && !TreeViewBuilder.ContainsNode(draggedNode, targetNode))
             {
                 if (e.Effect == DragDropEffects.Move)
                 {
                     if (targetNode.Tag is Element)
                     {
-                        MoveToElement(targetNode,draggedNode,draggedNodeParent,targetNodeParent);
+                        TreeViewBuilder.MoveToElement(targetNode, draggedNode, draggedNodeParent, targetNodeParent);
+                        RebuildTree();
                         return;
                     }
                     (draggedNodeParent.Tag as ISegment)?.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    //TODO: опять ветвление из Circuit
+                    //TODO: опять ветвление из Circuit (done)
                     draggedNode.Remove();
                     targetNode.Nodes.Add(draggedNode);
                 }
 
-                (targetNode.Tag as ISegment)?.SubSegments.Add((ISegment)draggedNode.Tag); //TODO: и снова
+                (targetNode.Tag as ISegment)?.SubSegments.Add((ISegment)draggedNode.Tag); //TODO: и снова (done)
 
-                /*Remove empty segment*/
                 if (draggedNodeParent.Tag is Segment && draggedNodeParent.Nodes.Count == 0)
                 {
                     draggedNodeParent.Remove();
-                    RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                    TreeViewBuilder.SegmentRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
                         draggedNodeParent.Tag as ISegment);
                 }
                 targetNode.Expand();
             }
-        }
-
-        private void RecursiveRemove(EventDrivenCollection subSegments, ISegment toDelete)
-        {
-            if (subSegments == null)
-            {
-                return;
-            }
-            bool isDeleted = subSegments.Remove(toDelete);
-            if (!isDeleted)
-            {
-                foreach (var s in subSegments)
-                {
-                    RecursiveRemove(s.SubSegments,toDelete);
-                }
-            }
-        }
-
-        //TODO: мне кажется, работу с нодами надо вынести в отдельный класс. В главной форме слишком много логики. Либо бить окно на контролы
-        private bool ContainsNode(TreeNode node1, TreeNode node2)
-        {
-            if (node2.Parent == null)
-            {
-                return false;
-            }
-
-            if (node2.Parent.Equals(node1))
-            {
-                return true;
-            }
-
-            return ContainsNode(node1, node2.Parent);
         }
 
         private void circuitElementsTreeView_DragEnter(object sender, DragEventArgs e)
@@ -365,7 +273,7 @@ namespace CircuitAppUI
                 MessageBox.Show(@"Are you sure you want to permanently delete selected item?",
                     @"Delete segment", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                RecursiveRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
+                TreeViewBuilder.SegmentRemove(_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments,
                     circuitElementsTreeView.SelectedNode.Tag as ISegment);
                 circuitElementsTreeView.Nodes.Remove(circuitElementsTreeView.SelectedNode);
             }
@@ -466,7 +374,15 @@ namespace CircuitAppUI
             {
                 return;
             }
-            _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments.Add(form.Type);
+
+            if (circuitElementsTreeView.SelectedNode.Tag is Element element)
+            {
+                (circuitElementsTreeView.SelectedNode.Parent.Tag as Segment).SubSegments.Add(form.Type);
+            }
+            else
+            {
+                (circuitElementsTreeView.SelectedNode.Tag as Segment).SubSegments.Add(form.Type);
+            }
             RebuildTree();
         }
 
@@ -485,9 +401,10 @@ namespace CircuitAppUI
                     ((Element) editElement).Value = form.ElementValue;
                     ((Element) editElement).Name = form.ElementName;
                     circuitElementsTreeView.SelectedNode.Tag = editElement;
-                    ReplaceElement(circuitElementsTreeView.SelectedNode,
+                    var path = TreeViewBuilder.ReplaceElement(circuitElementsTreeView.SelectedNode,
                         _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments,
                         editElement as ISegment);
+                    ChooseTreeNodeAfterReplace(path);
                 }
             }
             else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
@@ -498,31 +415,12 @@ namespace CircuitAppUI
                 if (connectionForm.DialogResult == DialogResult.OK)
                 {
                     (connectionForm.Type as Segment).SubSegments = segment.SubSegments;
-                    ReplaceElement(circuitElementsTreeView.SelectedNode,
+                    var path = TreeViewBuilder.ReplaceElement(circuitElementsTreeView.SelectedNode,
                             _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments,
                             (connectionForm.Type as Segment));
+                    ChooseTreeNodeAfterReplace(path);
                 }
             }
-        }
-
-        private (List<int>, ISegment) FindPath(TreeNode currentNode,
-            EventDrivenCollection currentSegment)
-        {
-            var path = new List<int>();
-            while (currentNode.Parent != null)
-            {
-                path.Insert(0, currentNode.Index);
-                currentNode = currentNode.Parent;
-            }
-
-            ISegment segment = currentSegment[path[0]];
-
-            foreach (var index in path.Skip(1))
-            {
-                segment = segment.SubSegments[index];
-            }
-
-            return (path, segment);
         }
 
         private void ChooseTreeNodeAfterReplace(List<int> path)
@@ -534,33 +432,6 @@ namespace CircuitAppUI
                 circuitElementsTreeView.SelectedNode =
                     circuitElementsTreeView.SelectedNode.Nodes[index];
             }
-        }
-
-        private void ReplaceElement(TreeNode currentNode, EventDrivenCollection currentSegment,
-            ISegment replace)
-        {
-            var replaceNode = currentNode;
-            var pathAndItem = FindPath(currentNode, currentSegment);
-
-            RecursiveRemove(currentSegment, pathAndItem.Item2);
-
-            int replaceIndex = pathAndItem.Item1[pathAndItem.Item1.Count - 1];
-
-            if (replaceNode.Parent.Parent != null)
-            {
-                pathAndItem.Item1.RemoveAt(pathAndItem.Item1.Count - 1);
-                pathAndItem.Item2 = currentSegment[pathAndItem.Item1[0]];
-                foreach (var index in pathAndItem.Item1.Skip(1))
-                {
-                    pathAndItem.Item2 = pathAndItem.Item2.SubSegments[index];
-                }
-                pathAndItem.Item2.SubSegments.Insert(replaceIndex, replace);
-                pathAndItem.Item1.Add(replaceIndex);
-                ChooseTreeNodeAfterReplace(pathAndItem.Item1);
-                return;
-            }
-            currentSegment.Insert(replaceIndex, replace);
-            ChooseTreeNodeAfterReplace(pathAndItem.Item1);
         }
 
         private void addCircuitButton_Click(object sender, EventArgs e)

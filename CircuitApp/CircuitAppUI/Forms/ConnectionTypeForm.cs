@@ -21,11 +21,11 @@ namespace CircuitAppUI
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close()
+            //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close() (done)
             //TODO: зачем сбрасывать перед закрытием?(done)
             DialogResult = DialogResult.OK;
             Close();
-            //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?
+            //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?(done)
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

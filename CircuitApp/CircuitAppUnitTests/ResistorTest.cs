@@ -19,13 +19,13 @@ namespace CircuitAppUnitTests
             _resistor = new Resistor();
         }
 
-        [Test(Description = "Test resistor CalculateZ method")]
+        [Test(Description = "Test resistor CalculateImpedance method")]
         public void ResistorCalculateZTest()
         {
             Initialize();
             _resistor.Value = 30.0;
             Complex expected = new Complex(30.0,0);
-            Complex actual = _resistor.CalculateZ(32);
+            Complex actual = _resistor.CalculateImpedance(32);
             Assert.AreEqual(expected,actual,"Wrong impedance calculation");
         }
     }

@@ -7,7 +7,11 @@ namespace CircuitAppUI
     //TODO: именование (done)
     //TODO: xml
     //TODO: верстка
-    //TODO: то есть форма не создает цепь, а просто меняет имя?
+    //TODO: то есть форма не создает цепь, а просто меняет имя? 
+
+    /// <summary>
+    /// Form for editing/adding new circuit
+    /// </summary>
     public partial class CircuitForm : Form
     {
         public Circuit Circuit { get; set; }

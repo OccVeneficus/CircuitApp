@@ -34,6 +34,6 @@ namespace CircutApp
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public abstract Complex CalculateZ(double frequency);
+        public abstract Complex CalculateImpedance(double frequency);
     }
 }

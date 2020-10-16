@@ -10,10 +10,10 @@ namespace CircutApp
     public class SerialSegment : Segment
     {
         public override string Name { get; } = "Serial segment";
-        public override Complex CalculateZ(double frequency)
+        public override Complex CalculateImpedance(double frequency)
         {
             return SubSegments.Aggregate<ISegment, Complex>(0, (current, segment) => 
-                    current + segment.CalculateZ(frequency));
+                    current + segment.CalculateImpedance(frequency));
         }
     }
 }

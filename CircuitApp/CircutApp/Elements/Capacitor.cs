@@ -9,7 +9,7 @@ namespace CircutApp
     /// <inheritdoc cref="ISegment"/>
     public class Capacitor : Element
     {
-        public override Complex CalculateZ(double frequency)
+        public override Complex CalculateImpedance(double frequency)
         {
             return (Complex)(1 / (2 * Math.PI * frequency * Value * Complex.ImaginaryOne));
         }
