@@ -105,8 +105,14 @@ namespace CircuitAppUI
         {
             AddSubSegment(node);
             CircuitImage = Draw(node);
-            DrawParallelConnections(node, CircuitImage);
-            //DrawSerialConnections(node,CircuitImage);
+            if (node.Segment is ParallelSegment)
+            {
+                DrawParallelConnections(node,CircuitImage);
+            }
+            else if (node.Segment is SerialSegment)
+            {
+                DrawSerialConnections(node,CircuitImage);
+            }
             PictureGraphics.DrawImage(CircuitImage,new Point(50,50));
         }
 

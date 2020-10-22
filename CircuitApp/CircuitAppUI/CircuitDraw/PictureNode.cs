@@ -22,6 +22,8 @@ namespace CircuitAppUI.CircuitDraw
 
         public PictureNode Parent { get; set; }
 
+        public Size Size { get; set; }
+
         public List<PictureNode> SubNodes { get; set; } = new List<PictureNode>();
 
         public PictureNode(ISegment segment)

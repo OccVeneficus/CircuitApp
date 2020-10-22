@@ -483,8 +483,10 @@ namespace CircuitAppUI
             a.SubSegments[0].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new Capacitor());
             a.SubSegments[0].SubSegments.Add(new Inductor());
-            a.SubSegments[0].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new Inductor());
+            //a.SubSegments[0].SubSegments.Add(new ParallelSegment());
+            //a.SubSegments[0].SubSegments[3].SubSegments.Add(new Inductor());
+            //a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
+            //a.SubSegments[0].SubSegments[3].SubSegments.Add(new Inductor());
             CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
         }
     }
