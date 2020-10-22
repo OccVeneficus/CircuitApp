@@ -144,6 +144,7 @@
             this.MaximumSize = new System.Drawing.Size(299, 211);
             this.MinimumSize = new System.Drawing.Size(299, 211);
             this.Name = "ElementForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit Element";
             this.Load += new System.EventHandler(this.ElementForm_Load);

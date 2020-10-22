@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -62,7 +63,8 @@
             this.circuitElementsTreeView = new System.Windows.Forms.TreeView();
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.circuitPuctureBox = new System.Windows.Forms.PictureBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -77,7 +79,8 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circuitPuctureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -257,7 +260,6 @@
             // 
             // addFrequencyButton
             // 
-            this.addFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.addFrequencyButton.Location = new System.Drawing.Point(31, 66);
             this.addFrequencyButton.Name = "addFrequencyButton";
             this.addFrequencyButton.Size = new System.Drawing.Size(110, 27);
@@ -268,7 +270,6 @@
             // 
             // deleteFrequencyButton
             // 
-            this.deleteFrequencyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.deleteFrequencyButton.Location = new System.Drawing.Point(147, 66);
             this.deleteFrequencyButton.Name = "deleteFrequencyButton";
             this.deleteFrequencyButton.Size = new System.Drawing.Size(110, 27);
@@ -365,7 +366,7 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.panel6, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel7, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -461,21 +462,27 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.pictureBox1);
+            this.panel7.Controls.Add(this.circuitPuctureBox);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(391, 3);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(955, 512);
             this.panel7.TabIndex = 1;
             // 
-            // pictureBox1
+            // circuitPuctureBox
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(955, 512);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.circuitPuctureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.circuitPuctureBox.Location = new System.Drawing.Point(0, 0);
+            this.circuitPuctureBox.Name = "circuitPuctureBox";
+            this.circuitPuctureBox.Size = new System.Drawing.Size(955, 512);
+            this.circuitPuctureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.circuitPuctureBox.TabIndex = 0;
+            this.circuitPuctureBox.TabStop = false;
+            this.circuitPuctureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.circuitPuctureBox_Paint);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // MainForm
             // 
@@ -501,7 +508,8 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circuitPuctureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -525,7 +533,7 @@
         private System.Windows.Forms.TreeView circuitElementsTreeView;
         private System.Windows.Forms.ComboBox circuitsComboBox;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox circuitPuctureBox;
         private System.Windows.Forms.TextBox frequencyInputTextBox;
         private System.Windows.Forms.Button editCircuitButton;
         private System.Windows.Forms.Button removeCircuitButton;
@@ -542,6 +550,7 @@
         private System.Windows.Forms.TextBox elementTypeTextBox;
         private System.Windows.Forms.TextBox elementValueTextBox;
         private System.Windows.Forms.Button addSegmentButton;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 

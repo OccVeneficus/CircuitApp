@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
+using CircuitAppUI.CircuitDraw;
 
 namespace CircuitAppUI
 {
@@ -19,6 +20,7 @@ namespace CircuitAppUI
             //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта (done)
             _project = new Project();
             BindDefaultCircuitsChangeEvents();
+            CircuitDrawer.CircuitPictureBox = circuitPuctureBox;
             BindDataSources();
             RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
@@ -471,6 +473,19 @@ namespace CircuitAppUI
                 circuitsComboBox.SelectedIndexChanged += circuitsComboBox_SelectedIndexChanged;
                 RebuildTree();
             }
+        }
+
+        private void circuitPuctureBox_Paint(object sender, PaintEventArgs e)
+        {
+            CircuitDrawer.PictureGraphics = e.Graphics;
+            Circuit a = new Circuit();
+            a.SubSegments.Add(new ParallelSegment());
+            a.SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments.Add(new Capacitor());
+            a.SubSegments[0].SubSegments.Add(new Inductor());
+            a.SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments.Add(new Inductor());
+            CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
         }
     }
 }

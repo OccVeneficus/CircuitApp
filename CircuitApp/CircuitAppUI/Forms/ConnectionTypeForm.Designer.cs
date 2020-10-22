@@ -102,6 +102,7 @@
             this.MaximumSize = new System.Drawing.Size(307, 185);
             this.MinimumSize = new System.Drawing.Size(307, 185);
             this.Name = "ConnectionTypeForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add as...";
             this.Load += new System.EventHandler(this.ConnectionTypeForm_Load);
