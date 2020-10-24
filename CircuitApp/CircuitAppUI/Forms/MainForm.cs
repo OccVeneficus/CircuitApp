@@ -481,18 +481,17 @@ namespace CircuitAppUI
             Circuit a = new Circuit();
             a.SubSegments.Add(new SerialSegment());
             a.SubSegments[0].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new Capacitor());
-            a.SubSegments[0].SubSegments.Add(new Inductor());
-            a.SubSegments[0].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Inductor());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Inductor());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[4].SubSegments.Add(new Inductor());
-            a.SubSegments[0].SubSegments[4].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new Resistor());
-            CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
+            a.SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments.Add(new ParallelSegment());
+            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments.Add(new SerialSegment());
+            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments.Add(new ParallelSegment());
+            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
+            CircuitDrawer.DrawCircuit(new PictureNode(_project.Circuits[0].SubSegments[0]));
         }
     }
 }
