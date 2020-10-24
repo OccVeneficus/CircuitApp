@@ -34,19 +34,22 @@ namespace CircuitAppUI
 
         public static Bitmap CircuitImage { get; set; }
 
-        private static Size GetCircuitSize(PictureNode segment)
+        private static Size GetCircuitSize(PictureNode rootNode)
         {
             var size = new Size(0,0);
-            if (segment.Segment is SerialSegment)
+            if (rootNode.Segment is SerialSegment)
             {
-                size = GetSerialSegmentSize(segment);
+                size = GetSerialSegmentSize(rootNode);
             }
-            else if (segment.Segment is ParallelSegment)
+            else if (rootNode.Segment is ParallelSegment)
             {
-                size = GetParallelSegmentSize(segment);
-                //size.Height += ElementSize.Height;
-                //size.Width = size.Width < ElementSize.Width ? ElementSize.Width : size.Width;
+                size = GetParallelSegmentSize(rootNode);
             }
+            else if (rootNode.Segment is Element)
+            {
+                size = ElementSize;
+            }
+            rootNode.Size = size;
             return size;
         }
 
@@ -61,11 +64,23 @@ namespace CircuitAppUI
                 {
                     size.Height = size.Height < ElementSize.Height ? ElementSize.Height : size.Height;
                     size.Width += ElementSize.Width + 11;
+                    subNode.Size = ElementSize;
+                    subNode.NodeStartPoint = new Point(x, y);
+                    subNode.LeftConnectionPoint = new Point(x, ElementSize.Height / 2 + 1);
+                    subNode.RightConnectionPoint = new Point(x + ElementSize.Width, ElementSize.Height / 2 + 1);
+                    x += ElementSize.Width + 11;
                 }
-                subNode.NodeStartPoint = new Point(x, y);
-                subNode.LeftConnectionPoint = new Point(x, 26);
-                subNode.RightConnectionPoint = new Point(x + ElementSize.Width, 26);
-                x += ElementSize.Width + 11;
+                else if (subNode.Segment is ParallelSegment)
+                {
+                    var parallelSegmentSize = GetParallelSegmentSize(subNode);
+                    size.Height = size.Height < parallelSegmentSize.Height ? parallelSegmentSize.Height : size.Height;
+                    size.Width += parallelSegmentSize.Width + 11;
+                    subNode.Size = parallelSegmentSize;
+                    subNode.NodeStartPoint = new Point(x, y);
+                    subNode.LeftConnectionPoint = new Point(x, subNode.Size.Height / 2 + 1);
+                    subNode.RightConnectionPoint = new Point(x + subNode.Size.Width, subNode.Size.Height / 2 + 1);
+                    x += subNode.Size.Width + 11;
+                }
             }
 
             return size;
@@ -74,7 +89,7 @@ namespace CircuitAppUI
         private static Size GetParallelSegmentSize(PictureNode node)
         {
             var size = new Size(0,0);
-            var x = 15;
+            var x = 0;
             var y = 0;
             var yConnectionPoint = 26;
             foreach (var subNode in node.SubNodes)
@@ -82,7 +97,8 @@ namespace CircuitAppUI
                 if (subNode.Segment is Element)
                 {
                     size.Height += ElementSize.Height;
-                    size.Width = size.Width < ElementSize.Width +15 ? ElementSize.Width+30 : size.Width;
+                    size.Width = size.Width < ElementSize.Width ? ElementSize.Width : size.Width;
+                    subNode.Size = ElementSize;
                 }
                 subNode.NodeStartPoint = new Point(x,y);
                 subNode.LeftConnectionPoint = new Point(x,Math.Abs(yConnectionPoint));
@@ -90,6 +106,9 @@ namespace CircuitAppUI
                 y += ElementSize.Height;
                 yConnectionPoint += ElementSize.Height;
             }
+            node.LeftConnectionPoint = new Point(x,size.Height/2);
+            node.RightConnectionPoint = new Point(size.Width,size.Height/2);
+            node.Size = size;
             return size;
         }
 
@@ -97,23 +116,63 @@ namespace CircuitAppUI
         {
             foreach (var subSegment in rootNode.Segment.SubSegments)
             {
-                rootNode.SubNodes.Add(new PictureNode(subSegment));
+                var subNode = new PictureNode(subSegment);
+                rootNode.SubNodes.Add(subNode);
+                if (subSegment.SubSegments != null)
+                {
+                    AddSubSegment(subNode);
+                }
             }
         }
 
         public static void DrawCircuit(PictureNode node)
         {
             AddSubSegment(node);
-            CircuitImage = Draw(node);
+            var size = GetCircuitSize(node);
             if (node.Segment is ParallelSegment)
             {
-                DrawParallelConnections(node,CircuitImage);
+                CircuitImage = DrawParallelSegment(node);
             }
             else if (node.Segment is SerialSegment)
             {
-                DrawSerialConnections(node,CircuitImage);
+                CircuitImage = DrawSerialSegment(node);
             }
-            PictureGraphics.DrawImage(CircuitImage,new Point(50,50));
+            PictureGraphics.DrawImage(CircuitImage,new Point(10,CircuitPictureBox.Height/2 - CircuitImage.Height/2));
+        }
+
+        private static Bitmap DrawSerialSegment(PictureNode rootNode)
+        {
+            var size = rootNode.Size;
+            var image = new Bitmap(size.Width, size.Height);
+            var g = Graphics.FromImage(image);
+            foreach (var subNode in rootNode.SubNodes)
+            {
+                var subNodeImage = new Bitmap(subNode.Size.Width,subNode.Size.Height);
+                if (subNode.Segment is Element)
+                {
+                    subNodeImage = DrawElement(subNode);
+                }
+                else if (subNode.Segment is ParallelSegment)
+                {
+                    subNodeImage = DrawParallelSegment(subNode);
+                }
+                g.DrawImage(subNodeImage, subNode.NodeStartPoint);
+            }
+            DrawSerialConnections(rootNode,image);
+            return image;
+        }
+
+        private static Bitmap DrawParallelSegment(PictureNode rootNode)
+        {
+            var size = rootNode.Size;
+            var image = new Bitmap(size.Width, size.Height);
+            var g = Graphics.FromImage(image);
+            foreach (var subNode in rootNode.SubNodes)
+            {
+                g.DrawImage(DrawElement(subNode), subNode.NodeStartPoint);
+            }
+            DrawParallelConnections(rootNode,image);
+            return image;
         }
 
         private static void DrawParallelConnections(PictureNode node, Bitmap image)
@@ -123,15 +182,15 @@ namespace CircuitAppUI
                 node.SubNodes[node.SubNodes.Count-1].RightConnectionPoint);
             g.DrawLine(BlackPen, node.SubNodes[0].LeftConnectionPoint,
                 node.SubNodes[node.SubNodes.Count-1].LeftConnectionPoint);
-            if (node.SubNodes.Count % 2 != 0)
-            {
-                Point leftConnectionPoint = node.SubNodes[node.SubNodes.Count / 2].LeftConnectionPoint;
-                Point rightConnectionPoint = node.SubNodes[node.SubNodes.Count / 2].RightConnectionPoint;
-                g.DrawLine(BlackPen, leftConnectionPoint.X,leftConnectionPoint.Y,
-                    leftConnectionPoint.X - 10, leftConnectionPoint.Y);
-                g.DrawLine(BlackPen, rightConnectionPoint.X, rightConnectionPoint.Y,
-                    rightConnectionPoint.X + 10, rightConnectionPoint.Y);
-            }
+            //if (node.SubNodes.Count % 2 != 0)
+            //{
+            //    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X,node.LeftConnectionPoint.Y +1);
+            //    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X, node.RightConnectionPoint.Y + 1);
+            //}
+            //g.DrawLine(BlackPen, node.LeftConnectionPoint.X, node.LeftConnectionPoint.Y,
+            //    node.LeftConnectionPoint.X - 10, node.LeftConnectionPoint.Y);
+            //g.DrawLine(BlackPen, node.RightConnectionPoint.X, node.RightConnectionPoint.Y,
+            //    node.RightConnectionPoint.X + 10, node.RightConnectionPoint.Y);
         }
 
         private static void DrawSerialConnections(PictureNode node, Bitmap image)
@@ -144,27 +203,23 @@ namespace CircuitAppUI
             }
         }
 
-        public static Bitmap Draw(PictureNode node)
+        public static Bitmap DrawElement(PictureNode node)
         {
-            var size = GetCircuitSize(node);
+            var size = node.Size;
             var image = new Bitmap(size.Width,size.Height);
             var g = Graphics.FromImage(image);
-            foreach (var subNode in node.SubNodes)
-            {
-                if (subNode.Segment is Resistor)
-                {
-                    g.DrawImage(DrawResistor(), subNode.NodeStartPoint);
-                }
-                else if (subNode.Segment is Inductor)
-                {
-                    g.DrawImage(DrawInductor(), subNode.NodeStartPoint);
-                }
-                else if (subNode.Segment is Capacitor)
-                {
-                    g.DrawImage(DrawCapacitor(), subNode.NodeStartPoint);
-                }
+            if (node.Segment is Resistor)
+            { 
+                g.DrawImage(DrawResistor(), 0,0);
             }
-
+            else if (node.Segment is Inductor)
+            {
+                g.DrawImage(DrawInductor(), 0,0);
+            }
+            else if (node.Segment is Capacitor)
+            {
+                g.DrawImage(DrawCapacitor(), 0,0);
+            }
             return image;
         }
 
