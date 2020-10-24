@@ -86,6 +86,31 @@ namespace CircuitAppUI
             return size;
         }
 
+        private static void SetPoints(PictureNode rootNode)
+        {
+            foreach (var node in rootNode.SubNodes)
+            {
+                if (node.Segment is Element)
+                {
+                    node.NodeStartPoint = new Point(node.NodeStartPoint.X,
+                        rootNode.Size.Height/2 - ElementSize.Height/2);
+                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X,
+                        rootNode.Size.Height / 2 + 1);
+                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X,
+                        rootNode.Size.Height / 2 + 1);
+                }
+                else if (node.Segment is ParallelSegment && node.Size.Height < rootNode.Size.Height)
+                {
+                    node.NodeStartPoint = new Point(node.NodeStartPoint.X,
+                        rootNode.Size.Height / 2 - node.Size.Height / 2);
+                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X,
+                        rootNode.Size.Height / 2 + 1);
+                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X,
+                        rootNode.Size.Height / 2 + 1);
+                }
+            }
+        }
+
         private static Size GetParallelSegmentSize(PictureNode node)
         {
             var size = new Size(0,0);
@@ -129,6 +154,7 @@ namespace CircuitAppUI
         {
             AddSubSegment(node);
             var size = GetCircuitSize(node);
+            SetPoints(node);
             if (node.Segment is ParallelSegment)
             {
                 CircuitImage = DrawParallelSegment(node);
