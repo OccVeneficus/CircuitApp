@@ -64,7 +64,7 @@
             this.circuitElementsTreeView = new System.Windows.Forms.TreeView();
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.circuitPuctureBox = new System.Windows.Forms.PictureBox();
+            this.circuitPictureBox = new System.Windows.Forms.PictureBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -80,7 +80,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circuitPuctureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circuitPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -463,23 +463,23 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.circuitPuctureBox);
+            this.panel7.Controls.Add(this.circuitPictureBox);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(391, 3);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(955, 512);
             this.panel7.TabIndex = 1;
             // 
-            // circuitPuctureBox
+            // circuitPictureBox
             // 
-            this.circuitPuctureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.circuitPuctureBox.Location = new System.Drawing.Point(0, 0);
-            this.circuitPuctureBox.Name = "circuitPuctureBox";
-            this.circuitPuctureBox.Size = new System.Drawing.Size(955, 512);
-            this.circuitPuctureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.circuitPuctureBox.TabIndex = 0;
-            this.circuitPuctureBox.TabStop = false;
-            this.circuitPuctureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.circuitPuctureBox_Paint);
+            this.circuitPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.circuitPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.circuitPictureBox.Name = "circuitPictureBox";
+            this.circuitPictureBox.Size = new System.Drawing.Size(955, 512);
+            this.circuitPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.circuitPictureBox.TabIndex = 0;
+            this.circuitPictureBox.TabStop = false;
+            this.circuitPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.circuitPictureBox_Paint);
             // 
             // errorProvider1
             // 
@@ -510,7 +510,7 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.circuitPuctureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circuitPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
@@ -535,7 +535,7 @@
         private System.Windows.Forms.TreeView circuitElementsTreeView;
         private System.Windows.Forms.ComboBox circuitsComboBox;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.PictureBox circuitPuctureBox;
+        private System.Windows.Forms.PictureBox circuitPictureBox;
         private System.Windows.Forms.TextBox frequencyInputTextBox;
         private System.Windows.Forms.Button editCircuitButton;
         private System.Windows.Forms.Button removeCircuitButton;

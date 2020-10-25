@@ -15,6 +15,8 @@ namespace CircuitAppUI
     /// </summary>
     public static class CircuitDrawer
     {
+        private static readonly int _xMargin = 11;
+
         public static PictureBox CircuitPictureBox { get; set; }
 
         /// <summary>
@@ -99,6 +101,11 @@ namespace CircuitAppUI
                     node.RightConnectionPoint = new Point(rootNode.Size.Width / 2 +
                                                           ElementSize.Width / 2, node.RightConnectionPoint.Y);
                 }
+                if (node.Segment is SerialSegment)
+                {
+                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X, rootNode.Size.Height - node.Size.Height/2);
+                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X, rootNode.Size.Height - node.Size.Height / 2);
+                }
             }
         }
 
@@ -138,7 +145,7 @@ namespace CircuitAppUI
                 if (subNode.Segment is Element)
                 {
                     size.Height += ElementSize.Height;
-                    size.Width = size.Width < ElementSize.Width ? ElementSize.Width : size.Width;
+                    size.Width = size.Width < ElementSize.Width ? ElementSize.Width + 2*_xMargin : size.Width;
                     subNode.Size = ElementSize;
                     subNode.NodeStartPoint = new Point(x, y);
                     subNode.LeftConnectionPoint = new Point(x, yConnectionPoint);
@@ -191,8 +198,8 @@ namespace CircuitAppUI
                 CircuitImage = DrawSerialSegment(node);
             }
 
-            //var g = Graphics.FromImage(CircuitImage);
-            //g.DrawRectangle(BlackPen, 0, 0, CircuitImage.Width - 1, CircuitImage.Height - 1);
+            var g = Graphics.FromImage(CircuitImage);
+            g.DrawRectangle(BlackPen, 0, 0, CircuitImage.Width - 1, CircuitImage.Height - 1);
             PictureGraphics.DrawImage(CircuitImage,new Point(10,CircuitPictureBox.Height/2 - CircuitImage.Height/2));
         }
 
@@ -238,6 +245,7 @@ namespace CircuitAppUI
                 }
                 g.DrawImage(subNodeImage, subNode.NodeStartPoint);
             }
+            //g.DrawRectangle(BlackPen,0,0,size.Width,size.Height);
             DrawParallelConnections(rootNode,image);
             return image;
         }
@@ -257,6 +265,8 @@ namespace CircuitAppUI
                 g.DrawLine(BlackPen, subNode.RightConnectionPoint.X,
                     subNode.RightConnectionPoint.Y, node.Size.Width + 11, subNode.RightConnectionPoint.Y);
             }
+            g.DrawLine(BlackPen,node.LeftConnectionPoint,new Point(node.LeftConnectionPoint.X - 11, node.LeftConnectionPoint.Y));
+            g.DrawLine(BlackPen, node.RightConnectionPoint, new Point(node.RightConnectionPoint.X + 11, node.RightConnectionPoint.Y));
         }
 
         private static void DrawSerialConnections(PictureNode node, Bitmap image)

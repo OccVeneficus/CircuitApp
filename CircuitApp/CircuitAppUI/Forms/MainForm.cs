@@ -20,7 +20,7 @@ namespace CircuitAppUI
             //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта (done)
             _project = new Project();
             BindDefaultCircuitsChangeEvents();
-            CircuitDrawer.CircuitPictureBox = circuitPuctureBox;
+            CircuitDrawer.CircuitPictureBox = circuitPictureBox;
             BindDataSources();
             RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
@@ -53,6 +53,7 @@ namespace CircuitAppUI
                 _project.Circuits[circuitsComboBox.SelectedIndex]
                     .CalculateImpedances(_project.Frequencies[circuitsComboBox.SelectedIndex]);
             RebindDataSources();
+            circuitPictureBox.Invalidate();
         }
 
         private void frequenciesListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,6 +75,7 @@ namespace CircuitAppUI
 
             RebindDataSources();
             RebuildTree();
+            circuitPictureBox.Invalidate();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
@@ -475,23 +477,17 @@ namespace CircuitAppUI
             }
         }
 
-        private void circuitPuctureBox_Paint(object sender, PaintEventArgs e)
+        private void circuitPictureBox_Paint(object sender, PaintEventArgs e)
         {
             CircuitDrawer.PictureGraphics = e.Graphics;
             Circuit a = new Circuit();
-            a.SubSegments.Add(new SerialSegment());
+            a.SubSegments.Add(new ParallelSegment());
             a.SubSegments[0].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[3].SubSegments.Add(new SerialSegment());
-            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[3].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
-            CircuitDrawer.DrawCircuit(new PictureNode(_project.Circuits[0].SubSegments[0]));
+            CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
+            //CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit).SubSegments[0]));
         }
+
     }
 }
