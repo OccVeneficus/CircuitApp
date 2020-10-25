@@ -482,11 +482,14 @@ namespace CircuitAppUI
             CircuitDrawer.PictureGraphics = e.Graphics;
             Circuit a = new Circuit();
             a.SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments.Add(new Resistor());
-            CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
-            //CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit).SubSegments[0]));
+            a.SubSegments[0].SubSegments.Add(new SerialSegment());
+            a.SubSegments[0].SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments.Add(new SerialSegment());
+            a.SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor());
+            //CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
+            CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit).SubSegments[0]));
         }
 
     }
