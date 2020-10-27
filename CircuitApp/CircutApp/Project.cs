@@ -63,6 +63,16 @@ namespace CircutApp
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments.Add(new SerialSegment());
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new Resistor(){Name = "R4",Value = 12.13});
             Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new Capacitor() { Name = "C2", Value = 0.005});
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments.Add(new ParallelSegment());
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments.Add(new Resistor() { Name = "R43.1", Value = 44.3 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments.Add(new Inductor() { Name = "L5.1", Value = 44.3e-6 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments.Add(new SerialSegment());
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments.Add(new Resistor() { Name = "R432", Value = 50.5 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments[2].SubSegments.Add(new Capacitor() { Name = "C223", Value = 223e-12 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments.Add(new SerialSegment());
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[3].SubSegments.Add(new Resistor() { Name = "R32", Value = 0.32 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[3].SubSegments.Add(new Inductor() { Name = "L21", Value = 21e-5 });
+            Circuits[0].SubSegments[0].SubSegments[2].SubSegments[3].SubSegments.Add(new Capacitor() { Name = "C22", Value = 22e-9 });
             Circuits[0].SubSegments[0].SubSegments.Add(new ParallelSegment());
             Circuits[0].SubSegments[0].SubSegments[4].SubSegments.Add(new Resistor(){Name = "R5",Value = 90.54});
             Circuits[0].SubSegments[0].SubSegments[4].SubSegments.Add(new Resistor() { Name = "R6", Value = 13.12 });
