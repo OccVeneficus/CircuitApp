@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Numerics;
 
-namespace CircutApp
+namespace CircutApp.Elements
 {
     /// <summary>
     /// <inheritdoc cref="IElement"/>

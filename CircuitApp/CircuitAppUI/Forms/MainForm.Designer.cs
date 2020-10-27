@@ -1,4 +1,4 @@
-﻿namespace CircuitAppUI
+﻿namespace CircuitAppUI.Forms
 {
     partial class MainForm
     {

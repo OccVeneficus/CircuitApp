@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using CircutApp;
+using CircutApp.Elements;
 
 namespace CircuitAppUnitTests
 {

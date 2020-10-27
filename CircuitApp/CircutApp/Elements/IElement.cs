@@ -1,4 +1,6 @@
-﻿namespace CircutApp
+﻿using CircutApp.Segments;
+
+namespace CircutApp.Elements
 {
     /// <summary>
     /// Interface for electric circuit elements

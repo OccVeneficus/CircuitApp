@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using CircutApp.Elements;
+using CircutApp.Segments;
 
 namespace CircutApp
 {

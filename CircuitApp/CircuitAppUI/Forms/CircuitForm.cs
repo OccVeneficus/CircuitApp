@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using CircutApp;
 
-namespace CircuitAppUI
+namespace CircuitAppUI.Forms
 {
     //TODO: именование (done)
     //TODO: xml

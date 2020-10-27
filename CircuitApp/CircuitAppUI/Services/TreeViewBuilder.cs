@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CircuitAppUI.Forms;
 using CircutApp;
+using CircutApp.Segments;
 
-namespace CircuitAppUI
+namespace CircuitAppUI.Services
 {
     /// <summary>
     /// Service class for work with elementsTreeView 

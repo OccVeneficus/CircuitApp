@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using CircutApp;
+using CircutApp.Elements;
 using NUnit.Framework;
 
 namespace CircuitAppUnitTests

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Numerics;
 
-namespace CircutApp
+namespace CircutApp.Segments
 {
     /// <summary>
     /// Type for parallel segment

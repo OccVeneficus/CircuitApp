@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Numerics;
 
-namespace CircutApp
+namespace CircutApp.Segments
 {
     /// <summary>
     /// Interface for circuit segments

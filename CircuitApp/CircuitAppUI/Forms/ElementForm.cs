@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using CircutApp;
+using CircuitAppUI.Services;
+using CircutApp.Elements;
 
-namespace CircuitAppUI
+namespace CircuitAppUI.Forms
 {
     //TODO: именование (done)
     //TODO: xml (done)

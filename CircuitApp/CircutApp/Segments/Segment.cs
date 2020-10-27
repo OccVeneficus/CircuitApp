@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Numerics;
+using CircutApp.Elements;
 
-namespace CircutApp
+namespace CircutApp.Segments
 {
     /// <summary>
     /// Base type for parallel and serial segments

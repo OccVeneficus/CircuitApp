@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using CircutApp;
+using CircutApp.Segments;
 
-namespace CircuitAppUI
+namespace CircuitAppUI.Forms
 {
     //TODO: верстка
     //TODO: xml

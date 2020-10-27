@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CircutApp;
+using CircutApp.Segments;
 
 namespace CircuitAppUI.CircuitDraw
 {
@@ -19,8 +20,6 @@ namespace CircuitAppUI.CircuitDraw
         public Point RightConnectionPoint { get; set; }
         
         public Point NodeStartPoint { get; set; } = Point.Empty;
-
-        public PictureNode Parent { get; set; }
 
         public Size Size { get; set; }
 

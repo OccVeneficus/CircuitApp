@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
+using CircutApp.Segments;
 
-namespace CircutApp
+namespace CircutApp.Elements
 {
     /// <summary>
     /// Class for circuit element Resistor

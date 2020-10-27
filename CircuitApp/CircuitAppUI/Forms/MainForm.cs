@@ -1,5 +1,4 @@
-﻿using CircutApp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -7,8 +6,12 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using CircuitAppUI.CircuitDraw;
+using CircuitAppUI.Services;
+using CircutApp;
+using CircutApp.Elements;
+using CircutApp.Segments;
 
-namespace CircuitAppUI
+namespace CircuitAppUI.Forms
 {
     public partial class MainForm : Form
     {
@@ -379,13 +382,13 @@ namespace CircuitAppUI
                 return;
             }
 
-            if (circuitElementsTreeView.SelectedNode.Tag is Element element)
+            if (circuitElementsTreeView.SelectedNode.Tag is Element)
             {
-                (circuitElementsTreeView.SelectedNode.Parent.Tag as Segment).SubSegments.Add(form.Type);
+                (circuitElementsTreeView.SelectedNode.Parent.Tag as Segment)?.SubSegments.Add(form.Type);
             }
             else
             {
-                (circuitElementsTreeView.SelectedNode.Tag as Segment).SubSegments.Add(form.Type);
+                (circuitElementsTreeView.SelectedNode.Tag as Segment)?.SubSegments.Add(form.Type);
             }
             RebuildTree();
         }
@@ -418,7 +421,7 @@ namespace CircuitAppUI
                 connectionForm.ShowDialog();
                 if (connectionForm.DialogResult == DialogResult.OK)
                 {
-                    (connectionForm.Type as Segment).SubSegments = segment.SubSegments;
+                    ((Segment) connectionForm.Type).SubSegments = segment.SubSegments;
                     var path = TreeViewBuilder.ReplaceElement(circuitElementsTreeView.SelectedNode,
                             _project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0].SubSegments,
                             (connectionForm.Type as Segment));
@@ -483,23 +486,16 @@ namespace CircuitAppUI
             Circuit a = new Circuit();
             a.SubSegments.Add(new ParallelSegment());
             a.SubSegments[0].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments.Add(new SerialSegment());
+            a.SubSegments[0].SubSegments[1].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new Resistor());
             a.SubSegments[0].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[2].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments.Add(new SerialSegment());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments.Add(new SerialSegment());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments[2].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments[2].SubSegments.Add(new ParallelSegment());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
-            a.SubSegments[0].SubSegments[2].SubSegments[1].SubSegments[1].SubSegments[2].SubSegments[1].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
+            a.SubSegments[0].SubSegments[3].SubSegments.Add(new Resistor());
             //a.SubSegments[0].SubSegments[2].SubSegments.Add(new Resistor());
             //a.SubSegments[0].SubSegments[2].SubSegments.Add(new Resistor());
             //CircuitDrawer.DrawCircuit(new PictureNode(a.SubSegments[0]));
-            CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit).SubSegments[0]));
+            CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit)?.SubSegments[0]));
         }
 
     }
