@@ -65,7 +65,8 @@
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.circuitPictureBox = new System.Windows.Forms.PictureBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.buttonsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.addElementToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -81,13 +82,12 @@
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.circuitPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -102,10 +102,10 @@
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.77778F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel4, 2, 0);
@@ -124,7 +124,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(452, 163);
+            this.panel2.Size = new System.Drawing.Size(368, 163);
             this.panel2.TabIndex = 0;
             // 
             // groupBox4
@@ -141,7 +141,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(452, 163);
+            this.groupBox4.Size = new System.Drawing.Size(368, 163);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Element";
@@ -149,33 +149,49 @@
             // removeElementButton
             // 
             this.removeElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.removeElementButton.Location = new System.Drawing.Point(327, 105);
+            this.removeElementButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.removeElementButton.FlatAppearance.BorderSize = 0;
+            this.removeElementButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.removeElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeElementButton.ImageIndex = 2;
+            this.removeElementButton.ImageList = this.buttonsImageList;
+            this.removeElementButton.Location = new System.Drawing.Point(297, 63);
             this.removeElementButton.Name = "removeElementButton";
-            this.removeElementButton.Size = new System.Drawing.Size(110, 28);
+            this.removeElementButton.Size = new System.Drawing.Size(47, 37);
             this.removeElementButton.TabIndex = 9;
-            this.removeElementButton.Text = "Remove";
             this.removeElementButton.UseVisualStyleBackColor = true;
             this.removeElementButton.Click += new System.EventHandler(this.removeElementButton_Click);
             // 
             // editElementButton
             // 
             this.editElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.editElementButton.Location = new System.Drawing.Point(327, 66);
+            this.editElementButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.editElementButton.FlatAppearance.BorderSize = 0;
+            this.editElementButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.editElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.editElementButton.ImageIndex = 1;
+            this.editElementButton.ImageList = this.buttonsImageList;
+            this.editElementButton.Location = new System.Drawing.Point(297, 106);
             this.editElementButton.Name = "editElementButton";
-            this.editElementButton.Size = new System.Drawing.Size(110, 27);
+            this.editElementButton.Size = new System.Drawing.Size(47, 37);
             this.editElementButton.TabIndex = 8;
-            this.editElementButton.Text = "Edit";
             this.editElementButton.UseVisualStyleBackColor = true;
             this.editElementButton.Click += new System.EventHandler(this.editElementButton_Click);
             // 
             // addElementButton
             // 
             this.addElementButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.addElementButton.Location = new System.Drawing.Point(327, 25);
+            this.addElementButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.addElementButton.FlatAppearance.BorderSize = 0;
+            this.addElementButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.addElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addElementButton.ImageIndex = 0;
+            this.addElementButton.ImageList = this.buttonsImageList;
+            this.addElementButton.Location = new System.Drawing.Point(297, 21);
             this.addElementButton.Name = "addElementButton";
-            this.addElementButton.Size = new System.Drawing.Size(110, 28);
+            this.addElementButton.Size = new System.Drawing.Size(47, 35);
             this.addElementButton.TabIndex = 7;
-            this.addElementButton.Text = "Add";
+            this.addElementToolTip.SetToolTip(this.addElementButton, "Add new element");
             this.addElementButton.UseVisualStyleBackColor = true;
             this.addElementButton.Click += new System.EventHandler(this.addElementButton_Click);
             // 
@@ -183,7 +199,7 @@
             // 
             this.typeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(6, 111);
+            this.typeLabel.Location = new System.Drawing.Point(11, 116);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(44, 17);
             this.typeLabel.TabIndex = 5;
@@ -193,7 +209,7 @@
             // 
             this.valueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.valueLabel.AutoSize = true;
-            this.valueLabel.Location = new System.Drawing.Point(6, 71);
+            this.valueLabel.Location = new System.Drawing.Point(7, 73);
             this.valueLabel.Name = "valueLabel";
             this.valueLabel.Size = new System.Drawing.Size(48, 17);
             this.valueLabel.TabIndex = 4;
@@ -213,37 +229,37 @@
             // 
             this.elementTypeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.elementTypeTextBox.Enabled = false;
-            this.elementTypeTextBox.Location = new System.Drawing.Point(59, 108);
+            this.elementTypeTextBox.Location = new System.Drawing.Point(61, 113);
             this.elementTypeTextBox.Name = "elementTypeTextBox";
-            this.elementTypeTextBox.Size = new System.Drawing.Size(262, 22);
+            this.elementTypeTextBox.Size = new System.Drawing.Size(230, 22);
             this.elementTypeTextBox.TabIndex = 2;
             // 
             // elementValueTextBox
             // 
             this.elementValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.elementValueTextBox.Enabled = false;
-            this.elementValueTextBox.Location = new System.Drawing.Point(59, 68);
+            this.elementValueTextBox.Location = new System.Drawing.Point(61, 70);
             this.elementValueTextBox.Name = "elementValueTextBox";
-            this.elementValueTextBox.Size = new System.Drawing.Size(262, 22);
+            this.elementValueTextBox.Size = new System.Drawing.Size(230, 22);
             this.elementValueTextBox.TabIndex = 1;
             // 
             // elementNameTextBox
             // 
             this.elementNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.elementNameTextBox.Enabled = false;
-            this.elementNameTextBox.Location = new System.Drawing.Point(59, 28);
+            this.elementNameTextBox.Location = new System.Drawing.Point(61, 28);
             this.elementNameTextBox.MaxLength = 40;
             this.elementNameTextBox.Name = "elementNameTextBox";
-            this.elementNameTextBox.Size = new System.Drawing.Size(262, 22);
+            this.elementNameTextBox.Size = new System.Drawing.Size(230, 22);
             this.elementNameTextBox.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.groupBox3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(461, 3);
+            this.panel3.Location = new System.Drawing.Point(377, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(290, 163);
+            this.panel3.Size = new System.Drawing.Size(293, 163);
             this.panel3.TabIndex = 1;
             // 
             // groupBox3
@@ -254,37 +270,49 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(290, 163);
+            this.groupBox3.Size = new System.Drawing.Size(293, 163);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Frequency Input";
             // 
             // addFrequencyButton
             // 
-            this.addFrequencyButton.Location = new System.Drawing.Point(31, 66);
+            this.addFrequencyButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.addFrequencyButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.addFrequencyButton.FlatAppearance.BorderSize = 0;
+            this.addFrequencyButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.addFrequencyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addFrequencyButton.ImageIndex = 0;
+            this.addFrequencyButton.ImageList = this.buttonsImageList;
+            this.addFrequencyButton.Location = new System.Drawing.Point(116, 95);
             this.addFrequencyButton.Name = "addFrequencyButton";
-            this.addFrequencyButton.Size = new System.Drawing.Size(110, 27);
+            this.addFrequencyButton.Size = new System.Drawing.Size(33, 37);
             this.addFrequencyButton.TabIndex = 4;
-            this.addFrequencyButton.Text = "Add";
             this.addFrequencyButton.UseVisualStyleBackColor = true;
             this.addFrequencyButton.Click += new System.EventHandler(this.addFrequencyButton_Click);
             // 
             // deleteFrequencyButton
             // 
-            this.deleteFrequencyButton.Location = new System.Drawing.Point(147, 66);
+            this.deleteFrequencyButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.deleteFrequencyButton.FlatAppearance.BorderSize = 0;
+            this.deleteFrequencyButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.deleteFrequencyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteFrequencyButton.ImageIndex = 2;
+            this.deleteFrequencyButton.ImageList = this.buttonsImageList;
+            this.deleteFrequencyButton.Location = new System.Drawing.Point(155, 95);
             this.deleteFrequencyButton.Name = "deleteFrequencyButton";
-            this.deleteFrequencyButton.Size = new System.Drawing.Size(110, 27);
+            this.deleteFrequencyButton.Size = new System.Drawing.Size(37, 37);
             this.deleteFrequencyButton.TabIndex = 3;
-            this.deleteFrequencyButton.Text = "Delete";
             this.deleteFrequencyButton.UseVisualStyleBackColor = true;
             this.deleteFrequencyButton.Click += new System.EventHandler(this.deleteFrequencyButton_Click);
             // 
             // frequencyInputTextBox
             // 
-            this.frequencyInputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.frequencyInputTextBox.Location = new System.Drawing.Point(31, 28);
+            this.frequencyInputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.frequencyInputTextBox.Location = new System.Drawing.Point(58, 63);
             this.frequencyInputTextBox.Name = "frequencyInputTextBox";
-            this.frequencyInputTextBox.Size = new System.Drawing.Size(226, 22);
+            this.frequencyInputTextBox.Size = new System.Drawing.Size(173, 22);
             this.frequencyInputTextBox.TabIndex = 0;
             this.frequencyInputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
             // 
@@ -292,9 +320,9 @@
             // 
             this.panel4.Controls.Add(this.groupBox2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(757, 3);
+            this.panel4.Location = new System.Drawing.Point(676, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(290, 163);
+            this.panel4.Size = new System.Drawing.Size(331, 163);
             this.panel4.TabIndex = 2;
             // 
             // groupBox2
@@ -303,7 +331,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(290, 163);
+            this.groupBox2.Size = new System.Drawing.Size(331, 163);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Frequencies";
@@ -317,7 +345,7 @@
             this.frequenciesListBox.ItemHeight = 16;
             this.frequenciesListBox.Location = new System.Drawing.Point(3, 21);
             this.frequenciesListBox.Name = "frequenciesListBox";
-            this.frequenciesListBox.Size = new System.Drawing.Size(287, 132);
+            this.frequenciesListBox.Size = new System.Drawing.Size(325, 132);
             this.frequenciesListBox.TabIndex = 1;
             this.frequenciesListBox.SelectedIndexChanged += new System.EventHandler(this.frequenciesListBox_SelectedIndexChanged);
             // 
@@ -325,9 +353,9 @@
             // 
             this.panel5.Controls.Add(this.groupBox1);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(1053, 3);
+            this.panel5.Location = new System.Drawing.Point(1013, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(293, 163);
+            this.panel5.Size = new System.Drawing.Size(333, 163);
             this.panel5.TabIndex = 3;
             // 
             // groupBox1
@@ -336,7 +364,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(293, 163);
+            this.groupBox1.Size = new System.Drawing.Size(333, 163);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Impedances";
@@ -350,7 +378,7 @@
             this.impedancesListBox.ItemHeight = 16;
             this.impedancesListBox.Location = new System.Drawing.Point(6, 21);
             this.impedancesListBox.Name = "impedancesListBox";
-            this.impedancesListBox.Size = new System.Drawing.Size(287, 132);
+            this.impedancesListBox.Size = new System.Drawing.Size(327, 132);
             this.impedancesListBox.TabIndex = 0;
             this.impedancesListBox.SelectedIndexChanged += new System.EventHandler(this.impedancesListBox_SelectedIndexChanged);
             // 
@@ -395,44 +423,65 @@
             // addSegmentButton
             // 
             this.addSegmentButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addSegmentButton.Location = new System.Drawing.Point(257, 480);
+            this.addSegmentButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.addSegmentButton.FlatAppearance.BorderSize = 0;
+            this.addSegmentButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.addSegmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addSegmentButton.ImageIndex = 3;
+            this.addSegmentButton.ImageList = this.buttonsImageList;
+            this.addSegmentButton.Location = new System.Drawing.Point(147, 466);
             this.addSegmentButton.Name = "addSegmentButton";
-            this.addSegmentButton.Size = new System.Drawing.Size(119, 29);
+            this.addSegmentButton.Size = new System.Drawing.Size(35, 35);
             this.addSegmentButton.TabIndex = 5;
-            this.addSegmentButton.Text = "Add segment";
             this.addSegmentButton.UseVisualStyleBackColor = true;
             this.addSegmentButton.Click += new System.EventHandler(this.addSegmentButton_Click);
             // 
             // editCircuitButton
             // 
             this.editCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editCircuitButton.Location = new System.Drawing.Point(188, 480);
+            this.editCircuitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.editCircuitButton.FlatAppearance.BorderSize = 0;
+            this.editCircuitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.editCircuitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.editCircuitButton.ImageIndex = 1;
+            this.editCircuitButton.ImageList = this.buttonsImageList;
+            this.editCircuitButton.Location = new System.Drawing.Point(100, 466);
             this.editCircuitButton.Name = "editCircuitButton";
-            this.editCircuitButton.Size = new System.Drawing.Size(63, 29);
+            this.editCircuitButton.Size = new System.Drawing.Size(35, 35);
             this.editCircuitButton.TabIndex = 4;
-            this.editCircuitButton.Text = "Edit";
             this.editCircuitButton.UseVisualStyleBackColor = true;
             this.editCircuitButton.Click += new System.EventHandler(this.editCircuitButton_Click);
             // 
             // removeCircuitButton
             // 
             this.removeCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removeCircuitButton.Location = new System.Drawing.Point(108, 480);
+            this.removeCircuitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.removeCircuitButton.FlatAppearance.BorderSize = 0;
+            this.removeCircuitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.removeCircuitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeCircuitButton.ImageIndex = 2;
+            this.removeCircuitButton.ImageList = this.buttonsImageList;
+            this.removeCircuitButton.Location = new System.Drawing.Point(53, 466);
             this.removeCircuitButton.Name = "removeCircuitButton";
-            this.removeCircuitButton.Size = new System.Drawing.Size(74, 29);
+            this.removeCircuitButton.Size = new System.Drawing.Size(35, 35);
             this.removeCircuitButton.TabIndex = 3;
-            this.removeCircuitButton.Text = "Remove";
             this.removeCircuitButton.UseVisualStyleBackColor = true;
             this.removeCircuitButton.Click += new System.EventHandler(this.deleteCircuitButton_Click);
             // 
             // addCircuitButton
             // 
             this.addCircuitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addCircuitButton.Location = new System.Drawing.Point(3, 480);
+            this.addCircuitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.addCircuitButton.FlatAppearance.BorderSize = 0;
+            this.addCircuitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.addCircuitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addCircuitButton.ImageIndex = 0;
+            this.addCircuitButton.ImageList = this.buttonsImageList;
+            this.addCircuitButton.Location = new System.Drawing.Point(6, 466);
             this.addCircuitButton.Name = "addCircuitButton";
-            this.addCircuitButton.Size = new System.Drawing.Size(99, 29);
+            this.addCircuitButton.Size = new System.Drawing.Size(35, 35);
             this.addCircuitButton.TabIndex = 2;
-            this.addCircuitButton.Text = "Add circuit";
+            this.addElementToolTip.SetToolTip(this.addCircuitButton, "Add new circuit");
             this.addCircuitButton.UseVisualStyleBackColor = true;
             this.addCircuitButton.Click += new System.EventHandler(this.addCircuitButton_Click);
             // 
@@ -443,7 +492,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.circuitElementsTreeView.Location = new System.Drawing.Point(3, 36);
             this.circuitElementsTreeView.Name = "circuitElementsTreeView";
-            this.circuitElementsTreeView.Size = new System.Drawing.Size(373, 438);
+            this.circuitElementsTreeView.Size = new System.Drawing.Size(373, 424);
             this.circuitElementsTreeView.TabIndex = 1;
             this.circuitElementsTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.circuitElementsTreeView_ItemDrag);
             this.circuitElementsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.circuitElementsTreeView_AfterSelect);
@@ -481,9 +530,14 @@
             this.circuitPictureBox.TabStop = false;
             this.circuitPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.circuitPictureBox_Paint);
             // 
-            // errorProvider1
+            // buttonsImageList
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.buttonsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("buttonsImageList.ImageStream")));
+            this.buttonsImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.buttonsImageList.Images.SetKeyName(0, "plus (3).png");
+            this.buttonsImageList.Images.SetKeyName(1, "pencil.png");
+            this.buttonsImageList.Images.SetKeyName(2, "minus (2).png");
+            this.buttonsImageList.Images.SetKeyName(3, "git_branch_icon_151328.png");
             // 
             // MainForm
             // 
@@ -511,7 +565,6 @@
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.circuitPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -552,7 +605,8 @@
         private System.Windows.Forms.TextBox elementTypeTextBox;
         private System.Windows.Forms.TextBox elementValueTextBox;
         private System.Windows.Forms.Button addSegmentButton;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ImageList buttonsImageList;
+        private System.Windows.Forms.ToolTip addElementToolTip;
     }
 }
 

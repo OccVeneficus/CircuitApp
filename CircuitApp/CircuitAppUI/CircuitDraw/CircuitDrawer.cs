@@ -12,6 +12,8 @@ namespace CircuitAppUI.CircuitDraw
     {
         private static readonly int XMargin = 11;
 
+        private static readonly int ConnectionHeightMargin = 26;
+
         public static PictureBox CircuitPictureBox { get; set; }
 
         /// <summary>
@@ -47,6 +49,8 @@ namespace CircuitAppUI.CircuitDraw
                 size = ElementSize;
             }
             rootNode.Size = size;
+            rootNode.LeftConnectionPoint = new Point(0,size.Height/2 + 1);
+            rootNode.RightConnectionPoint = new Point(rootNode.Size.Width, size.Height / 2 + 1);
         }
 
         private static Size GetSerialSegmentSize(PictureNode node)
@@ -89,7 +93,6 @@ namespace CircuitAppUI.CircuitDraw
                     x += subNode.Size.Width + XMargin;
                 }
             }
-
             return size;
         }
 
@@ -114,9 +117,9 @@ namespace CircuitAppUI.CircuitDraw
                 if (node.Segment is SerialSegment && node.Size.Height > ElementSize.Height)
                 {
                     var delimiter = (node.Size.Height / ElementSize.Height) - 1;
-                    var connectionHeight = (ElementSize.Height/2 + yMargin) * delimiter;
-                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X, node.LeftConnectionPoint.Y + connectionHeight);
-                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X, node.RightConnectionPoint.Y + connectionHeight);
+                    var connectionHeight = (ConnectionHeightMargin) * delimiter;
+                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X, node.LeftConnectionPoint.Y + connectionHeight - yMargin);
+                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X, node.RightConnectionPoint.Y + connectionHeight - yMargin);
                 }
             }
         }
@@ -125,24 +128,12 @@ namespace CircuitAppUI.CircuitDraw
         {
             foreach (var node in rootNode.SubNodes)
             {
-                if (node.Segment is Element)
-                {
-                    node.NodeStartPoint = new Point(node.NodeStartPoint.X,
-                        rootNode.Size.Height/2 - ElementSize.Height/2);
-                    node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X,
-                        rootNode.Size.Height / 2 + 1);
-                    node.RightConnectionPoint = new Point(node.RightConnectionPoint.X,
-                        rootNode.Size.Height / 2 + 1);
-                }
-                else if (node.Segment is Segment && node.Size.Height < rootNode.Size.Height)
-                {
-                    node.NodeStartPoint = new Point(node.NodeStartPoint.X,
+                node.NodeStartPoint = new Point(node.NodeStartPoint.X,
                         rootNode.Size.Height / 2 - node.Size.Height / 2);
                     node.LeftConnectionPoint = new Point(node.LeftConnectionPoint.X,
                         rootNode.Size.Height / 2 + 1);
                     node.RightConnectionPoint = new Point(node.RightConnectionPoint.X,
                         rootNode.Size.Height / 2 + 1);
-                }
             }
         }
 
@@ -151,7 +142,7 @@ namespace CircuitAppUI.CircuitDraw
             var size = new Size(0,0);
             var x = 0;
             var y = 0;
-            var yConnectionPoint = 26;
+            var yConnectionPoint = ConnectionHeightMargin;
             foreach (var subNode in node.SubNodes)
             {
                 if (subNode.Segment is Element)
@@ -318,9 +309,13 @@ namespace CircuitAppUI.CircuitDraw
             var g = Graphics.FromImage(image);
             for (int i = 0; i < node.SubNodes.Count - 1; i++)
             {
-                g.DrawLine(BlackPen,node.SubNodes[i].RightConnectionPoint,
-                    node.SubNodes[i+1].LeftConnectionPoint);
+                g.DrawLine(BlackPen, node.SubNodes[i].RightConnectionPoint,
+                    node.SubNodes[i + 1].LeftConnectionPoint);
             }
+            g.DrawLine(BlackPen,node.SubNodes[node.SubNodes.Count-1].RightConnectionPoint.X,
+                node.SubNodes[node.SubNodes.Count - 1].RightConnectionPoint.Y,
+                node.SubNodes[node.SubNodes.Count - 1].RightConnectionPoint.X - XMargin + 1,
+                node.SubNodes[node.SubNodes.Count - 1].RightConnectionPoint.Y);
         }
 
         public static Bitmap DrawElement(PictureNode node)
