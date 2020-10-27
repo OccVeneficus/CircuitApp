@@ -159,6 +159,7 @@
             this.removeElementButton.Name = "removeElementButton";
             this.removeElementButton.Size = new System.Drawing.Size(47, 37);
             this.removeElementButton.TabIndex = 9;
+            this.addElementToolTip.SetToolTip(this.removeElementButton, "Delete selected element");
             this.removeElementButton.UseVisualStyleBackColor = true;
             this.removeElementButton.Click += new System.EventHandler(this.removeElementButton_Click);
             // 
@@ -175,6 +176,7 @@
             this.editElementButton.Name = "editElementButton";
             this.editElementButton.Size = new System.Drawing.Size(47, 37);
             this.editElementButton.TabIndex = 8;
+            this.addElementToolTip.SetToolTip(this.editElementButton, "Edit selected element");
             this.editElementButton.UseVisualStyleBackColor = true;
             this.editElementButton.Click += new System.EventHandler(this.editElementButton_Click);
             // 
@@ -288,6 +290,7 @@
             this.addFrequencyButton.Name = "addFrequencyButton";
             this.addFrequencyButton.Size = new System.Drawing.Size(33, 37);
             this.addFrequencyButton.TabIndex = 4;
+            this.addElementToolTip.SetToolTip(this.addFrequencyButton, "Add new frequency");
             this.addFrequencyButton.UseVisualStyleBackColor = true;
             this.addFrequencyButton.Click += new System.EventHandler(this.addFrequencyButton_Click);
             // 
@@ -303,6 +306,7 @@
             this.deleteFrequencyButton.Name = "deleteFrequencyButton";
             this.deleteFrequencyButton.Size = new System.Drawing.Size(37, 37);
             this.deleteFrequencyButton.TabIndex = 3;
+            this.addElementToolTip.SetToolTip(this.deleteFrequencyButton, "Delete current frequency");
             this.deleteFrequencyButton.UseVisualStyleBackColor = true;
             this.deleteFrequencyButton.Click += new System.EventHandler(this.deleteFrequencyButton_Click);
             // 
@@ -312,7 +316,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.frequencyInputTextBox.Location = new System.Drawing.Point(58, 63);
             this.frequencyInputTextBox.Name = "frequencyInputTextBox";
-            this.frequencyInputTextBox.Size = new System.Drawing.Size(173, 22);
+            this.frequencyInputTextBox.Size = new System.Drawing.Size(191, 22);
             this.frequencyInputTextBox.TabIndex = 0;
             this.frequencyInputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
             // 
@@ -433,6 +437,7 @@
             this.addSegmentButton.Name = "addSegmentButton";
             this.addSegmentButton.Size = new System.Drawing.Size(35, 35);
             this.addSegmentButton.TabIndex = 5;
+            this.addElementToolTip.SetToolTip(this.addSegmentButton, "Add new segment");
             this.addSegmentButton.UseVisualStyleBackColor = true;
             this.addSegmentButton.Click += new System.EventHandler(this.addSegmentButton_Click);
             // 
@@ -449,6 +454,7 @@
             this.editCircuitButton.Name = "editCircuitButton";
             this.editCircuitButton.Size = new System.Drawing.Size(35, 35);
             this.editCircuitButton.TabIndex = 4;
+            this.addElementToolTip.SetToolTip(this.editCircuitButton, "Edit current circuit");
             this.editCircuitButton.UseVisualStyleBackColor = true;
             this.editCircuitButton.Click += new System.EventHandler(this.editCircuitButton_Click);
             // 
@@ -465,6 +471,7 @@
             this.removeCircuitButton.Name = "removeCircuitButton";
             this.removeCircuitButton.Size = new System.Drawing.Size(35, 35);
             this.removeCircuitButton.TabIndex = 3;
+            this.addElementToolTip.SetToolTip(this.removeCircuitButton, "Delete current circuit");
             this.removeCircuitButton.UseVisualStyleBackColor = true;
             this.removeCircuitButton.Click += new System.EventHandler(this.deleteCircuitButton_Click);
             // 
