@@ -6,6 +6,7 @@ using CircutApp.Segments;
 
 namespace CircuitAppUI.CircuitDraw
 {
+    //TODO: статический класс подразумевает, что в программе в один момент времени можно отрисовать только одну цепь. Для САПР это плохо
     /// <summary>
     /// Service class for circuit drawing
     /// </summary>
@@ -30,7 +31,8 @@ namespace CircuitAppUI.CircuitDraw
         /// Default size for element pictures
         /// </summary>
         private static readonly Size ElementSize = new Size(50,51);
-
+        //TODO: тут надо определиться - или класс создает и возвращает битмап, а клиентский код решает, где этот битмап пристроить ...
+        // ... или в класс передается графикс, на котором всё и рисуется
         /// <summary>
         /// Bitmap with circuit drawing
         /// </summary>
@@ -40,7 +42,7 @@ namespace CircuitAppUI.CircuitDraw
         /// PictureBox to draw on
         /// </summary>
         public static PictureBox CircuitPictureBox { get; set; }
-
+        //TODO: А нужно ли хранить и пикчербокс, и его же графикс?
         /// <summary>
         /// Graphics of circuitPictureBox
         /// </summary>
@@ -83,6 +85,9 @@ namespace CircuitAppUI.CircuitDraw
         private static void GetCircuitSize(PictureNode rootNode)
         {
             var size = new Size(0,0);
+            //TODO: к твоему вопросу "что лучше - if или switch?" ...
+            // ... Зависит от цели. Есть варианты, при которых if нельзя заменить на switch, так как switch может проверять значения только одного объекта.
+            // ... При этом почти все if else и switch в этом классе по-хорошему должны быть заменены на использование полиморфных объектов через общий интерфейс
             if (rootNode.Segment is SerialSegment)
             {
                 size = GetSerialSegmentSize(rootNode);
@@ -150,6 +155,9 @@ namespace CircuitAppUI.CircuitDraw
             {
                 if (subNode.Segment is Element)
                 {
+                    //TODO: вот в таких алгоритмах надо оставлять МНОГО комментариев, потому что понять для чего написана каждая строка практически невозможно ...
+                    // или один большой комментарий в начале ветки if, или отдельные комментарии у строчек.
+
                     size.Height += ElementSize.Height;
                     size.Width = size.Width < ElementSize.Width ? ElementSize.Width + 2 * XMargin 
                         : size.Width;
@@ -445,6 +453,7 @@ namespace CircuitAppUI.CircuitDraw
         /// <returns>Bitmap with inductor picture</returns>
         public static Bitmap DrawInductor()
         {
+            //TODO: магические числа
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);
             graphics.DrawLine(BlackPen, 0, 26, 10, 26);
@@ -461,6 +470,7 @@ namespace CircuitAppUI.CircuitDraw
         /// <returns>Bitmap with resistor picture</returns>
         public static Bitmap DrawResistor()
         {
+            //TODO: магические числа
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);
             graphics.DrawRectangle(BlackPen, new Rectangle(10, 19, 30, 14));
@@ -475,6 +485,7 @@ namespace CircuitAppUI.CircuitDraw
         /// <returns>Bitmap with capacitor picture</returns>
         public static Bitmap DrawCapacitor()
         {
+            //TODO: магические числа
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);
             graphics.DrawLine(BlackPen, 22, 19, 22, 33);
@@ -485,6 +496,6 @@ namespace CircuitAppUI.CircuitDraw
             graphics.DrawLine(BlackPen, 27, 26, ElementSize.Width, 26);
             return bitmap;
         }
-
+        //TODO: отрисовка годная. Теперь попробуй разбить этот класс на полиморфные объекты
     }
 }

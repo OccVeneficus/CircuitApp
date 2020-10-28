@@ -14,6 +14,7 @@ namespace CircuitAppUI.CircuitDraw
         /// </summary>
         public ISegment Segment { get; private set; }
 
+        //TODO: здесь и далее имеет смысл в комментарии указать, что точка откладывается от StartPoint
         /// <summary>
         /// Point of left connection 
         /// </summary>
