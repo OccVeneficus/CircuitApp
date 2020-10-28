@@ -40,14 +40,8 @@ namespace CircuitAppUI.Forms
 
         private void BindDataSources()
         {
-            frequenciesListBox.SelectedIndexChanged -= frequenciesListBox_SelectedIndexChanged;
-            impedancesListBox.SelectedIndexChanged -= impedancesListBox_SelectedIndexChanged;
             circuitsComboBox.DataSource = _project.Circuits;
             circuitsComboBox.DisplayMember = "Name";
-            frequenciesListBox.DataSource = _project.Frequencies[0];
-            impedancesListBox.DataSource = _project.ImpedanceZ[0];
-            frequenciesListBox.SelectedIndexChanged += frequenciesListBox_SelectedIndexChanged;
-            impedancesListBox.SelectedIndexChanged += impedancesListBox_SelectedIndexChanged;
         }
 
         private void Circuit_SegmentChanged(object sender, EventArgs e)
@@ -55,48 +49,29 @@ namespace CircuitAppUI.Forms
             _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                 _project.Circuits[circuitsComboBox.SelectedIndex]
                     .CalculateImpedances(_project.Frequencies[circuitsComboBox.SelectedIndex]);
-            RebindDataSources();
+            UpdateCalculationsTable();
             circuitPictureBox.Invalidate();
-        }
-
-        private void frequenciesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            impedancesListBox.SelectedIndex = frequenciesListBox.SelectedIndex;
-        }
-
-        private void impedancesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            frequenciesListBox.SelectedIndex = impedancesListBox.SelectedIndex;
         }
 
         private void circuitsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (frequenciesListBox.DataSource == null)
-            {
-                return;
-            }
-
-            RebindDataSources();
+            UpdateCalculationsTable();
             RebuildTree();
             circuitPictureBox.Invalidate();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
-        private void RebindDataSources()
+        private void UpdateCalculationsTable()
         {
             if (_project.Circuits.Count.Equals(0))
             {
+                circuitPictureBox.Invalidate();
+                calculationsTabel.Rows.Clear();
                 return;
             }
-            frequenciesListBox.SelectedIndexChanged -= frequenciesListBox_SelectedIndexChanged;
-            impedancesListBox.SelectedIndexChanged -= impedancesListBox_SelectedIndexChanged;
-            frequenciesListBox.ClearSelected();
-            frequenciesListBox.DataSource = null;
-            impedancesListBox.DataSource = null;
-            frequenciesListBox.DataSource = _project.Frequencies[circuitsComboBox.SelectedIndex];
-            impedancesListBox.DataSource = _project.ImpedanceZ[circuitsComboBox.SelectedIndex];
-            frequenciesListBox.SelectedIndexChanged += frequenciesListBox_SelectedIndexChanged;
-            impedancesListBox.SelectedIndexChanged += impedancesListBox_SelectedIndexChanged;
+            calculationsTabel.Rows.Clear();
+            FillFrequenciesColumn();
+            FillImpedancesColumn();
         }
 
         private void RebuildTree()
@@ -123,6 +98,10 @@ namespace CircuitAppUI.Forms
 
         private void addFrequencyButton_Click(object sender, EventArgs e)
         {
+            if (circuitsComboBox.Items.Count == 0)
+            {
+                return;
+            }
             if (string.IsNullOrWhiteSpace(frequencyInputTextBox.Text) || 
                 !double.TryParse(frequencyInputTextBox.Text, NumberStyles.Float,
                     CultureInfo.InvariantCulture, out _))
@@ -141,8 +120,7 @@ namespace CircuitAppUI.Forms
                 _project.ImpedanceZ[circuitsComboBox.SelectedIndex] =
                     _project.Circuits[circuitsComboBox.SelectedIndex]
                         .CalculateImpedances(_project.Frequencies[circuitsComboBox.SelectedIndex]);
-                RebindDataSources();
-                frequenciesListBox.SelectedIndex = frequenciesListBox.Items.Count - 1;
+                UpdateCalculationsTable();
             }
         }
 
@@ -191,20 +169,48 @@ namespace CircuitAppUI.Forms
             }
         }
 
+        private void FillImpedancesColumn()
+        {
+            for (int index = 0; index < calculationsTabel.Rows.Count; index++)
+            {
+                var imaginary = Math.Round(_project.ImpedanceZ[circuitsComboBox.SelectedIndex][index].Imaginary,4);
+                var real = Math.Round(_project.ImpedanceZ[circuitsComboBox.SelectedIndex][index].Real,4);
+                string number = string.Format($"{real}; {imaginary}i");
+                calculationsTabel[1, index].Value = number;
+                calculationsTabel[1, index].Tag = _project.ImpedanceZ[circuitsComboBox.SelectedIndex][index];
+            }
+        }
+
+        private void FillFrequenciesColumn()
+        {
+            var frequencies = _project.Frequencies[circuitsComboBox.SelectedIndex];
+            for (int index = 0; index < frequencies.Count; index++)
+            {
+                calculationsTabel.Rows.Add();
+                calculationsTabel[0, index].Value = Math.Round(frequencies[index],2);
+                calculationsTabel[0, index].Tag = frequencies[index];
+            }
+        }
+
         private void deleteFrequencyButton_Click(object sender, EventArgs e)
         {
-            if (impedancesListBox.Items.Count == 0)
+            if (calculationsTabel.Rows.Count == 0)
             {
                 MessageBox.Show(@"You can't delete item from empty list.",
                     @"List is empty", MessageBoxButtons.OK);
                 return;
             }
-            _project.Frequencies[circuitsComboBox.SelectedIndex].Remove
-                (Convert.ToDouble(frequenciesListBox.SelectedItem));
-            _project.ImpedanceZ[circuitsComboBox.SelectedIndex].Remove
-                ((Complex)impedancesListBox.SelectedItem);
-            frequenciesListBox.SelectedIndex = 0;
-            RebindDataSources();
+
+            for (int index = 0; index < calculationsTabel.SelectedRows.Count; index++)
+            {
+                var frequency = (double) calculationsTabel.SelectedRows[index].Cells[0].Tag;
+                var impedance =
+                    (Complex) calculationsTabel[1, calculationsTabel.SelectedRows[index].Cells[0].RowIndex].Tag;
+                _project.Frequencies[circuitsComboBox.SelectedIndex].Remove(frequency);
+                _project.ImpedanceZ[circuitsComboBox.SelectedIndex].Remove(impedance);
+            }
+
+            UpdateCalculationsTable();
         }
 
         private void circuitElementsTreeView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -315,7 +321,7 @@ namespace CircuitAppUI.Forms
                 { 
                     circuitsComboBox.SelectedIndex = 0;
                 }
-                RebindDataSources();
+                UpdateCalculationsTable();
                 RebuildTree();
                 if (circuitElementsTreeView.Nodes.Count != 0)
                 {
@@ -375,6 +381,10 @@ namespace CircuitAppUI.Forms
 
         private void addSegmentButton_Click(object sender, EventArgs e)
         {
+            if (circuitsComboBox.SelectedItem == null)
+            {
+                return;
+            }
             ConnectionTypeForm form = new ConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.Cancel)
@@ -414,7 +424,13 @@ namespace CircuitAppUI.Forms
                     ChooseTreeNodeAfterReplace(path);
                 }
             }
-            else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
+            else if (circuitElementsTreeView.SelectedNode.Tag is Segment rootSegment &&
+                     circuitElementsTreeView.SelectedNode.Parent == null)
+            {
+                editCircuitButton_Click(sender,e);
+            }
+            else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment &&
+                     circuitElementsTreeView.SelectedNode.Parent != null)
             {
                 var connectionForm = new ConnectionTypeForm();
                 connectionForm.Type = segment;
@@ -483,9 +499,9 @@ namespace CircuitAppUI.Forms
         private void circuitPictureBox_Paint(object sender, PaintEventArgs e)
         {
             CircuitDrawer.PictureGraphics = e.Graphics;
+            e.Graphics.Clear(Color.White);
             CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit)
                 ?.SubSegments[0]));
         }
-
     }
 }

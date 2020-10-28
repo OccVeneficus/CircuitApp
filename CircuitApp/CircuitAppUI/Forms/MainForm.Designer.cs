@@ -35,6 +35,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.removeElementButton = new System.Windows.Forms.Button();
+            this.buttonsImageList = new System.Windows.Forms.ImageList(this.components);
             this.editElementButton = new System.Windows.Forms.Button();
             this.addElementButton = new System.Windows.Forms.Button();
             this.typeLabel = new System.Windows.Forms.Label();
@@ -49,11 +50,8 @@
             this.deleteFrequencyButton = new System.Windows.Forms.Button();
             this.frequencyInputTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.frequenciesListBox = new System.Windows.Forms.ListBox();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.impedancesListBox = new System.Windows.Forms.ListBox();
+            this.calculationsGroupBox = new System.Windows.Forms.GroupBox();
+            this.calculationsTabel = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -65,8 +63,9 @@
             this.circuitsComboBox = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.circuitPictureBox = new System.Windows.Forms.PictureBox();
-            this.buttonsImageList = new System.Windows.Forms.ImageList(this.components);
             this.addElementToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.FrequenciesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpedancesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -74,9 +73,8 @@
             this.panel3.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.calculationsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.calculationsTabel)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -101,15 +99,14 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.77778F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.03704F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.93477F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.07487F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel4, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel5, 3, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 527);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -124,7 +121,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(368, 163);
+            this.panel2.Size = new System.Drawing.Size(493, 163);
             this.panel2.TabIndex = 0;
             // 
             // groupBox4
@@ -141,7 +138,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(368, 163);
+            this.groupBox4.Size = new System.Drawing.Size(493, 163);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Element";
@@ -155,13 +152,22 @@
             this.removeElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.removeElementButton.ImageIndex = 2;
             this.removeElementButton.ImageList = this.buttonsImageList;
-            this.removeElementButton.Location = new System.Drawing.Point(297, 63);
+            this.removeElementButton.Location = new System.Drawing.Point(422, 63);
             this.removeElementButton.Name = "removeElementButton";
             this.removeElementButton.Size = new System.Drawing.Size(47, 37);
             this.removeElementButton.TabIndex = 9;
             this.addElementToolTip.SetToolTip(this.removeElementButton, "Delete selected element");
             this.removeElementButton.UseVisualStyleBackColor = true;
             this.removeElementButton.Click += new System.EventHandler(this.removeElementButton_Click);
+            // 
+            // buttonsImageList
+            // 
+            this.buttonsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("buttonsImageList.ImageStream")));
+            this.buttonsImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.buttonsImageList.Images.SetKeyName(0, "plus (3).png");
+            this.buttonsImageList.Images.SetKeyName(1, "pencil.png");
+            this.buttonsImageList.Images.SetKeyName(2, "minus (2).png");
+            this.buttonsImageList.Images.SetKeyName(3, "git_branch_icon_151328.png");
             // 
             // editElementButton
             // 
@@ -172,7 +178,7 @@
             this.editElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.editElementButton.ImageIndex = 1;
             this.editElementButton.ImageList = this.buttonsImageList;
-            this.editElementButton.Location = new System.Drawing.Point(297, 106);
+            this.editElementButton.Location = new System.Drawing.Point(422, 106);
             this.editElementButton.Name = "editElementButton";
             this.editElementButton.Size = new System.Drawing.Size(47, 37);
             this.editElementButton.TabIndex = 8;
@@ -189,7 +195,7 @@
             this.addElementButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addElementButton.ImageIndex = 0;
             this.addElementButton.ImageList = this.buttonsImageList;
-            this.addElementButton.Location = new System.Drawing.Point(297, 21);
+            this.addElementButton.Location = new System.Drawing.Point(422, 21);
             this.addElementButton.Name = "addElementButton";
             this.addElementButton.Size = new System.Drawing.Size(47, 35);
             this.addElementButton.TabIndex = 7;
@@ -233,7 +239,7 @@
             this.elementTypeTextBox.Enabled = false;
             this.elementTypeTextBox.Location = new System.Drawing.Point(61, 113);
             this.elementTypeTextBox.Name = "elementTypeTextBox";
-            this.elementTypeTextBox.Size = new System.Drawing.Size(230, 22);
+            this.elementTypeTextBox.Size = new System.Drawing.Size(355, 22);
             this.elementTypeTextBox.TabIndex = 2;
             // 
             // elementValueTextBox
@@ -242,7 +248,7 @@
             this.elementValueTextBox.Enabled = false;
             this.elementValueTextBox.Location = new System.Drawing.Point(61, 70);
             this.elementValueTextBox.Name = "elementValueTextBox";
-            this.elementValueTextBox.Size = new System.Drawing.Size(230, 22);
+            this.elementValueTextBox.Size = new System.Drawing.Size(355, 22);
             this.elementValueTextBox.TabIndex = 1;
             // 
             // elementNameTextBox
@@ -252,16 +258,16 @@
             this.elementNameTextBox.Location = new System.Drawing.Point(61, 28);
             this.elementNameTextBox.MaxLength = 40;
             this.elementNameTextBox.Name = "elementNameTextBox";
-            this.elementNameTextBox.Size = new System.Drawing.Size(230, 22);
+            this.elementNameTextBox.Size = new System.Drawing.Size(355, 22);
             this.elementNameTextBox.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.groupBox3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(377, 3);
+            this.panel3.Location = new System.Drawing.Point(502, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(293, 163);
+            this.panel3.Size = new System.Drawing.Size(154, 163);
             this.panel3.TabIndex = 1;
             // 
             // groupBox3
@@ -272,7 +278,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(293, 163);
+            this.groupBox3.Size = new System.Drawing.Size(154, 163);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Frequency Input";
@@ -286,7 +292,7 @@
             this.addFrequencyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFrequencyButton.ImageIndex = 0;
             this.addFrequencyButton.ImageList = this.buttonsImageList;
-            this.addFrequencyButton.Location = new System.Drawing.Point(116, 95);
+            this.addFrequencyButton.Location = new System.Drawing.Point(40, 82);
             this.addFrequencyButton.Name = "addFrequencyButton";
             this.addFrequencyButton.Size = new System.Drawing.Size(33, 37);
             this.addFrequencyButton.TabIndex = 4;
@@ -302,7 +308,7 @@
             this.deleteFrequencyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteFrequencyButton.ImageIndex = 2;
             this.deleteFrequencyButton.ImageList = this.buttonsImageList;
-            this.deleteFrequencyButton.Location = new System.Drawing.Point(155, 95);
+            this.deleteFrequencyButton.Location = new System.Drawing.Point(79, 82);
             this.deleteFrequencyButton.Name = "deleteFrequencyButton";
             this.deleteFrequencyButton.Size = new System.Drawing.Size(37, 37);
             this.deleteFrequencyButton.TabIndex = 3;
@@ -314,77 +320,48 @@
             // 
             this.frequencyInputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.frequencyInputTextBox.Location = new System.Drawing.Point(58, 63);
+            this.frequencyInputTextBox.Location = new System.Drawing.Point(6, 54);
             this.frequencyInputTextBox.Name = "frequencyInputTextBox";
-            this.frequencyInputTextBox.Size = new System.Drawing.Size(191, 22);
+            this.frequencyInputTextBox.Size = new System.Drawing.Size(142, 22);
             this.frequencyInputTextBox.TabIndex = 0;
             this.frequencyInputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frequencyInputTextBox_KeyPress);
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.groupBox2);
+            this.panel4.Controls.Add(this.calculationsGroupBox);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(676, 3);
+            this.panel4.Location = new System.Drawing.Point(662, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(331, 163);
+            this.panel4.Size = new System.Drawing.Size(684, 163);
             this.panel4.TabIndex = 2;
             // 
-            // groupBox2
+            // calculationsGroupBox
             // 
-            this.groupBox2.Controls.Add(this.frequenciesListBox);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(331, 163);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Frequencies";
+            this.calculationsGroupBox.Controls.Add(this.calculationsTabel);
+            this.calculationsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.calculationsGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.calculationsGroupBox.Name = "calculationsGroupBox";
+            this.calculationsGroupBox.Size = new System.Drawing.Size(684, 163);
+            this.calculationsGroupBox.TabIndex = 0;
+            this.calculationsGroupBox.TabStop = false;
+            this.calculationsGroupBox.Text = "Frequencises And Impedances";
             // 
-            // frequenciesListBox
+            // calculationsTabel
             // 
-            this.frequenciesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.frequenciesListBox.FormattingEnabled = true;
-            this.frequenciesListBox.ItemHeight = 16;
-            this.frequenciesListBox.Location = new System.Drawing.Point(3, 21);
-            this.frequenciesListBox.Name = "frequenciesListBox";
-            this.frequenciesListBox.Size = new System.Drawing.Size(325, 132);
-            this.frequenciesListBox.TabIndex = 1;
-            this.frequenciesListBox.SelectedIndexChanged += new System.EventHandler(this.frequenciesListBox_SelectedIndexChanged);
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.groupBox1);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(1013, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(333, 163);
-            this.panel5.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.impedancesListBox);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(333, 163);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Impedances";
-            // 
-            // impedancesListBox
-            // 
-            this.impedancesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.impedancesListBox.FormattingEnabled = true;
-            this.impedancesListBox.ItemHeight = 16;
-            this.impedancesListBox.Location = new System.Drawing.Point(6, 21);
-            this.impedancesListBox.Name = "impedancesListBox";
-            this.impedancesListBox.Size = new System.Drawing.Size(327, 132);
-            this.impedancesListBox.TabIndex = 0;
-            this.impedancesListBox.SelectedIndexChanged += new System.EventHandler(this.impedancesListBox_SelectedIndexChanged);
+            this.calculationsTabel.AllowUserToAddRows = false;
+            this.calculationsTabel.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.calculationsTabel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.calculationsTabel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FrequenciesColumn,
+            this.ImpedancesColumn});
+            this.calculationsTabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.calculationsTabel.Location = new System.Drawing.Point(3, 18);
+            this.calculationsTabel.Name = "calculationsTabel";
+            this.calculationsTabel.RowHeadersWidth = 51;
+            this.calculationsTabel.RowTemplate.Height = 24;
+            this.calculationsTabel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.calculationsTabel.Size = new System.Drawing.Size(678, 142);
+            this.calculationsTabel.TabIndex = 0;
             // 
             // panel1
             // 
@@ -537,14 +514,21 @@
             this.circuitPictureBox.TabStop = false;
             this.circuitPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.circuitPictureBox_Paint);
             // 
-            // buttonsImageList
+            // FrequenciesColumn
             // 
-            this.buttonsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("buttonsImageList.ImageStream")));
-            this.buttonsImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.buttonsImageList.Images.SetKeyName(0, "plus (3).png");
-            this.buttonsImageList.Images.SetKeyName(1, "pencil.png");
-            this.buttonsImageList.Images.SetKeyName(2, "minus (2).png");
-            this.buttonsImageList.Images.SetKeyName(3, "git_branch_icon_151328.png");
+            this.FrequenciesColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FrequenciesColumn.HeaderText = "Frequencies";
+            this.FrequenciesColumn.MinimumWidth = 6;
+            this.FrequenciesColumn.Name = "FrequenciesColumn";
+            this.FrequenciesColumn.ReadOnly = true;
+            // 
+            // ImpedancesColumn
+            // 
+            this.ImpedancesColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ImpedancesColumn.HeaderText = "Impedances";
+            this.ImpedancesColumn.MinimumWidth = 6;
+            this.ImpedancesColumn.Name = "ImpedancesColumn";
+            this.ImpedancesColumn.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -564,9 +548,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
+            this.calculationsGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.calculationsTabel)).EndInit();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
@@ -584,11 +567,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListBox frequenciesListBox;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListBox impedancesListBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel6;
@@ -614,6 +592,10 @@
         private System.Windows.Forms.Button addSegmentButton;
         private System.Windows.Forms.ImageList buttonsImageList;
         private System.Windows.Forms.ToolTip addElementToolTip;
+        private System.Windows.Forms.GroupBox calculationsGroupBox;
+        private System.Windows.Forms.DataGridView calculationsTabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FrequenciesColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImpedancesColumn;
     }
 }
 

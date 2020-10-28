@@ -49,8 +49,9 @@ namespace CircutApp
                 ImpedanceZ.Add(new List<Complex>());
                 Frequencies.Add(new List<double>()
                 {
-                    rand.NextDouble()*100, rand.NextDouble()*1000,
-                    rand.NextDouble()*5000,rand.NextDouble()*9999999
+                    500,100,5000,50
+                    //rand.NextDouble()*500, rand.NextDouble()*500,
+                    //rand.NextDouble()*500,rand.NextDouble()*500
                 });
             }
 
