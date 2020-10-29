@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CircuitAppUI.CircuitDraw
+namespace CircuitAppUI.CircuitDraw.SegmentsDraw
 {
     public interface IDrawableCircuitSegment
     {
@@ -15,7 +15,7 @@ namespace CircuitAppUI.CircuitDraw
         /// <summary>
         /// Sets points for <see cref="SegmentNode"/> SubNodes
         /// </summary>
-        void SetPoints();
+        void CalculatePoints();
 
         /// <summary>
         /// Calculates segment size

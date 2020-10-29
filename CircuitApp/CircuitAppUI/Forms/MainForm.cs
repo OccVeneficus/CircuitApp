@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using CircuitAppUI.CircuitDraw;
+using CircuitAppUI.CircuitDraw.SegmentsDraw;
 using CircuitAppUI.Services;
 using CircutApp;
 using CircutApp.Elements;
@@ -497,10 +498,11 @@ namespace CircuitAppUI.Forms
 
         private void circuitPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            CircuitDrawer.CircuitImageStartPoint = new Point(50, circuitPictureBox.Height/2);
+            var circuitDrawer = new CircuitDrawer();
             e.Graphics.Clear(Color.White);
-            var circuitImage = CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit)
-                ?.SubSegments[0]));
+            DrawableCircuitSegmentBase test = new DrawSerialSegment();
+            test.Segment =_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0];
+            var circuitImage = circuitDrawer.DrawCircuit(test);
             e.Graphics.DrawImage(circuitImage,10,circuitPictureBox.Height/2 - circuitImage.Height/2);
         }
     }

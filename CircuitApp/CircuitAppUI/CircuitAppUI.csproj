@@ -48,8 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircuitDraw\CircuitDrawer.cs" />
-    <Compile Include="CircuitDraw\IDrawableCircuitSegment.cs" />
-    <Compile Include="CircuitDraw\PictureNode.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawableCircuitElementBase.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawCapacitor.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawInductor.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\DrawParallelSegment.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawResistor.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\DrawSerialSegment.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\IDrawableCircuitSegment.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\DrawableCircuitSegmentBase.cs" />
     <Compile Include="Forms\CircuitForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,8 +126,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\circuitApp.ico" />
-    <Content Include="Resources\resistance.ico" />
+    <Content Include="Resources\newSegmentImage.png" />
+    <Content Include="Resources\removeImage.png" />
+    <Content Include="Resources\editimage.png" />
+    <Content Include="Resources\addImage.png" />
+    <Content Include="Resources\appImage.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
