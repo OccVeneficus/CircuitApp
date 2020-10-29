@@ -8,7 +8,7 @@ namespace CircuitAppUI.CircuitDraw
 {
     //TODO: статический класс подразумевает, что в программе в один момент времени можно отрисовать только одну цепь. Для САПР это плохо
     /// <summary>
-    /// Service class for circuit drawing
+    /// Service class that draws an image of Circuit
     /// </summary>
     public static class CircuitDrawer
     {
@@ -30,33 +30,29 @@ namespace CircuitAppUI.CircuitDraw
         /// <summary>
         /// Default size for element pictures
         /// </summary>
+        
         private static readonly Size ElementSize = new Size(50,51);
         //TODO: тут надо определиться - или класс создает и возвращает битмап, а клиентский код решает, где этот битмап пристроить ...
         // ... или в класс передается графикс, на котором всё и рисуется
+
         /// <summary>
         /// Bitmap with circuit drawing
         /// </summary>
         private static Bitmap _circuitImage;
 
-        /// <summary>
-        /// PictureBox to draw on
-        /// </summary>
-        public static PictureBox CircuitPictureBox { get; set; }
-        //TODO: А нужно ли хранить и пикчербокс, и его же графикс?
-        /// <summary>
-        /// Graphics of circuitPictureBox
-        /// </summary>
-        public static Graphics PictureGraphics { get; set; }
+        //TODO: А нужно ли хранить и пикчербокс, и его же графикс?(done)
+
+        public static Point CircuitImageStartPoint { get; set; } = new Point(10,10);
 
         /// <summary>
         /// Draws circuit
         /// </summary>
         /// <param name="node">Node that contains circuit root element</param>
-        public static void DrawCircuit(PictureNode node)
+        public static Bitmap DrawCircuit(PictureNode node)
         {
             if (node.Segment == null || node.Segment.SubSegments.Count == 0)
             {
-                return;
+                return new Bitmap(1,1);
             }
             AddSubSegment(node);
             GetCircuitSize(node);
@@ -74,8 +70,7 @@ namespace CircuitAppUI.CircuitDraw
                 }
             }
 
-            PictureGraphics.DrawImage(_circuitImage, new Point(10, CircuitPictureBox.Height 
-                / 2 - _circuitImage.Height / 2));
+            return _circuitImage;
         }
 
         /// <summary>
@@ -488,12 +483,25 @@ namespace CircuitAppUI.CircuitDraw
             //TODO: магические числа
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);
-            graphics.DrawLine(BlackPen, 22, 19, 22, 33);
-            graphics.DrawLine(BlackPen, 27, 19, 27, 33);
 
-            graphics.DrawLine(BlackPen, 0, 26, 22, 26);
+            /*Draw capacitor plates*/
+            const int platesTopY = 19;
+            const int platesBottomY = 33;
+            const int leftPlateX = 22;
+            const int rightPlateX = 27;
+            //Draw left plate
+            graphics.DrawLine(BlackPen, leftPlateX, platesTopY, leftPlateX,platesBottomY);
+            //Draw right plate
+            graphics.DrawLine(BlackPen, rightPlateX, platesTopY, rightPlateX, platesBottomY);
 
-            graphics.DrawLine(BlackPen, 27, 26, ElementSize.Width, 26);
+            /*Draw capacitor connections*/
+            const int connectionsY = 26;
+            const int drawingLeftEndX = 0;
+            const int drawingRightEndX = 50;
+            //Draw left connection
+            graphics.DrawLine(BlackPen, drawingLeftEndX,connectionsY,leftPlateX,connectionsY);
+            //Draw right connection
+            graphics.DrawLine(BlackPen, rightPlateX,connectionsY,drawingRightEndX,connectionsY);
             return bitmap;
         }
         //TODO: отрисовка годная. Теперь попробуй разбить этот класс на полиморфные объекты

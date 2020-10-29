@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircuitDraw\CircuitDrawer.cs" />
+    <Compile Include="CircuitDraw\IDrawableCircuitSegment.cs" />
     <Compile Include="CircuitDraw\PictureNode.cs" />
     <Compile Include="Forms\CircuitForm.cs">
       <SubType>Form</SubType>

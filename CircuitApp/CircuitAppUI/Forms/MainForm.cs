@@ -23,7 +23,6 @@ namespace CircuitAppUI.Forms
             //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта (done)
             _project = new Project();
             BindDefaultCircuitsChangeEvents();
-            CircuitDrawer.CircuitPictureBox = circuitPictureBox;
             BindDataSources();
             RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
@@ -498,10 +497,11 @@ namespace CircuitAppUI.Forms
 
         private void circuitPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            CircuitDrawer.PictureGraphics = e.Graphics;
+            CircuitDrawer.CircuitImageStartPoint = new Point(50, circuitPictureBox.Height/2);
             e.Graphics.Clear(Color.White);
-            CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit)
+            var circuitImage = CircuitDrawer.DrawCircuit(new PictureNode((circuitsComboBox.SelectedItem as Circuit)
                 ?.SubSegments[0]));
+            e.Graphics.DrawImage(circuitImage,10,circuitPictureBox.Height/2 - circuitImage.Height/2);
         }
     }
 }
