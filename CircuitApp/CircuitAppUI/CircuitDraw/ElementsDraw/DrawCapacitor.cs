@@ -15,7 +15,7 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
         /// <summary>
         /// Capacitor right plate X coordinate
         /// </summary>
-        private const int RightPlateX = 22;
+        private const int RightPlateX = 27;
 
         public override Bitmap DrawSegment()
         {

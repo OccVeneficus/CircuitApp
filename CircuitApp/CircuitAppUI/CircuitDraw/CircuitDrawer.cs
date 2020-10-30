@@ -21,6 +21,7 @@ namespace CircuitAppUI.CircuitDraw
         /// Draws circuit
         /// </summary>
         /// <param name="node">Node that contains circuit root element</param>
+        /// <returns>Image of segment</returns>
         public Bitmap DrawCircuit(DrawableCircuitSegmentBase node)
         {
             if (node.Segment == null || node.Segment.SubSegments.Count == 0)

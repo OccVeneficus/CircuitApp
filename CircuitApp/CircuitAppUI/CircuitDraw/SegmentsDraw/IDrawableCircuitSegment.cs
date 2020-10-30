@@ -2,6 +2,7 @@
 
 namespace CircuitAppUI.CircuitDraw.SegmentsDraw
 {
+    //Represents drawers for all segments
     public interface IDrawableCircuitSegment
     {
         Pen Pen { get; set; }

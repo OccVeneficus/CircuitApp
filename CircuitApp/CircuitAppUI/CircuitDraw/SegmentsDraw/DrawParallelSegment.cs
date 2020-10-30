@@ -63,51 +63,65 @@ namespace CircuitAppUI.CircuitDraw.SegmentsDraw
                         //TODO: вот в таких алгоритмах надо оставлять МНОГО комментариев, потому что понять для чего написана каждая строка практически невозможно ...
                         // или один большой комментарий в начале ветки if, или отдельные комментарии у строчек.
                         subNode.GetSegmentSize();
+                        //If segment is element, then add its height to segment height
                         size.Height += ElementSize.Height;
+                        //Make margins on left and right side of element if segment width smaller than
+                        //element size
                         size.Width = size.Width < ElementSize.Width
                             ? ElementSize.Width + 2 * XMargin
                             : size.Width;
-                        subNode.Size = ElementSize;
+                        //Set points for subNode relatively to parent node
                         subNode.StartPoint = new Point(x, y);
                         subNode.LeftConnectionPoint = new Point(x, yConnectionPoint);
                         subNode.RightConnectionPoint = new Point(x + ElementSize.Width,
                             yConnectionPoint);
+                        //Increase y start and connection coordinates for next branch
                         y += ElementSize.Height;
                         yConnectionPoint += ElementSize.Height;
                         break;
                     }
                     case SerialSegment _:
                     {
-                        var serialSegmentSize = subNode.GetSegmentSize();
-                        size.Height += serialSegmentSize.Height;
-                        size.Width = size.Width < serialSegmentSize.Width
-                            ? serialSegmentSize.Width + XMargin : size.Width;
-                        subNode.Size = serialSegmentSize;
+                        subNode.GetSegmentSize();
+                        //Add subNode height to segment height
+                        size.Height += subNode.Size.Height;
+                        //If segment width less than subNode width 
+                        //make it subNode width. This is for proper margins
+                        //if in subNode subNodes will be parallel segments
+                        size.Width = size.Width < subNode.Size.Width
+                            ? subNode.Size.Width + XMargin : size.Width;
+                        //Set points for subNode relatively to parent node
                         subNode.StartPoint = new Point(x + XMargin, y);
                         subNode.LeftConnectionPoint = new Point(x + XMargin, yConnectionPoint);
-                        subNode.RightConnectionPoint = new Point(x + serialSegmentSize.Width,
+                        subNode.RightConnectionPoint = new Point(x + subNode.Size.Width,
                             yConnectionPoint);
+                        //Increase y start and connection coordinates for next branch
                         yConnectionPoint += subNode.Size.Height;
                         y += subNode.Size.Height;
                         break;
                     }
                     case ParallelSegment _:
                     {
-                        var parallelSegmentSize = subNode.GetSegmentSize();
-                        size.Height += parallelSegmentSize.Height;
-                        size.Width = size.Width < parallelSegmentSize.Width + XMargin
-                            ? parallelSegmentSize.Width + 2 * XMargin
+                        subNode.GetSegmentSize();
+                        //Same as for serial segment
+                        size.Height += subNode.Size.Height;
+                        //2*XMargin for proper margins in parent node
+                        size.Width = size.Width < subNode.Size.Width + XMargin
+                            ? subNode.Size.Width + 2 * XMargin
                             : size.Width;
+                        //How many elements in segment height - 1
                         var delimiter = (subNode.Size.Height / ElementSize.Height) - 1;
+                        //Middle of segment size height
                         var connectionHeight = (ElementSize.Height / 2) * delimiter;
-
-                        subNode.Size = parallelSegmentSize;
+                        //Set points for subNode relatively to parent node
                         subNode.StartPoint = new Point(x + XMargin, y);
+                        //Calculate Left and right connections for correct 
+                        //Drawing.
                         subNode.LeftConnectionPoint = new Point(x + XMargin,
                             yConnectionPoint + (connectionHeight + 2)
                             * (subNode.Segment.SubSegments.Count - 1) - 1);
                         subNode.RightConnectionPoint =
-                            new Point(x + parallelSegmentSize.Width + XMargin,
+                            new Point(x + subNode.Size.Width + XMargin,
                                 yConnectionPoint + (connectionHeight + 2)
                                 * (subNode.Segment.SubSegments.Count - 1) - 1);
                         yConnectionPoint += subNode.Size.Height;
