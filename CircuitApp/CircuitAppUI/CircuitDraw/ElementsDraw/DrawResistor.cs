@@ -30,7 +30,6 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
         public override Bitmap DrawSegment()
         {
             GetSegmentSize();
-            //TODO: магические числа(done)
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);
             graphics.DrawRectangle(Pen, new Rectangle(ResistorStartX, ResistorStartY,

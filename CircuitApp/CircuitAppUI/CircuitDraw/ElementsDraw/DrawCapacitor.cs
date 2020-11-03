@@ -2,6 +2,7 @@
 
 namespace CircuitAppUI.CircuitDraw.ElementsDraw
 {
+    //TODO: если интерфейс Drawable, то и классы должны быть Drawable, а не Draw. Сейчас название как у метода, а не класса
     /// <summary>
     /// Class for capacitor drawing
     /// </summary>
@@ -19,7 +20,6 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
 
         public override Bitmap DrawSegment()
         {
-            //TODO: магические числа (done)
             GetSegmentSize();
             var bitmap = new Bitmap(ElementSize.Width, ElementSize.Height);
             var graphics = Graphics.FromImage(bitmap);

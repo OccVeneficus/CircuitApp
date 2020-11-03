@@ -35,7 +35,6 @@ namespace CircuitAppUI.CircuitDraw.SegmentsDraw
         /// </summary>
         public Point StartPoint { get; set; } = Point.Empty;
 
-        //TODO: здесь и далее имеет смысл в комментарии указать, что точка откладывается от StartPoint (done)
         /// <summary>
         /// Point of left connection. Postpones from <see cref="StartPoint"/>
         /// </summary>

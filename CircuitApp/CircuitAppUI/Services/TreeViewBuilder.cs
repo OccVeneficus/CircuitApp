@@ -12,7 +12,6 @@ namespace CircuitAppUI.Services
     /// </summary>
     public static class TreeViewBuilder
     {
-        //TODO: мне кажется, работу с нодами надо вынести в отдельный класс. В главной форме слишком много логики. Либо бить окно на контролы (done)
         /// <summary>
         /// Check if first node contains second node
         /// </summary>
@@ -44,7 +43,6 @@ namespace CircuitAppUI.Services
         public static void MoveToElement(TreeNode targetNode, TreeNode draggedNode,
             TreeNode draggedNodeParent, TreeNode targetNodeParent)
         {
-            //TODO: var (done)
             var form = new ConnectionTypeForm();
             form.ShowDialog();
             if (form.DialogResult == DialogResult.OK)
@@ -54,7 +52,6 @@ namespace CircuitAppUI.Services
                 (targetNodeParent.Tag as ISegment)?.SubSegments.Add(form.Type);
                 (draggedNodeParent.Tag as Segment)?.SubSegments.Remove(draggedNode.Tag as ISegment);
                 (targetNodeParent.Tag as ISegment)?.SubSegments.Remove(targetNode.Tag as ISegment);
-                //TODO: здоровенный кусок кода дублируется только потому, что в качестве корня дерева используется не ISegment (done)
             }
         }
 
@@ -71,7 +68,6 @@ namespace CircuitAppUI.Services
             }
         }
 
-        //TODO: DefineTreeNode() (done)?
         /// <summary>
         /// Create new node, fill it's name and tag with segment value and put it in appropriate position in treeview
         /// </summary>
@@ -79,7 +75,6 @@ namespace CircuitAppUI.Services
         /// <param name="segment">Segment to add</param>
         private static void DefineTreeNode(TreeNode currentNode, ISegment segment)
         {
-            //TODO: Если у цепей сделать дефолтное имя, то от свитча можно будет избавиться (done)
             var node = new TreeNode
             {
                 Text = segment.Name,

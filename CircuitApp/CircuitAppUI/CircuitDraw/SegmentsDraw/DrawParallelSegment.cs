@@ -60,8 +60,6 @@ namespace CircuitAppUI.CircuitDraw.SegmentsDraw
                 {
                     case Element _:
                     {
-                        //TODO: вот в таких алгоритмах надо оставлять МНОГО комментариев, потому что понять для чего написана каждая строка практически невозможно ...
-                        // или один большой комментарий в начале ветки if, или отдельные комментарии у строчек.
                         subNode.GetSegmentSize();
                         //If segment is element, then add its height to segment height
                         size.Height += ElementSize.Height;

@@ -7,16 +7,11 @@ using CircutApp.Segments;
 
 namespace CircuitAppUI.CircuitDraw
 {
-    //TODO: статический класс подразумевает, что в программе в один момент времени можно отрисовать только одну цепь. Для САПР это плохо (done)
     /// <summary>
     /// Class that draws an image of Circuit
     /// </summary>
     public class CircuitDrawer
     {
-        //TODO: тут надо определиться - или класс создает и возвращает битмап, а клиентский код решает, где этот битмап пристроить ...(done)
-        // ... или в класс передается графикс, на котором всё и рисуется
-        //TODO: А нужно ли хранить и пикчербокс, и его же графикс?(done)
-
         /// <summary>
         /// Draws circuit
         /// </summary>
@@ -32,10 +27,7 @@ namespace CircuitAppUI.CircuitDraw
             node.GetSegmentSize();
             return node.DrawSegment();
         }
-        //TODO: к твоему вопросу "что лучше - if или switch?" ...
-        // ... Зависит от цели. Есть варианты, при которых if нельзя заменить на switch, так как switch может проверять значения только одного объекта.
-        // ... При этом почти все if else и switch в этом классе по-хорошему должны быть заменены на использование полиморфных объектов через общий интерфейс
-
+        
         /// <summary>
         /// Fills rootNode SubSegments
         /// </summary>
@@ -90,6 +82,5 @@ namespace CircuitAppUI.CircuitDraw
                 }
             }
         }
-        //TODO: отрисовка годная. Теперь попробуй разбить этот класс на полиморфные объекты (done)
     }
 }

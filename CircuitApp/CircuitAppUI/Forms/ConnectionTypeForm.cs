@@ -4,14 +4,11 @@ using CircutApp.Segments;
 
 namespace CircuitAppUI.Forms
 {
-    //TODO: верстка
-    //TODO: xml
     /// <summary>
     /// Form for choosing connection type
     /// </summary>
     public partial class ConnectionTypeForm : Form
     {
-        //TODO: именование(done)
         public ISegment Type { get; set; }
         public ConnectionTypeForm()
         {
@@ -21,11 +18,8 @@ namespace CircuitAppUI.Forms
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            //TODO: лучше создавать объект Type в обработчиках радиобаттонов, а здесь просто Close() (done)
-            //TODO: зачем сбрасывать перед закрытием?(done)
             DialogResult = DialogResult.OK;
             Close();
-            //TODO: почему не сделать какой-нибудь радиобаттон включенным по умолчанию?(done)
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -62,7 +56,6 @@ namespace CircuitAppUI.Forms
             }
             else
             {
-                //TODO: здесь должно кидаться исключение на случай добавления новых радиобаттонов на форму (done)
                 throw new ArgumentException("Failed to choose segment connection type");
             }
         }

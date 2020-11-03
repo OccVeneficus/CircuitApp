@@ -8,9 +8,6 @@ using CircutApp.Elements;
 
 namespace CircuitAppUI.Forms
 {
-    //TODO: именование (done)
-    //TODO: xml (done)
-    //TODO: верстка (done)
     /// <summary>
     /// Form for adding/editing circuit elements
     /// </summary>
@@ -54,8 +51,6 @@ namespace CircuitAppUI.Forms
 
         private void valueTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //TODO: аналогичная проверка в MainForm - избавиться от дублирования (done)
-            //TODO: вообще, не очевидно, что проверяется условием, пояснить комментарием (done)
             KeyPressChecking.CheckForDouble(sender, e);
         }
 

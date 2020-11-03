@@ -14,6 +14,8 @@ using CircutApp.Segments;
 
 namespace CircuitAppUI.Forms
 {
+    //TODO: с версткой всех второстепенных окон всё равно беда: кнопки почему-то уменьшены от стандартных размеров, выровнены по центру, а не по нижнему правому краю ...
+    // поля до границ окна везде разные (как и расстояния между элементами), где-то есть группбоксы, где-то нет. В общем, сверстать страницы аккуратнее и единообразнее
     public partial class MainForm : Form
     {
         private readonly Project _project;
@@ -21,17 +23,15 @@ namespace CircuitAppUI.Forms
         public MainForm()
         {
             InitializeComponent();
-            //TODO: не многовато ли методов Initialize()? Вводят путаницу в назначении. И при этом ни один из них не создаёт экземпляр проекта (done)
             _project = new Project();
             BindDefaultCircuitsChangeEvents();
             BindDataSources();
-            RebuildTree(); //TODO: Re - это не самостоятельное слово (done)
+            RebuildTree();
             circuitElementsTreeView.SelectedNode = circuitElementsTreeView.Nodes[0];
         }
 
         private void BindDefaultCircuitsChangeEvents()
         {
-            //TODO: это не должно делаться в форме - сделай отдельный класс для инициализации проекта включая частоты и пр.(done)
             for (int i = 0; i < 5; i++)
             {
                 _project.Circuits[i].CircuitChanged += Circuit_SegmentChanged;
@@ -106,7 +106,6 @@ namespace CircuitAppUI.Forms
                 !double.TryParse(frequencyInputTextBox.Text, NumberStyles.Float,
                     CultureInfo.InvariantCulture, out _))
             {
-                //TODO: грамошибка (done)
                 frequencyInputTextBox.BackColor = Color.LightCoral;
                 MessageBox.Show(@"You can't add empty space or strings to frequencies.",
                     @"Wrong input", MessageBoxButtons.OK);
@@ -230,7 +229,6 @@ namespace CircuitAppUI.Forms
 
         private void circuitElementsTreeView_DragDrop(object sender, DragEventArgs e)
         {
-            //TODO: var (done)
             var targetPoint = circuitElementsTreeView.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = circuitElementsTreeView.GetNodeAt(targetPoint);
             if (targetNode == null)
@@ -252,12 +250,11 @@ namespace CircuitAppUI.Forms
                         return;
                     }
                     (draggedNodeParent.Tag as ISegment)?.SubSegments.Remove(draggedNode.Tag as ISegment);
-                    //TODO: опять ветвление из Circuit (done)
                     draggedNode.Remove();
                     targetNode.Nodes.Add(draggedNode);
                 }
 
-                (targetNode.Tag as ISegment)?.SubSegments.Add((ISegment)draggedNode.Tag); //TODO: и снова (done)
+                (targetNode.Tag as ISegment)?.SubSegments.Add((ISegment)draggedNode.Tag);
 
                 if (draggedNodeParent.Tag is Segment && draggedNodeParent.Nodes.Count == 0)
                 {
@@ -354,8 +351,8 @@ namespace CircuitAppUI.Forms
                 else if (circuitElementsTreeView.SelectedNode.Tag is Segment segment)
                 {
                     segment.SubSegments.Add(newElement as ISegment);
-                } 
-                //TODO: одинаковые ветки - избавиться с помощью полиморфизма} (done)
+                }
+
                 else if (circuitElementsTreeView.SelectedNode.Tag is Element element)
                 {
                     ConnectionTypeForm connectionForm = new ConnectionTypeForm();
@@ -368,7 +365,7 @@ namespace CircuitAppUI.Forms
                             connectionForm.Type.SubSegments.Add(element);
                             parentSegment.SubSegments.Remove(element);
                             parentSegment.SubSegments.Add(connectionForm.Type);
-                        } //TODO: избавиться от дублирования (done)
+                        }
                     }
                     else
                     {
