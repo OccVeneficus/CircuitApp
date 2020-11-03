@@ -49,11 +49,11 @@
   <ItemGroup>
     <Compile Include="CircuitDraw\CircuitDrawer.cs" />
     <Compile Include="CircuitDraw\ElementsDraw\DrawableCircuitElementBase.cs" />
-    <Compile Include="CircuitDraw\ElementsDraw\DrawCapacitor.cs" />
-    <Compile Include="CircuitDraw\ElementsDraw\DrawInductor.cs" />
-    <Compile Include="CircuitDraw\SegmentsDraw\DrawParallelSegment.cs" />
-    <Compile Include="CircuitDraw\ElementsDraw\DrawResistor.cs" />
-    <Compile Include="CircuitDraw\SegmentsDraw\DrawSerialSegment.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawableCapacitor.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawableInductor.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\DrawableParallelSegment.cs" />
+    <Compile Include="CircuitDraw\ElementsDraw\DrawableResistor.cs" />
+    <Compile Include="CircuitDraw\SegmentsDraw\DrawableSerialSegment.cs" />
     <Compile Include="CircuitDraw\SegmentsDraw\IDrawableCircuitSegment.cs" />
     <Compile Include="CircuitDraw\SegmentsDraw\DrawableCircuitSegmentBase.cs" />
     <Compile Include="Forms\CircuitForm.cs">

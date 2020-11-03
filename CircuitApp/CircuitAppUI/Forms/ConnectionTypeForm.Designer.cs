@@ -42,17 +42,20 @@
             this.groupBox1.Controls.Add(this.okButton);
             this.groupBox1.Controls.Add(this.serialRadioButton);
             this.groupBox1.Controls.Add(this.parallelRadioButton);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(289, 138);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(243, 107);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add segment as:";
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(144, 97);
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.Location = new System.Drawing.Point(164, 80);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -62,7 +65,9 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(63, 97);
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.Location = new System.Drawing.Point(85, 80);
+            this.okButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -73,9 +78,10 @@
             // serialRadioButton
             // 
             this.serialRadioButton.AutoSize = true;
-            this.serialRadioButton.Location = new System.Drawing.Point(69, 58);
+            this.serialRadioButton.Location = new System.Drawing.Point(11, 48);
+            this.serialRadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.serialRadioButton.Name = "serialRadioButton";
-            this.serialRadioButton.Size = new System.Drawing.Size(139, 21);
+            this.serialRadioButton.Size = new System.Drawing.Size(107, 17);
             this.serialRadioButton.TabIndex = 1;
             this.serialRadioButton.Text = "Serial to choosen";
             this.serialRadioButton.UseVisualStyleBackColor = true;
@@ -84,9 +90,10 @@
             // parallelRadioButton
             // 
             this.parallelRadioButton.AutoSize = true;
-            this.parallelRadioButton.Location = new System.Drawing.Point(69, 31);
+            this.parallelRadioButton.Location = new System.Drawing.Point(11, 27);
+            this.parallelRadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.parallelRadioButton.Name = "parallelRadioButton";
-            this.parallelRadioButton.Size = new System.Drawing.Size(150, 21);
+            this.parallelRadioButton.Size = new System.Drawing.Size(115, 17);
             this.parallelRadioButton.TabIndex = 0;
             this.parallelRadioButton.TabStop = true;
             this.parallelRadioButton.Text = "Parallel to choosen";
@@ -95,12 +102,13 @@
             // 
             // ConnectionTypeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 138);
+            this.ClientSize = new System.Drawing.Size(243, 107);
             this.Controls.Add(this.groupBox1);
-            this.MaximumSize = new System.Drawing.Size(307, 185);
-            this.MinimumSize = new System.Drawing.Size(307, 185);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaximumSize = new System.Drawing.Size(259, 146);
+            this.MinimumSize = new System.Drawing.Size(259, 146);
             this.Name = "ConnectionTypeForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

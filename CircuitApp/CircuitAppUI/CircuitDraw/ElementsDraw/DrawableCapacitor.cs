@@ -6,7 +6,7 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
     /// <summary>
     /// Class for capacitor drawing
     /// </summary>
-    public class DrawCapacitor : DrawableCircuitElementBase
+    public class DrawableCapacitor : DrawableCircuitElementBase
     {
         /// <summary>
         /// Capacitor left plate X coordinate

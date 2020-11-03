@@ -7,7 +7,7 @@ namespace CircuitAppUI.CircuitDraw.SegmentsDraw
     /// <summary>
     /// Class for parallel segment drawing
     /// </summary>
-    public class DrawParallelSegment : DrawableCircuitSegmentBase
+    public class DrawableParallelSegment : DrawableCircuitSegmentBase
     {
         public override void CalculatePoints()
         {

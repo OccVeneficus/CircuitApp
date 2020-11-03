@@ -497,7 +497,7 @@ namespace CircuitAppUI.Forms
         {
             var circuitDrawer = new CircuitDrawer();
             e.Graphics.Clear(Color.White);
-            DrawableCircuitSegmentBase test = new DrawSerialSegment();
+            DrawableCircuitSegmentBase test = new DrawableSerialSegment();
             test.Segment =_project.Circuits[circuitsComboBox.SelectedIndex].SubSegments[0];
             var circuitImage = circuitDrawer.DrawCircuit(test);
             e.Graphics.DrawImage(circuitImage,10,circuitPictureBox.Height/2 - circuitImage.Height/2);

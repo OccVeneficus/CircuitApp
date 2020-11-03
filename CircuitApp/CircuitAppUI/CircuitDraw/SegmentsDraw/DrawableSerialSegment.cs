@@ -2,7 +2,7 @@
 
 namespace CircuitAppUI.CircuitDraw.SegmentsDraw
 {
-    public class DrawSerialSegment : DrawableCircuitSegmentBase
+    public class DrawableSerialSegment : DrawableCircuitSegmentBase
     {
         public override void CalculatePoints()
         {

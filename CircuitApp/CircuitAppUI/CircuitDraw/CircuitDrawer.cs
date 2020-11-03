@@ -58,23 +58,23 @@ namespace CircuitAppUI.CircuitDraw
             {
                 case Resistor _:
                 {
-                    return new DrawResistor();
+                    return new DrawableResistor();
                 }
                 case Capacitor _:
                 {
-                    return new DrawCapacitor();
+                    return new DrawableCapacitor();
                 }
                 case Inductor _:
                 {
-                    return new DrawInductor();
+                    return new DrawableInductor();
                 }
                 case SerialSegment _:
                 {
-                    return new DrawSerialSegment();
+                    return new DrawableSerialSegment();
                 }
                 case ParallelSegment _:
                 {
-                    return new DrawParallelSegment();
+                    return new DrawableParallelSegment();
                 }
                 default:
                 {

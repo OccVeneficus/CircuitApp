@@ -5,7 +5,7 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
     /// <summary>
     /// Class for resistor drawing
     /// </summary>
-    public class DrawResistor : DrawableCircuitElementBase
+    public class DrawableResistor : DrawableCircuitElementBase
     {
         /// <summary>
         /// Resistor rectangle start X coordinate

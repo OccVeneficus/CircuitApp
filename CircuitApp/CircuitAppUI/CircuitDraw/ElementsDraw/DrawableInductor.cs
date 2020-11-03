@@ -5,7 +5,7 @@ namespace CircuitAppUI.CircuitDraw.ElementsDraw
     /// <summary>
     /// Class for inductor drawing
     /// </summary>
-    public class DrawInductor : DrawableCircuitElementBase
+    public class DrawableInductor : DrawableCircuitElementBase
     {
         /// <summary>
         /// Determines arc height
